@@ -1,0 +1,6 @@
+$ cat .gitignore
+
+*.Rproj
+*.Rproj.user/
+*.Rhistory
+scratch.R

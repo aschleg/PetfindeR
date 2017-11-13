@@ -1,0 +1,12 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.Rproj\.user
+^README\.Rmd$
+^cran-comments\.md$
+^NEWS\.md$
+^.*\.travis\.yml$
+^.*\.DS_Store
+^.*\.gitignore$
+^\.git$
+^.*\.Rhistory
+^.*\.Rprofile
