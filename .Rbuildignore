@@ -10,3 +10,4 @@
 ^\.git$
 ^.*\.Rhistory
 ^.*\.Rprofile
+^api_key

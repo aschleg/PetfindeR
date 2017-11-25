@@ -14,5 +14,5 @@ Imports:
   markdown
 RoxygenNote: 6.0.1
 License: LICENSE
-URL: https://github.com/aschleg/petpy
+URL: https://github.com/aschleg/PetfindeR
 VignetteBuilder: knitr

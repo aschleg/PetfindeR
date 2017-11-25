@@ -3,4 +3,6 @@ $ cat .gitignore
 *.Rproj
 *.Rproj.user/
 *.Rhistory
+.Rproj.user
+api_key
 scratch.R
