@@ -152,6 +152,7 @@ Petfinder <- function(key, secret = NULL) {
                                    outputformat = outputformat)
       
       r <- private$return_json(url, params)
+      r <- shelter_records_to_df(r$petfinder$shelters$shelter)
       
       return(r)
       
