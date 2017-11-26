@@ -10,6 +10,8 @@ LazyData: true
 Imports:
   R6,
   httr,
+  jsonlite,
+  plyr,
   knitr,
   markdown
 RoxygenNote: 6.0.1

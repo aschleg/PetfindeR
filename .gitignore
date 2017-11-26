@@ -5,4 +5,3 @@ $ cat .gitignore
 *.Rhistory
 .Rproj.user
 api_key
-scratch.R
