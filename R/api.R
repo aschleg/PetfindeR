@@ -1,12 +1,12 @@
 
-
+#' @export
 Petfinder <- function(key, secret = NULL) {
   auth <- .Petfinder.class$new(key, secret)
   
   return(auth)
 }
 
-.Petfinder.class <- R6Class("Petfinder",
+.Petfinder.class <- R6Class(".Petfinder.class",
 
   public = list(
     key = NULL,
@@ -24,11 +24,11 @@ Petfinder <- function(key, secret = NULL) {
     breed.list = function(animal, outputformat = 'json') {
       
       url <- paste0(self$host, 'breed.list', sep = '')
-      params <- private$parameters(key = self$key, 
+      params <- parameters(key = self$key, 
                                    animal = animal, 
                                    outputformat = outputformat)
 
-      breeds <- private$return_json(url, params)
+      breeds <- return_json(url, params)
 
       breeds <- breeds$petfinder$breeds$breed
       colnames(breeds) <- paste0(animal, 'breeds', sep = ' ')
@@ -40,7 +40,7 @@ Petfinder <- function(key, secret = NULL) {
                        outputformat = 'json') {
       
       url <- paste0(self$host, 'pet.get', sep = '')
-      params <- private$parameters(key = self$key,
+      params <- parameters(key = self$key,
                                    id = petId,
                                    outputformat = outputformat)
       
@@ -48,7 +48,7 @@ Petfinder <- function(key, secret = NULL) {
         
         pets <- lapply(petId, function(x) {
           params['id'] <- x
-          pet_record(private$return_json(url, params)$petfinder$pet)
+          pet_record(return_json(url, params)$petfinder$pet)
         })
         
         r <- rbind.list(pets)
@@ -56,7 +56,7 @@ Petfinder <- function(key, secret = NULL) {
       }
       
       else {
-        r <- private$return_json(url, params)
+        r <- return_json(url, params)
         r <- pet_record(r$petfinder$pet)
       }
       
@@ -75,7 +75,7 @@ Petfinder <- function(key, secret = NULL) {
                              outputformat = 'json') {
       
       url <- paste0(self$host, 'pet.getRandom', sep = '')
-      params <- private$parameters(key = self$key,
+      params <- parameters(key = self$key,
                                    animal = animal,
                                    breed = breed,
                                    size = size,
@@ -89,14 +89,14 @@ Petfinder <- function(key, secret = NULL) {
         rvec <- list()
       
         for (i in 1:records) {
-          rvec[[i]] <- pet_record(private$return_json(url, params)$petfinder$pet)
+          rvec[[i]] <- pet_record(return_json(url, params)$petfinder$pet)
         }
       
         r <- rbind.fill(rvec)
       }
       
       else {
-        r <- pet_record(private$return_json(url, params)$petfinder$pet)
+        r <- pet_record(return_json(url, params)$petfinder$pet)
       }
       
       return(r)
@@ -112,26 +112,39 @@ Petfinder <- function(key, secret = NULL) {
                         offset = NULL,
                         count = NULL,
                         output = NULL,
+                        pages = NULL,
                         outputformat = 'json') {
       
       url <- paste0(self$host, 'pet.find', sep = '')
-      params <- private$parameters(key = self$key,
-                                   location = location,
-                                   animal = animal,
-                                   breed = breed,
-                                   size = size,
-                                   sex = sex,
-                                   age = age,
-                                   offset = offset,
-                                   count = count,
-                                   output = output,
-                                   outputformat = outputformat)
+      params <- parameters(key = self$key,
+                           location = location,
+                           animal = animal,
+                           breed = breed,
+                           size = size,
+                           sex = sex,
+                           age = age,
+                           offset = offset,
+                           count = count,
+                           output = output,
+                           pages = pages,
+                           outputformat = outputformat)
       
-      r <- private$return_json(url, params)
+      r <- return_json(url, params)
       
-      if (r$petfinder$lastOffset$`$t` == '1') {
+      if (!is.null(pages)) {
+        pageresults <- paged_result(r = r, element = r$petfinder$pets$pet, url = url, params = params)
+        
+        df <- rbind.fill(lapply(pageresults, function(x) {
+          pet_records_df(x)
+        }))
+        
+        return(df)
+      }
+      
+      else if (r$petfinder$lastOffset$`$t` == '1') {
         return(pet_record(r$petfinder$pets$pet))
       }
+      
       else {
         return(pet_records_df(r$petfinder$pets$pet))
       }
@@ -141,35 +154,60 @@ Petfinder <- function(key, secret = NULL) {
                             name = NULL,
                             offset = NULL,
                             count = NULL,
+                            pages = NULL,
                             outputformat = 'json') {
       
       url <- paste0(self$host, 'shelter.find', sep = '')
-      params <- private$parameters(key = self$key,
+      params <- parameters(key = self$key,
                                    location = location,
                                    name = name,
                                    offset = offset,
                                    count = count,
+                                   pages = pages,
                                    outputformat = outputformat)
       
-      r <- private$return_json(url, params)
-      r <- shelter_records_to_df(r$petfinder$shelters$shelter)
+      r <- return_json(url, params)
       
+      if (!is.null(pages)) {
+        pageresults <- paged_result(r = r, element = r$petfinder$shelters$shelter, url = url, params = params)
+        
+        r <- rbind.fill(lapply(pageresults, function(x) {
+          shelter_records_to_df(x)
+        }))
+      }
+      
+      else {
+        r <- shelter_records_to_df(r$petfinder$shelters$shelter)
+      }
       return(r)
-      
     },
     
     shelter.get = function(shelterId,
                            outputformat = 'json') {
       
       url <- paste0(self$host, 'shelter.get', sep = '')
-      params <- private$parameters(key = self$key,
+      params <- parameters(key = self$key,
                                    id = shelterId,
                                    outputformat = outputformat)
       
-      r <- private$return_json(url, params)
+      if (is.list(shelterId) | is.vector(shelterId)) {
+        
+        shelters <- lapply(petId, function(x) {
+          params['id'] <- x
+          shelter_records_to_df(return_json(url, params)$shelter)
+        })
+        
+        r <- rbind.list(shelters)
+        
+      }
+
+      else {
+        r <- return_json(url, params)
+        r <- shelter_records_to_df(r$petfinder$shelter)
+      }
       
       return(r)
-      
+    
     },
     
     shelter.getPets = function(shelterId,
@@ -177,94 +215,50 @@ Petfinder <- function(key, secret = NULL) {
                                offset = NULL,
                                count = NULL,
                                output = NULL,
+                               pages = NULL,
                                outputformat = 'json') {
       
       url <- paste0(self$host, 'shelter.getPets', sep = '')
-      params <- private$parameters(key = self$key,
-                                   id = shelterId,
-                                   status = status,
-                                   offset = offset,
-                                   count = count,
-                                   output = output,
-                                   outputformat = outputformat)
+      params <- parameters(key = self$key,
+                           id = shelterId,
+                           status = status,
+                           offset = offset,
+                           count = count,
+                           output = output,
+                           pages = pages,
+                           outputformat = outputformat)
       
-      r <- private$return_json(url, params)
+      r <- return_json(url, params)
       
-      return(r)
-      
+      if (r$petfinder$lastOffset$`$t` == '1') {
+        return(pet_record(r$petfinder$pets$pet))
+      }
+      else {
+        return(pet_records_df(r$petfinder$pets$pet))
+      }
     },
     
     shelter.listByBreed = function(animal,
                                    breed,
                                    offset = NULL,
                                    count = NULL,
+                                   pages = NULL,
                                    outputformat = 'json') {
       
       url <- paste0(self$host, 'shelter.listByBreed', sep = '')
-      params <- private$parameters(key = self$key,
-                                   animal = animal,
-                                   breed = breed,
-                                   offset = offset,
-                                   count = count,
-                                   outputformat = outputformat)
+      params <- parameters(key = self$key,
+                           animal = animal,
+                           breed = breed,
+                           offset = offset,
+                           count = count,
+                           pages = pages,
+                           outputformat = outputformat)
       
-      r <- private$return_json(url, params)
+      r <- return_json(url, params)
+      r <- shelter_records_to_df(r$petfinder$shelters$shelter)
       
       return(r)
       
-    }
-  ), 
-  
-  private = list(
-    
-    parameters = function(key,
-                          animal = NULL,
-                          breed = NULL,
-                          size = NULL,
-                          sex = NULL,
-                          location = NULL,
-                          name = NULL,
-                          age = NULL,
-                          petId = NULL,
-                          shelterId = NULL,
-                          status = NULL,
-                          output = NULL,
-                          outputformat = 'json',
-                          offset = NULL,
-                          count = NULL,
-                          id = NULL) {
-      
-      params <- list('key' = key,
-                     'animal' = animal,
-                     'breed' = breed,
-                     'size' = size,
-                     'sex' = sex,
-                     'age' = age,
-                     'location' = location,
-                     'name' = name,
-                     'petId' = petId,
-                     'shelterId' = shelterId,
-                     'status' = status,
-                     'output' = output,
-                     'format' = outputformat,
-                     'offset' = offset,
-                     'count' = count,
-                     'id' = id
-      )
-      
-      params <- params[!sapply(params, is.null)]
-      return(params)
-      
-    },
-    
-    return_json = function(url, params) {
-      url <- parse_url(url)
-      url$query <- params
-      url <- build_url(url)
-      
-      json_url <- fromJSON(url)
-      
-      return(json_url)
     }
   )
 )

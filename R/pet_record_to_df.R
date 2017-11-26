@@ -141,14 +141,18 @@ pet_records_df = function(r) {
     
     else if (records[i] == 'contact') {
       con <- r$contact
-      contact_list <- list()
       
-      for (j in 1:length(con)) {
-        contact_list[[j]] <- data.frame(con[[j]])
-      }
+      contacts <- data.frame(lapply(con, function(x) {
+        if (dim(x)[2] == 0) {
+          x <- NA
+        }
+        else {
+          x
+        }
+      }))
       
-      contact_df <- data.frame(contact_list)
-      colnames(contact_df) <- c('phone', 'state', 'email', 'city', 'zip', 'address')
+      contact_df <- rbind.fill(contacts)
+      colnames(contact_df) <- names(con)
       
       recordlist[[i]] <- contact_df
     }
@@ -173,9 +177,16 @@ pet_records_df = function(r) {
     }
     
     else {
-      df <- r[[i]][1]
+      tryCatch(
+        df <- r[[i]][1],
+        error = function(cond) {
+          df <- data.frame(NA)
+        }
+      )
+      
       colnames(df) <- records[i]
       recordlist[[i]] <- df
+      
     }
   }
   
