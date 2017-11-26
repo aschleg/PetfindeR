@@ -8,9 +8,11 @@
 #'   'cat', 'dog', 'horse', 'reptile', or 'smallfurry'.
 #' @return data.frame containing available breeds of the animal from the Petfinder database.
 #' @examples
-#' pf <- PetfindeR::Petfinder(key)
+#' \dontrun{
+#' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$breed.list('cat')
 #' pf$breed.list('dog')
+#' }
 breed.list <- function(animal) {
   return(NULL)
 }
@@ -40,10 +42,12 @@ breed.list <- function(animal) {
 #'   returns a simple record while 'full' returns a complete record with
 #'   description. Defaults to 'basic'.
 #' @return data.frame of pet records matching input parameters.
-#' @examples 
-#' pf <- Petfinder(key)
+#' @examples
+#' \dontrun{
+#' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$pet.find('WA')
 #' pf$pet.find('WA', 'cat', pages = 2)
+#' }
 pet.find <- function(location,
                      animal = NULL,
                      breed = NULL,
@@ -64,10 +68,12 @@ pet.find <- function(location,
 #'   record or a list or vector of petIds.
 #' @return data.frame of input petId(s).
 #' @examples 
-#' pf <- Petfinder(key)
+#' \dontrun{
+#' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$pet.get(petId)
 #' petIds <- c(petId1, petId2, petId3)
 #' pf$pet.get(petIds)
+#' }
 pet.get <- function(petId) {
   return(NULL)
 }
@@ -92,9 +98,11 @@ pet.get <- function(petId) {
 #'   search.
 #' @return data.frame of randomly selected pet record(s).
 #' @examples
-#' pf <- Petfinder(key)
+#' \dontrun{
+#' #' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$pet.getRandom(animal = 'cat')
 #' pf$pet.getRandom(10, 'dog')
+#' }
 pet.getRandom <- function(records = NULL,
                           animal = NULL,
                           breed = NULL,
@@ -121,9 +129,11 @@ pet.getRandom <- function(records = NULL,
 #'   returned (25 results from first call and 100 from the next four pages).
 #' @return data.frame of shelter records matching input parameters.
 #' @examples 
-#' pf <- Petfinder(key)
+#' \dontrun{
+#' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$shelter.find('WA', count = 5)
 #' pf$shelter.find('WA', pages = 3)
+#' }
 shelter.find <- function(location,
                         name = NULL,
                         offset = NULL,
@@ -139,10 +149,12 @@ shelter.find <- function(location,
 #'   a single record or a list or vector of shelterIds.
 #' @return data.frame of input shelterId(s).
 #' @examples 
-#' pf <- Petfinder(key)
+#' \dontrun{
+#' #' pf <- Petfinder(key)
 #' pf$shelter.get(shelterId)
 #' shelterIds <- c(shelterId1, shelterId2, shelterId3)
 #' pf$shelter.get(shelterIds)
+#' }
 shelter.get <- function(shelterId) {
   return(NULL)
 }
@@ -166,8 +178,10 @@ shelter.get <- function(shelterId) {
 #'   description. Defaults to 'basic'.
 #' @return data.frame of pet records associated with specified shelterId.
 #' @examples 
-#' pf <- Petfinder(key)
+#' \dontrun{
+#' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$shelter.getPets('WA40') # Seattle Area Feline Rescue.
+#' }
 shelter.getPets <- function(shelterId,
                             status = NULL,
                             offset = NULL,
@@ -190,9 +204,11 @@ shelter.getPets <- function(shelterId,
 #'   returned (25 results from first call and 100 from the next four pages).
 #' @return data.frame of pet records associated with specified shelterId.
 #' @examples 
-#' pf <- Petfinder(key)
+#' \dontrun{
+#' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$shelter.listByBreed('cat', 'Abyssinian')
 #' pf$shelter.listByBreed('dog', 'Golden Retriever')
+#' }
 shelter.listByBreed = function(animal,
                                breed,
                                offset = NULL,

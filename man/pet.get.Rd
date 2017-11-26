@@ -17,8 +17,10 @@ data.frame of input petId(s).
 Returns the available pet record data for the input pet Ids.
 }
 \examples{
-pf <- Petfinder(key)
+\dontrun{
+pf <- Petfinder(key) # Initialize Petfinder class
 pf$pet.get(petId)
 petIds <- c(petId1, petId2, petId3)
 pf$pet.get(petIds)
+}
 }

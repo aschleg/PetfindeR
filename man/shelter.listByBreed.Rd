@@ -28,7 +28,9 @@ data.frame of pet records associated with specified shelterId.
 Returns a data.frame of shelter IDs listing animals matching the input animal breed.
 }
 \examples{
-pf <- Petfinder(key)
+\dontrun{
+pf <- Petfinder(key) # Initialize Petfinder class
 pf$shelter.listByBreed('cat', 'Abyssinian')
 pf$shelter.listByBreed('dog', 'Golden Retriever')
+}
 }

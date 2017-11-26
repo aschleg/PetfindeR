@@ -35,6 +35,8 @@ data.frame of pet records associated with specified shelterId.
 Returns a collection of pet records for an individual shelter.
 }
 \examples{
-pf <- Petfinder(key)
+\dontrun{
+pf <- Petfinder(key) # Initialize Petfinder class
 pf$shelter.getPets('WA40') # Seattle Area Feline Rescue.
+}
 }

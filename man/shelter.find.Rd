@@ -30,7 +30,9 @@ data.frame of shelter records matching input parameters.
 Returns a data.frame of shelter records matching input parameters.
 }
 \examples{
-pf <- Petfinder(key)
+\dontrun{
+pf <- Petfinder(key) # Initialize Petfinder class
 pf$shelter.find('WA', count = 5)
 pf$shelter.find('WA', pages = 3)
+}
 }

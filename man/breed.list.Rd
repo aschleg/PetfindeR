@@ -19,7 +19,9 @@ Method for calling the 'breed.list' method of the Petfinder API. Returns the
 available breeds for the selected animal.
 }
 \examples{
-pf <- PetfindeR::Petfinder(key)
+\dontrun{
+pf <- Petfinder(key) # Initialize Petfinder class
 pf$breed.list('cat')
 pf$breed.list('dog')
+}
 }

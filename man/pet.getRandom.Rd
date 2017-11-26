@@ -41,7 +41,9 @@ Returns a randomly selected pet record. The possible result can be filtered
 with input parameters.
 }
 \examples{
-pf <- Petfinder(key)
+\dontrun{
+#' pf <- Petfinder(key) # Initialize Petfinder class
 pf$pet.getRandom(animal = 'cat')
 pf$pet.getRandom(10, 'dog')
+}
 }

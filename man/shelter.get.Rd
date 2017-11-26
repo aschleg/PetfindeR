@@ -17,8 +17,10 @@ data.frame of input shelterId(s).
 Returns shelter records of input shelterIds.
 }
 \examples{
-pf <- Petfinder(key)
+\dontrun{
+#' pf <- Petfinder(key)
 pf$shelter.get(shelterId)
 shelterIds <- c(shelterId1, shelterId2, shelterId3)
 pf$shelter.get(shelterIds)
+}
 }

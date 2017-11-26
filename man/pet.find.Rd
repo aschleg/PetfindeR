@@ -47,7 +47,9 @@ data.frame of pet records matching input parameters.
 Returns a data.frame of pet records matching input parameters.
 }
 \examples{
-pf <- Petfinder(key)
+\dontrun{
+pf <- Petfinder(key) # Initialize Petfinder class
 pf$pet.find('WA')
 pf$pet.find('WA', 'cat', pages = 2)
+}
 }
