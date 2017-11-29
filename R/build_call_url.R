@@ -43,11 +43,48 @@ parameters = function(key,
 
 
 return_json = function(url, params) {
-  url <- parse_url(url)
+  url <- httr::parse_url(url)
   url$query <- params
-  url <- build_url(url)
+  url <- httr::build_url(url)
   
-  json_url <- fromJSON(url)
+  json_url <- jsonlite::fromJSON(url)
   
   return(json_url)
+}
+
+
+check_inputs <- function(animal=NULL, size=NULL, sex=NULL, age=NULL) {
+  
+  if (!is.null(animal)) {
+    animals <- c('barnyard', 'bird', 'cat', 'dog', 'horse', 'reptile', 'smallfurry')
+    
+    if (!animal %in% animals) {
+      stop("animal must be one of 'barnyard', 'bird', 'cat', 'dog', 'horse', 'reptile', or 'smallfurry'")
+    }   
+  }
+  
+  if (!is.null(size)) {
+    sizes <- c('S', 'M', 'L', 'XL')
+    
+    if (!size %in% sizes) {
+      stop("size parameter must be one of 'S' (small), 'M' (medium), 'L' (large), or 'XL' (extra-large)")
+    }
+  }
+
+  if (!is.null(sex)) {
+    genders <- c('M', 'F')
+    
+    if (!sex %in% genders) {
+      stop("sex parameter must be one of 'M' (male), or 'F' (female)")
+    }
+  }
+  
+  if (!is.null(age)) {
+    ages <- c('Baby', 'Young', 'Adult', 'Senior')
+    
+    if (!age %in% ages) {
+      stop("age parameter must be one of 'Baby', 'Young', 'Adult', or 'Senior'")
+    }
+  }
+  
 }

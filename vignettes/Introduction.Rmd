@@ -1,0 +1,86 @@
+---
+title: "Getting Started with PetfindeR"
+author: "Aaron Schlegel"
+date: "`r Sys.Date()`"
+output: 
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+vignette: >
+  %\VignetteIndexEntry{Getting Started with PetfindeR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+The goal of the PetfindeR package is to provide a simple and straightforward interface for interacting with the [Petfinder API](https://www.petfinder.com/developers/api-docs) through R. The Petfinder database contains approximately 300,000 adoptable pet records and 11,000 animal welfare organization records, which makes it a very useful and valuable source of data for those in the animal welfare community. However, the outputs from the Petfinder API are in messy JSON format and thus it makes it more time-consuming and often frustrating to coerce the output data into a format that is workable with R. The PetfindeR package was developed to alleviate this difficultly and provide users with a streamlined interface for getting the data they want and using it for their specific purpose.
+
+# Obtaining an API Key from Petfinder
+
+Before we can use the PetfindeR package, we need to obtain an API key from the Petfinder website to authenticate our requests. To acquire an API key, create an account on [Petfinder's developer page](https://www.petfinder.com/developers/api-key). A 'secret' key is also given from Petfinder for requests that require an additional layer of authentication; however, the current methods available do not require a secret key to be given (this could potentially change in the future).
+
+# Getting Started with PetfindeR
+
+```{r}
+library(PetfindeR)
+```
+
+After installing and loading the package, The first step in using the PetfindeR package is to initialize the API connection to Petfinder. To do this, we pass the API key received from Petfinder into the `Petfinder` function which calls a wrapped [R6 class](https://cran.r-project.org/web/packages/R6/) and creates the connection to the API.
+
+It is best practice to obfuscate sensitive data such as API keys to avoid any potential malicious activity. To this effect, I load my API key by using the `read.table()` function to open a text file containing the key.  
+
+```{r}
+key <- read.table('api_key')$V1
+```
+
+The API key is securely loaded, so we can initalize the PetfindeR API!
+
+```{r}
+pf <- Petfinder(key)
+```
+
+That's all there is to it! The [Petfinder API methods](https://www.petfinder.com/developers/api-docs#methods) are now accessible through R.
+
+# Examples 
+
+The following section introduces the `PetfindeR` package and how to interact with the Petfinder API with some simple examples on extracting data from the database. The examples are split into pet and shelter methods, not due to any significant demarcation, but rather for organization.  
+
+## Pet Methods
+
+| Method                | Petfinder API Method | Description                                                                                        |
+|-----------------------|----------------------|----------------------------------------------------------------------------------------------------|
+| breed.list()          | breed.list           | Returns the available breeds for the selected animal.                                              |
+| pet.find()            | pet.find             | Returns a collection of pet records matching input parameters.                                     |
+| pet.get()             | pet.get              | Returns a single record for a pet.                                                                 |
+| pet.getRandom()       | pet.getRandom        | Returns a randomly selected pet record. The possible result can be filtered with input parameters. |
+
+### Finding the available breeds of an animal
+
+The `breed.list()` method allows the user to pull a list of breeds associated with a particular type of animal. The currently available animals to search for are `'barnyard'`, `'bird'`, `'cat'`, `'dog'`, `'horse'`, `'reptile'` and `'smallfurry'`. Let's say we are interested in finding the breeds of cats in the Petfinder database.
+
+```{r}
+cats <- pf$breed.list('cat')
+dim(cats) # Display number of results returned
+```
+
+```{r}
+head(cats) # Return the first five breeds for brevity
+```
+
+### Returning random pet records
+
+The `pet.getRandom()` method returns a random pet ID by default, but can return a full pet record with a description by setting `output = 'full'`. 
+
+```{r}
+pf$pet.getRandom(output = 'full')
+```
+
+We can also get a set of random results by setting the `records` parameter to the number of desired results to return. Note that each record counts as one call to the Petfinder API.
+
+```{r}
+random_records <- pf$pet.getRandom(records = 5, output = 'full')
+```
+
+### Getting pet records associated with a petId
+

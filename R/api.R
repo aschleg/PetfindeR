@@ -1,4 +1,20 @@
 
+#' Creates an authenticated connection with the Petfinder API. The stored
+#' authentication is then used to call the Petfinder API methods. An API key can
+#' be obtained from Petfinder by creating an account on their developer page
+#' (https://www.petfinder.com/developers/api-key). The function wraps the
+#' .Petfinder.class R6 class.
+#' 
+#' @param key The API key received from Petfinder
+#' @param secret The secret key received from Petfinder along with the API key.
+#'   Only used for methods that require additional authentication (not currently
+#'   used).
+#' @return Intialized Petfinder object that is then used to access the API.
+#' @examples 
+#' \dontrun{
+#' pf <- Petfinder(key) # Creates the connection with the Petfinder API.
+#' pf$breed.list('cat') # The connection can now be used to access the Petfinder API methods.
+#' }
 #' @export
 Petfinder <- function(key, secret = NULL) {
   auth <- .Petfinder.class$new(key, secret)
@@ -6,7 +22,7 @@ Petfinder <- function(key, secret = NULL) {
   return(auth)
 }
 
-.Petfinder.class <- R6Class(".Petfinder.class",
+.Petfinder.class <- R6::R6Class(".Petfinder.class",
 
   public = list(
     key = NULL,
@@ -22,6 +38,7 @@ Petfinder <- function(key, secret = NULL) {
     },
 
     breed.list = function(animal, outputformat = 'json') {
+      check_inputs(animal=animal)
       
       url <- paste0(self$host, 'breed.list', sep = '')
       params <- parameters(key = self$key, 
@@ -31,7 +48,7 @@ Petfinder <- function(key, secret = NULL) {
       breeds <- return_json(url, params)
 
       breeds <- breeds$petfinder$breeds$breed
-      colnames(breeds) <- paste0(animal, 'breeds', sep = ' ')
+      colnames(breeds) <- paste0(animal, '.breeds', sep = '')
       
       return(breeds)
     },
@@ -73,6 +90,7 @@ Petfinder <- function(key, secret = NULL) {
                              shelterId = NULL,
                              output = NULL,
                              outputformat = 'json') {
+      check_inputs(animal = animal, size = size, sex = sex)
       
       url <- paste0(self$host, 'pet.getRandom', sep = '')
       params <- parameters(key = self$key,
@@ -92,7 +110,7 @@ Petfinder <- function(key, secret = NULL) {
           rvec[[i]] <- pet_record(return_json(url, params)$petfinder$pet)
         }
       
-        r <- rbind.fill(rvec)
+        r <- plyr::rbind.fill(rvec)
       }
       
       else {
@@ -114,6 +132,7 @@ Petfinder <- function(key, secret = NULL) {
                         output = NULL,
                         pages = NULL,
                         outputformat = 'json') {
+      check_inputs(animal = animal, size = size, sex = sex, age = age)
       
       url <- paste0(self$host, 'pet.find', sep = '')
       params <- parameters(key = self$key,

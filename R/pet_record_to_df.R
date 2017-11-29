@@ -114,7 +114,7 @@ pet_records_df = function(r) {
         }
       }
       
-      statuses <- rbind.fill(status_list)
+      statuses <- plyr::rbind.fill(status_list)
       colnames(statuses) <- paste('status', gsub('X', '', colnames(statuses)), sep='.')
       
       recordlist[[i]] <- statuses
@@ -133,7 +133,7 @@ pet_records_df = function(r) {
         }
       }
       
-      photosdf <- rbind.fill(photo_list)
+      photosdf <- plyr::rbind.fill(photo_list)
       colnames(photosdf) <- paste('photo.', gsub('X', '', colnames(photosdf)), sep = '')
       
       recordlist[[i]] <- photosdf
@@ -151,7 +151,7 @@ pet_records_df = function(r) {
         }
       }))
       
-      contact_df <- rbind.fill(contacts)
+      contact_df <- plyr::rbind.fill(contacts)
       colnames(contact_df) <- names(con)
       
       recordlist[[i]] <- contact_df
@@ -170,7 +170,7 @@ pet_records_df = function(r) {
         }
       }
       
-      breeddf <- rbind.fill(breed_list)
+      breeddf <- plyr::rbind.fill(breed_list)
       colnames(breeddf) <- paste('breed', gsub('X', '', colnames(breeddf)), sep='.')
       
       recordlist[[i]] <- breeddf
