@@ -16,9 +16,7 @@ cats = pf$breed.list('cat')
 pf$pet.getRandom()
 ~~~
 
-The above simple example creates an authenticated connection to the Petfinder API and then uses that connection to
-pull the entire list of cat breeds listed in the Petfinder database. The next line returns a randomly selected
-pet record.
+The above simple example creates an authenticated connection to the Petfinder API and then uses that connection to pull the entire list of cat breeds listed in the Petfinder database. The next line returns a randomly selected pet record.
 
 ## Available Methods
 
@@ -32,3 +30,7 @@ pet record.
 | shelter.get()         | shelter.get          | Returns a single shelter record.                                                                   |
 | shelter.getPets()     | shelter.getPets      | Returns a collection of pet records for an individual shelter.                                     |
 | shelter.listByBreed() | shelter.listByBreed  | Returns a list of shelter IDs listing animals matching the input animal breed.                     |
+
+## Documentation
+
+* [Petfinder API Documentation](https://www.petfinder.com/developers/api-docs#methods)

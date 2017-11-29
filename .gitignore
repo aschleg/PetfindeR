@@ -6,3 +6,4 @@ $ cat .gitignore
 .Rproj.user
 api_key
 inst/doc
+.build.timestamp

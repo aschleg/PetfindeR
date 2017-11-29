@@ -11,3 +11,4 @@
 ^.*\.Rhistory
 ^.*\.Rprofile
 ^api_key
+^\.build.timestamp
