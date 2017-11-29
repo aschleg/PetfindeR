@@ -17,4 +17,5 @@ License: MIT + file LICENSE
 URL: https://github.com/aschleg/PetfindeR
 VignetteBuilder: knitr
 Suggests: knitr,
-  rmarkdown
+  rmarkdown,
+  prettydoc
