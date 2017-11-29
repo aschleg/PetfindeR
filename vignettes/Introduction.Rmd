@@ -31,7 +31,7 @@ After installing and loading the package, The first step in using the PetfindeR 
 It is best practice to obfuscate sensitive data such as API keys to avoid any potential malicious activity. To this effect, I load my API key by using the `read.table()` function to open a text file containing the key.  
 
 ```{r}
-key <- read.table('api_key')$V1
+key <- Sys.getenv('PETFINDER_KEY')
 ```
 
 The API key is securely loaded, so we can initalize the PetfindeR API!
