@@ -80,6 +80,7 @@ We can also get a set of random results by setting the `records` parameter to th
 
 ```{r}
 random_records <- pf$pet.getRandom(records = 5, output = 'full')
+random_records
 ```
 
 ### Getting pet records associated with a petId

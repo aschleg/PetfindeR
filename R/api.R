@@ -68,7 +68,7 @@ Petfinder <- function(key, secret = NULL) {
           pet_record(return_json(url, params)$petfinder$pet)
         })
         
-        r <- rbind.list(pets)
+        r <- plyr::rbind.list(pets)
         
       }
       
