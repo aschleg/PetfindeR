@@ -205,7 +205,7 @@ Petfinder <- function(key, secret = NULL) {
           shelter_records_to_df(return_json(url, params)$shelter)
         })
         
-        r <- rbind.list(shelters)
+        r <- rbind.fill(shelters)
         
       }
 
