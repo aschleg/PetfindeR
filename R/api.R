@@ -196,8 +196,7 @@ Petfinder <- function(key, secret = NULL) {
       
       url <- paste0(self$host, 'shelter.get', sep = '')
       params <- parameters(key = self$key,
-                                   id = shelterId,
-                                   outputformat = outputformat)
+                                   id = shelterId)
       
       if (is.list(shelterId) | is.vector(shelterId)) {
         
