@@ -70,7 +70,7 @@ pet_record = function(r) {
     else {
       df <- tryCatch(
         {
-          data.frame(r[i][[1]][[1]])
+          data.frame(r[i][[1]][[1]], stringsAsFactors = FALSE)
         },
         error = function(cond) {
           data.frame(NA)
