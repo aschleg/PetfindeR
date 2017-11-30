@@ -195,10 +195,9 @@ Petfinder <- function(key, secret = NULL) {
     shelter.get = function(shelterId) {
       
       url <- paste0(self$host, 'shelter.get', sep = '')
-      params <- parameters(key = self$key,
-                                   id = shelterId)
+      params <- parameters(key = self$key, id = shelterId)
       
-      if (is.list(shelterId) | is.vector(shelterId)) {
+      if (is.list(shelterId) | length(shelterId) > 1) {
         
         shelters <- lapply(shelterId, function(x) {
           params['id'] <- x

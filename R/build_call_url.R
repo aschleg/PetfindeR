@@ -12,7 +12,6 @@ parameters = function(key,
                       shelterId = NULL,
                       status = NULL,
                       output = NULL,
-                      outputformat = 'json',
                       offset = NULL,
                       count = NULL,
                       pages = NULL,
@@ -30,7 +29,6 @@ parameters = function(key,
                  'shelterId' = shelterId,
                  'status' = status,
                  'output' = output,
-                 'format' = outputformat,
                  'offset' = offset,
                  'count' = count,
                  'pages' = pages,
@@ -43,6 +41,7 @@ parameters = function(key,
 
 
 return_json = function(url, params) {
+  params['format'] = 'json'
   url <- httr::parse_url(url)
   url$query <- params
   url <- httr::build_url(url)
