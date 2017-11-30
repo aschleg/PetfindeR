@@ -1,5 +1,6 @@
 
 
+
 # Helper function for coercing JSON output into data.frame for a single pet record. 
 # Used by methods pet_get() and pet_getRandom().
 pet_record = function(r) {
@@ -13,29 +14,29 @@ pet_record = function(r) {
       ropt <- r$options$option
       
       if (is.data.frame(ropt)) {
-        statuses <- data.frame(as.matrix(t(ropt)))
+        statuses <- data.frame(as.matrix(t(ropt)), stringsAsFactors = FALSE)
       }
       
       else if (is.list(ropt)) {
-        statuses <- data.frame(status.1=ropt[[1]])
+        statuses <- data.frame(status.1=ropt[[1]], stringsAsFactors = FALSE)
       }
       
       else if (is.null(ropt)) {
-        statuses <- data.frame(status.1='None')
+        statuses <- data.frame(status.1='None', stringsAsFactors = FALSE)
       }
-
+      
       colnames(statuses) <- paste('status.', gsub('X', '', colnames(statuses)), sep = '')
       recordlist[[i]] <- statuses
     }
     
     else if (records[i] == 'media') {
-        
+      
       if (!is.data.frame(records[i])) {
         photos <- data.frame(photo.1=NA)
       }
       
       else {
-        photos <- data.frame(t(r$media$photos$photo$`$t`))
+        photos <- data.frame(t(r$media$photos$photo$`$t`), stringsAsFactors = FALSE)
         colnames(photos) <- paste('photo.', colnames(photos), sep = '')
       }
       
@@ -44,7 +45,7 @@ pet_record = function(r) {
     
     else if (records[i] == 'contact') {
       con <- r$contact
-    
+      
       contactnames <- names(con)
       contactinfo <- list()
       
@@ -54,14 +55,14 @@ pet_record = function(r) {
         }
       }
       
-      recordlist[[i]] <- data.frame(contactinfo)
+      recordlist[[i]] <- data.frame(contactinfo, stringsAsFactors = FALSE)
       
     }
     
     else if (records[i] == 'breeds') {
       breeds <- r$breeds$breed
-
-      breeds.df <- data.frame(t(breeds))
+      
+      breeds.df <- data.frame(t(breeds), stringsAsFactors = FALSE)
       colnames(breeds.df) <- paste('breed', gsub('X', '', colnames(breeds.df)), sep = '.')
       recordlist[[i]] <- breeds.df
     }
@@ -80,7 +81,7 @@ pet_record = function(r) {
     }
   }
   
-  pet.df <- data.frame(recordlist)
+  pet.df <- data.frame(recordlist, stringsAsFactors = FALSE)
   colnames(pet.df) <- gsub('X.t', '', colnames(pet.df))
   
   return(pet.df)
@@ -103,14 +104,14 @@ pet_records_df = function(r) {
       for (j in 1:length(ropt)) {
         if (!is.null(ropt[[j]])) {
           if (length(ropt[[j]][[1]]) == 1) {
-            status_list[[j]] <- data.frame('X1'=ropt[[j]][[1]])
+            status_list[[j]] <- data.frame('X1'=ropt[[j]][[1]], stringsAsFactors = FALSE)
           }
           else {
-            status_list[[j]] <- data.frame(t(ropt[[j]][[1]]))  
+            status_list[[j]] <- data.frame(t(ropt[[j]][[1]]), stringsAsFactors = FALSE)  
           }
         }
         else {
-          status_list[[j]] <- data.frame('X1'='None')
+          status_list[[j]] <- data.frame('X1'='None', stringsAsFactors = FALSE)
         }
       }
       
@@ -126,10 +127,10 @@ pet_records_df = function(r) {
       
       for (j in 1:length(photos)) {
         if (!is.data.frame(photos[[j]])) {
-          photo_list[[j]] <- data.frame('X1'=NA)
+          photo_list[[j]] <- data.frame('X1'=NA, stringsAsFactors = FALSE)
         }
         else {
-          photo_list[[j]] <- data.frame(t(photos[[j]][2]))
+          photo_list[[j]] <- data.frame(t(photos[[j]][2]), stringsAsFactors = FALSE)
         }
       }
       
@@ -163,10 +164,10 @@ pet_records_df = function(r) {
       
       for (j in 1:length(breeds)) {
         if (is.null(dim(breeds[[j]]))) {
-          breed_list[[j]] <- data.frame('X1'=breeds[[j]][[1]])
+          breed_list[[j]] <- data.frame('X1'=breeds[[j]][[1]], stringsAsFactors = FALSE)
         }
         else {
-          breed_list[[j]] <- data.frame(t(breeds[[j]][[1]]))    
+          breed_list[[j]] <- data.frame(t(breeds[[j]][[1]]), stringsAsFactors = FALSE)    
         }
       }
       
@@ -190,6 +191,35 @@ pet_records_df = function(r) {
     }
   }
   
-  pet.df <- data.frame(recordlist)
+  pet.df <- data.frame(recordlist, stringsAsFactors = FALSE)
   return(pet.df)
+}
+
+
+
+shelter_records_to_df = function(r) {
+  
+  df <- data.frame(lapply(r, function(x) {
+    
+    if (is.null(dim(x))) {
+      tryCatch(
+        x[[1]],
+        error = function(cond) {
+          x <- NA
+        }
+      )
+    }
+    
+    else if (dim(x)[2] == 0) {
+      x <- NA
+    }
+    
+    else {
+      x
+    }
+  }), stringsAsFactors = FALSE)
+  
+  colnames(df) <- names(r)
+  
+  return(df)
 }
