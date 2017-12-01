@@ -58,7 +58,7 @@ Petfinder <- function(key, secret = NULL) {
       params <- parameters(key = self$key,
                                    id = petId)
       
-      if (is.list(petId) | is.vector(petId)) {
+      if (is.list(petId) | length(shelterId) > 1)) {
         
         pets <- lapply(petId, function(x) {
           params['id'] <- x
