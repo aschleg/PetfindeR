@@ -248,6 +248,7 @@ Petfinder <- function(key, secret = NULL) {
                                    offset = NULL,
                                    count = NULL,
                                    pages = NULL) {
+      check_inputs(animal = animal)
       
       url <- paste0(self$host, 'shelter.listByBreed', sep = '')
       params <- parameters(key = self$key,
