@@ -154,4 +154,5 @@ The Abyssinian is a beautiful and wonderfully friendly breed of cat, so let's se
 ```{r}
 aby <- cats$cat.breeds[1]
 aby_shelters <- pf$shelter.listByBreed('cat', aby)
+aby_shelters
 ```
