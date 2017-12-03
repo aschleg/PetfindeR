@@ -10,25 +10,33 @@ pet_record = function(r) {
   
   for (i in 1:length(records)) {
     
-    if (records[i] == 'options') {
-      ropt <- r$options$option
-      
-      if (is.data.frame(ropt)) {
-        statuses <- data.frame(as.matrix(t(ropt)), stringsAsFactors = FALSE)
+    tryCatch(
+      {
+        if (records[i] == 'options') {
+          ropt <- r$options$option
+          
+          if (is.data.frame(ropt)) {
+            statuses <- data.frame(as.matrix(t(ropt)), stringsAsFactors = FALSE)
+          }
+          
+          else if (is.list(ropt)) {
+            statuses <- data.frame(status.1=ropt[[1]], stringsAsFactors = FALSE)
+          }
+          
+          else if (is.null(ropt)) {
+            statuses <- data.frame(status.1='None', stringsAsFactors = FALSE)
+          }
+          
+          colnames(statuses) <- paste('status.', gsub('X', '', colnames(statuses)), sep = '')
+          recordlist[[i]] <- statuses
+        }
+      },
+      error = function(cond) {
+        statuses <- data.frame(status.1=NA)
+        recordlist[[i]] <- statuses
       }
-      
-      else if (is.list(ropt)) {
-        statuses <- data.frame(status.1=ropt[[1]], stringsAsFactors = FALSE)
-      }
-      
-      else if (is.null(ropt)) {
-        statuses <- data.frame(status.1='None', stringsAsFactors = FALSE)
-      }
-      
-      colnames(statuses) <- paste('status.', gsub('X', '', colnames(statuses)), sep = '')
-      recordlist[[i]] <- statuses
-    }
-    
+    )
+
     else if (records[i] == 'media') {
       
       if (!is.data.frame(records[i])) {
