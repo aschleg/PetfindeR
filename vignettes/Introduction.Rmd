@@ -76,7 +76,7 @@ Let's say we want to find female cats in Washington. The default amount of recor
 
 ```{r}
 wa_cats <- pf$pet.find('WA', 'cat', sex='F')
-(wa_cats)
+wa_cats
 ```
 
 The call returned a `data.frame` with 25 rows and 54 columns. We won't print the results here for the sake of brevity.
@@ -107,6 +107,13 @@ pet_records
 ```
 
 ## Shelter Methods
+
+| Method                | Petfinder API Method | Description                                                                                        |
+|-----------------------|----------------------|----------------------------------------------------------------------------------------------------|
+| shelter.find()        | shelter.find         | Returns a collection of shelter records matching input parameters.                                 |
+| shelter.get()         | shelter.get          | Returns a single shelter record.                                                                   |
+| shelter.getPets()     | shelter.getPets      | Returns a collection of pet records for an individual shelter.                                     |
+| shelter.listByBreed() | shelter.listByBreed  | Returns a list of shelter IDs listing animals matching the input animal breed.                     |
 
 Shelter methods are rather similar to the Pet methods we explored previously, but return information on animal shelters and other animal welfare organizations.
 
