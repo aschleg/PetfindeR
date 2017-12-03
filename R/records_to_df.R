@@ -37,7 +37,7 @@ pet_record = function(r) {
       }
     )
 
-    else if (records[i] == 'media') {
+    if (records[i] == 'media') {
       
       if (!is.data.frame(records[i])) {
         photos <- data.frame(photo.1=NA)
