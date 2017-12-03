@@ -42,7 +42,7 @@ Petfinder <- function(key, secret = NULL) {
       
       url <- paste0(self$host, 'breed.list', sep = '')
       params <- parameters(key = self$key, 
-                                   animal = animal)
+                           animal = animal)
 
       breeds <- return_json(url, params)
 
@@ -58,9 +58,9 @@ Petfinder <- function(key, secret = NULL) {
       params <- parameters(key = self$key,
                                    id = petId)
       
-      if (is.list(petId) | length(petId) > 1) {
+      if (length(petId) > 1) {
         
-        pets <- lapply(petId, function(x) {
+        pets <- sapply(as.vector(petId), function(x) {
           params['id'] <- x
           pet_record(return_json(url, params)$petfinder$pet)
         })
