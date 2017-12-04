@@ -1,7 +1,4 @@
-language: R
-r:
-  - oldrel
-  - release
-  - devel
+language: r
+cache: packages
 r_build_args: --no-build-vignettes --no-manual
 r_check_args: --no-build-vignettes --no-manual
