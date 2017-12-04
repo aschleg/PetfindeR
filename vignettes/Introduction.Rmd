@@ -92,7 +92,7 @@ pf$pet.getRandom(output = 'full')
 We can also get a set of random results by setting the `records` parameter to the number of desired results to return. Note that each record counts as one call to the Petfinder API.
 
 ```{r}
-random_records <- pf$pet.getRandom(records = 5, output = 'full')
+random_records <- pf$pet.getRandom(records = 3, output = 'full')
 random_records
 ```
 
