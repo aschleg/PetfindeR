@@ -66,16 +66,12 @@ Petfinder <- function(key, secret = NULL) {
         })
         
         r <- plyr::rbind.fill(pets)
-        
       }
       
       else {
-        r <- return_json(url, params)
-        r <- pet_record(r$petfinder$pet)
+        r <- pet_record(return_json(url, params)$petfinder$pet)
       }
-      
       return(r)
-      
     },
     
     pet.getRandom = function(records = NULL,

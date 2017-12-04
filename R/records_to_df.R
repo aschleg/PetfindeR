@@ -9,72 +9,62 @@ pet_record = function(r) {
   recordlist <- list()
   
   for (i in 1:length(records)) {
-    
-    tryCatch(
-      {
-        if (records[i] == 'options') {
-          ropt <- r$options$option
-          
-          if (is.data.frame(ropt)) {
-            statuses <- data.frame(as.matrix(t(ropt)), stringsAsFactors = FALSE)
-          }
-          
-          else if (is.list(ropt)) {
-            statuses <- data.frame(status.1=ropt[[1]], stringsAsFactors = FALSE)
-          }
-          
-          else if (is.null(ropt)) {
-            statuses <- data.frame(status.1='None', stringsAsFactors = FALSE)
-          }
-          
-          colnames(statuses) <- paste('status.', gsub('X', '', colnames(statuses)), sep = '')
-          recordlist[[i]] <- statuses
-        }
-      },
-      error = function(cond) {
-        statuses <- data.frame(status.1=NA)
-        recordlist[[i]] <- statuses
-      }
-    )
 
-    if (records[i] == 'media') {
-      
+    if (!is.null(records[i]) & !is.logical(records[i]) & records[i] == 'options') {
+      ropt <- r$options$option
+
+      if (is.data.frame(ropt)) {
+        statuses <- data.frame(as.matrix(t(ropt)), stringsAsFactors = FALSE)
+      }
+
+      else if (is.list(ropt)) {
+        statuses <- data.frame(status.1=ropt[[1]], stringsAsFactors = FALSE)
+      }
+
+      else if (is.null(ropt)) {
+        statuses <- data.frame(status.1='None', stringsAsFactors = FALSE)
+      }
+
+      colnames(statuses) <- paste('status.', gsub('X', '', colnames(statuses)), sep = '')
+      recordlist[[i]] <- statuses
+    }
+
+    else if (!is.null(records[i]) & !is.logical(records[i]) & records[i] == 'media') {
+
       if (!is.data.frame(records[i])) {
         photos <- data.frame(photo.1=NA)
       }
-      
+
       else {
         photos <- data.frame(t(r$media$photos$photo$`$t`), stringsAsFactors = FALSE)
         colnames(photos) <- paste('photo.', colnames(photos), sep = '')
       }
-      
+
       recordlist[[i]] <- photos
     }
-    
-    else if (records[i] == 'contact') {
+
+    else if (!is.null(records[i]) & !is.logical(records[i]) & records[i] == 'contact') {
       con <- r$contact
-      
+
       contactnames <- names(con)
       contactinfo <- list()
-      
+
       for (i in contactnames) {
         if (!is.na(names(con[i][[1]][1]))) {
           contactinfo[[i]] <- con[i][[1]]$`$t`
         }
       }
-      
       recordlist[[i]] <- data.frame(contactinfo, stringsAsFactors = FALSE)
-      
     }
-    
-    else if (records[i] == 'breeds') {
+
+    else if (!is.null(records[i]) & !is.logical(records[i]) & records[i] == 'breeds') {
       breeds <- r$breeds$breed
-      
+
       breeds.df <- data.frame(t(breeds), stringsAsFactors = FALSE)
       colnames(breeds.df) <- paste('breed', gsub('X', '', colnames(breeds.df)), sep = '.')
       recordlist[[i]] <- breeds.df
     }
-    
+
     else {
       df <- tryCatch(
         {
@@ -88,7 +78,7 @@ pet_record = function(r) {
       recordlist[[i]] <- df
     }
   }
-  
+
   pet.df <- data.frame(recordlist, stringsAsFactors = FALSE)
   colnames(pet.df) <- gsub('X.t', '', colnames(pet.df))
   
