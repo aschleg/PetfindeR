@@ -76,7 +76,7 @@ Let's say we want to find female cats in Washington. The default amount of recor
 
 ```{r}
 wa_cats <- pf$pet.find('WA', 'cat', sex='F')
-head(wa_cats)
+dim(wa_cats)
 ```
 
 The call returned a `data.frame` with 25 rows and 54 columns. We won't print the results here for the sake of brevity.
