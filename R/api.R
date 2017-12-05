@@ -22,6 +22,8 @@ Petfinder <- function(key, secret = NULL) {
   return(auth)
 }
 
+
+#' Internal R6 class
 .Petfinder.class <- R6::R6Class(".Petfinder.class",
 
   public = list(
