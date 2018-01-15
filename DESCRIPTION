@@ -8,7 +8,6 @@ Description: R package that wraps the Petfinder API to allow easy and convenient
 Encoding: UTF-8
 LazyData: true
 Imports:
-  R6,
   httr,
   jsonlite,
   plyr

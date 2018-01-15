@@ -12,3 +12,4 @@
 ^.*\.Rprofile
 ^api_key
 ^\.build.timestamp
+^appveyor\.yml$
