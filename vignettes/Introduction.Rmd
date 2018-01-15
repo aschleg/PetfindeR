@@ -61,11 +61,9 @@ The `breed.list()` method allows the user to pull a list of breeds associated wi
 
 ```{r}
 cats <- pf$breed.list('cat')
-dim(cats) # Display number of results returned
 ```
 
 ```{r}
-head(cats) # Return the first five breeds for brevity
 ```
 
 ### Finding pet records matching criteria
@@ -76,10 +74,7 @@ Let's say we want to find female cats in Washington. The default amount of recor
 
 ```{r}
 wa_cats <- pf$pet.find('WA', 'cat', sex='F')
-dim(wa_cats)
 ```
-
-The call returned a `data.frame` with 25 rows and 54 columns. We won't print the results here for the sake of brevity.
 
 ### Returning random pet records
 
@@ -101,9 +96,6 @@ random_records
 Given a petId, an ID associated with information on a pet in the Petfinder database, the `pet.get()` method will return the pet data in a `data.frame`. The method also accepts a vector or list of IDs for returning multiple records. For example, we can take the petIds given in our previous call to `pet.getRandom()` and pass those to `pet.get()`. Note since we are using the same petIds from before, the returned records will be exactly the same.
 
 ```{r}
-petids <- random_records$id
-pet_records <- pf$pet.get(petids)
-pet_records
 ```
 
 ## Shelter Methods
@@ -123,7 +115,6 @@ Using the `shelter.find()` method, one can locate shelters and their available a
 
 ```{r}
 wa_shelters <- pf$shelter.find('98115')
-head(wa_shelters)
 ```
 
 ### Returning information on specific AWOs
@@ -143,23 +134,18 @@ Let's say we are interested in finding the available pets at a particular shelte
 
 ```{r}
 safr.pets <- pf$shelter.getPets('WA40')
-dim(safr.pets)
 ```
-
-The call returned 15 cats with 43 dimensions, we skip printing the results for the sake of brevity.
 
 ### Finding shelters that have a particular animal breed
 
 The `shelter.listByBreed()` method allows one to find shelters that have a particular breed of animal, which may be useful for users interested in finding rarer breeds of animal. The `breed` argument must match a breed listed in the Petfinder database, which can be easily extracted by using the `breed.list()` method. We already pulled the available cat breeds earlier in the vignette, so we can use that to select a breed of cat to search.
 
 ```{r}
-head(cats)
 ```
 
 The Abyssinian is a beautiful and wonderfully friendly breed of cat, so let's search for some shelters that have Abyssinians listed on Petfinder.
 
 ```{r}
-aby <- cats$cat.breeds[1]
-aby_shelters <- pf$shelter.listByBreed('cat', aby)
+aby_shelters <- pf$shelter.listByBreed('cat', 'Abyssinian')
 aby_shelters
 ```
