@@ -5,12 +5,11 @@
 # Used by methods pet_get() and pet_getRandom().
 pet_record = function(r) {
   records <- names(r)
-  
   recordlist <- list()
   
   for (i in 1:length(records)) {
 
-    if (!is.null(records[i]) & !is.logical(records[i]) & records[i] == 'options') {
+    if (length(records[i]) > 0 & !is.null(records[i]) & !is.logical(records[i]) & records[i] == 'options') {
       ropt <- r$options$option
 
       if (is.data.frame(ropt)) {
@@ -29,7 +28,7 @@ pet_record = function(r) {
       recordlist[[i]] <- statuses
     }
 
-    else if (!is.null(records[i]) & !is.logical(records[i]) & records[i] == 'media') {
+    else if (length(records[i]) > 0 & !is.null(records[i]) & !is.logical(records[i]) & records[i] == 'media') {
 
       if (!is.data.frame(records[i])) {
         photos <- data.frame(photo.1=NA)
@@ -43,7 +42,7 @@ pet_record = function(r) {
       recordlist[[i]] <- photos
     }
 
-    else if (!is.null(records[i]) & !is.logical(records[i]) & records[i] == 'contact') {
+    else if (length(records[i]) > 0 & !is.null(records[i]) & !is.logical(records[i]) & records[i] == 'contact') {
       con <- r$contact
 
       contactnames <- names(con)
@@ -57,7 +56,7 @@ pet_record = function(r) {
       recordlist[[i]] <- data.frame(contactinfo, stringsAsFactors = FALSE)
     }
 
-    else if (!is.null(records[i]) & !is.logical(records[i]) & records[i] == 'breeds') {
+    else if (length(records[i]) > 0 & !is.null(records[i]) & !is.logical(records[i]) & records[i] == 'breeds') {
       breeds <- r$breeds$breed
 
       breeds.df <- data.frame(t(breeds), stringsAsFactors = FALSE)

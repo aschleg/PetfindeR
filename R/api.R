@@ -48,8 +48,8 @@ Petfinder <- function(key, secret = NULL) {
 
       breeds <- return_json(url, params)
 
-      breeds <- breeds$petfinder$breeds$breed
-      colnames(breeds) <- paste0(animal, '.breeds', sep = '')
+      # breeds <- breeds$petfinder$breeds$breed
+      # colnames(breeds) <- paste0(animal, '.breeds', sep = '')
       
       return(breeds)
     },
@@ -61,19 +61,16 @@ Petfinder <- function(key, secret = NULL) {
                                    id = petId)
       
       if (length(petId) > 1) {
-        
         pets <- sapply(as.vector(petId), function(x) {
           params['id'] <- x
-          pet_record(return_json(url, params)$petfinder$pet)
+          return_json(url, params)
         })
-        
-        r <- plyr::rbind.fill(pets)
+      }
+      else {
+        pets <- return_json(url, params)
       }
       
-      else {
-        r <- pet_record(return_json(url, params)$petfinder$pet)
-      }
-      return(r)
+      return(pets)
     },
     
     pet.getRandom = function(records = NULL,
@@ -84,6 +81,7 @@ Petfinder <- function(key, secret = NULL) {
                              location = NULL,
                              shelterId = NULL,
                              output = NULL) {
+      
       check_inputs(animal = animal, size = size, sex = sex)
       
       url <- paste0(self$host, 'pet.getRandom', sep = '')
@@ -97,21 +95,17 @@ Petfinder <- function(key, secret = NULL) {
                                    output = output)
       
       if (!is.null(records)) {
-        rvec <- list()
+        pets <- list()
       
         for (i in 1:records) {
-          rvec[[i]] <- pet_record(return_json(url, params)$petfinder$pet)
+          pets[[i]] <- return_json(url, params)
         }
-      
-        r <- plyr::rbind.fill(rvec)
       }
-      
       else {
-        r <- pet_record(return_json(url, params)$petfinder$pet)
+        pets <- return_json(url, params)
       }
       
-      return(r)
-      
+      return(pets)
     },
     
     pet.find = function(location,
@@ -124,6 +118,7 @@ Petfinder <- function(key, secret = NULL) {
                         count = NULL,
                         output = NULL,
                         pages = NULL) {
+      
       check_inputs(animal = animal, size = size, sex = sex, age = age)
       
       url <- paste0(self$host, 'pet.find', sep = '')
@@ -142,22 +137,10 @@ Petfinder <- function(key, secret = NULL) {
       r <- return_json(url, params)
       
       if (!is.null(pages)) {
-        pageresults <- paged_result(r = r, element = r$petfinder$pets$pet, url = url, params = params)
-        
-        df <- rbind.fill(lapply(pageresults, function(x) {
-          pet_records_df(x)
-        }))
-        
-        return(df)
+        r <- paged_result(r = r, url = url, params = params)
       }
       
-      else if (r$petfinder$lastOffset$`$t` == '1') {
-        return(pet_record(r$petfinder$pets$pet))
-      }
-      
-      else {
-        return(pet_records_df(r$petfinder$pets$pet))
-      }
+      return(r)
     },
     
     shelter.find = function(location,
@@ -177,16 +160,9 @@ Petfinder <- function(key, secret = NULL) {
       r <- return_json(url, params)
       
       if (!is.null(pages)) {
-        pageresults <- paged_result(r = r, element = r$petfinder$shelters$shelter, url = url, params = params)
-        
-        r <- rbind.fill(lapply(pageresults, function(x) {
-          shelter_records_to_df(x)
-        }))
+        r <- paged_result(r = r, url = url, params = params)
       }
       
-      else {
-        r <- shelter_records_to_df(r$petfinder$shelters$shelter)
-      }
       return(r)
     },
     
@@ -195,24 +171,17 @@ Petfinder <- function(key, secret = NULL) {
       url <- paste0(self$host, 'shelter.get', sep = '')
       params <- parameters(key = self$key, id = shelterId)
       
-      if (is.list(shelterId) | length(shelterId) > 1) {
-        
-        shelters <- lapply(shelterId, function(x) {
+      if (length(shelterId) > 1) {
+        shelters <- sapply(shelterId, function(x) {
           params['id'] <- x
-          shelter_records_to_df(return_json(url, params)$shelter)
+          return_json(url, params)
         })
-        
-        r <- plyr::rbind.fill(shelters)
-        
       }
-
       else {
-        r <- return_json(url, params)
-        r <- shelter_records_to_df(r$petfinder$shelter)
+        shelters <- return_json(url, params)
       }
       
-      return(r)
-    
+      return(shelters)
     },
     
     shelter.getPets = function(shelterId,
@@ -233,12 +202,11 @@ Petfinder <- function(key, secret = NULL) {
       
       r <- return_json(url, params)
       
-      if (r$petfinder$lastOffset$`$t` == '1') {
-        return(pet_record(r$petfinder$pets$pet))
+      if (!is.null(pages)) {
+        r <- paged_result(r = r, url = url, params = params)
       }
-      else {
-        return(pet_records_df(r$petfinder$pets$pet))
-      }
+      
+      return(r)
     },
     
     shelter.listByBreed = function(animal,
@@ -246,6 +214,7 @@ Petfinder <- function(key, secret = NULL) {
                                    offset = NULL,
                                    count = NULL,
                                    pages = NULL) {
+      
       check_inputs(animal = animal)
       
       url <- paste0(self$host, 'shelter.listByBreed', sep = '')
@@ -257,10 +226,20 @@ Petfinder <- function(key, secret = NULL) {
                            pages = pages)
       
       r <- return_json(url, params)
-      r <- shelter_records_to_df(r$petfinder$shelters$shelter)
       
       return(r)
-      
     }
   )
 )
+
+
+return_json = function(url, params) {
+  params['format'] = 'json'
+  url <- httr::parse_url(url)
+  url$query <- params
+  url <- httr::build_url(url)
+  
+  json_url <- jsonlite::fromJSON(url)
+  
+  return(json_url)
+}

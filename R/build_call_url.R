@@ -40,18 +40,6 @@ parameters = function(key,
 }
 
 
-return_json = function(url, params) {
-  params['format'] = 'json'
-  url <- httr::parse_url(url)
-  url$query <- params
-  url <- httr::build_url(url)
-  
-  json_url <- jsonlite::fromJSON(url)
-  
-  return(json_url)
-}
-
-
 check_inputs <- function(animal=NULL, size=NULL, sex=NULL, age=NULL) {
   
   if (!is.null(animal)) {

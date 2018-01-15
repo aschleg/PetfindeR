@@ -2,6 +2,7 @@ $ cat .gitignore
 
 *.Rproj
 *.Rproj.user/
+*.Rproj.user.backup/
 *.Rhistory
 .Rproj.user
 api_key
