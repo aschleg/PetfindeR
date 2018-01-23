@@ -39,7 +39,7 @@ Petfinder <- function(key, secret = NULL) {
       
     },
 
-    breed.list = function(animal) {
+    breed.list = function(animal, return_df = TRUE) {
       check_inputs(animal=animal)
       
       url <- paste0(self$host, 'breed.list', sep = '')
@@ -47,14 +47,16 @@ Petfinder <- function(key, secret = NULL) {
                            animal = animal)
 
       breeds <- return_json(url, params)
-
-      # breeds <- breeds$petfinder$breeds$breed
-      # colnames(breeds) <- paste0(animal, '.breeds', sep = '')
       
+      if (return_df == TRUE) {
+        breeds <- breeds$petfinder$breeds$breed
+        colnames(breeds) <- paste0(animal, '.breeds', sep = '')
+      }
+
       return(breeds)
     },
     
-    pet.get = function(petId) {
+    pet.get = function(petId, return_df = TRUE) {
       
       url <- paste0(self$host, 'pet.get', sep = '')
       params <- parameters(key = self$key,
