@@ -5,14 +5,18 @@
 \title{Method for calling the 'breed.list' method of the Petfinder API. Returns the
 available breeds for the selected animal.}
 \usage{
-breed.list(animal)
+breed.list(animal, return_df = TRUE)
 }
 \arguments{
 \item{animal}{Return breeds of animal. Must be one of 'barnyard', 'bird',
 'cat', 'dog', 'horse', 'reptile', or 'smallfurry'.}
+
+\item{return_df}{If TRUE, the function will coerce the output JSON from the
+Petfinder API into a data.frame}
 }
 \value{
-data.frame containing available breeds of the animal from the Petfinder database.
+List of returned JSON from the Petfinder API. If the parameter return_df 
+  is TRUE, a data.frame is returned instead.
 }
 \description{
 Method for calling the 'breed.list' method of the Petfinder API. Returns the

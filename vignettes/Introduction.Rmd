@@ -6,6 +6,7 @@ output:
   prettydoc::html_pretty:
     theme: architect
     highlight: github
+  output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Getting Started with PetfindeR}
   %\VignetteEngine{knitr::rmarkdown}
@@ -37,7 +38,7 @@ key <- Sys.getenv('PETFINDER_KEY')
 The API key is securely loaded, so we can initalize the PetfindeR API!
 
 ```{r}
-pf <- Petfinder(key)
+pf <- Petfinder('34f8faa64359ce37eb52a11488bc35f2')
 ```
 
 That's all there is to it! The [Petfinder API methods](https://www.petfinder.com/developers/api-docs#methods) are now accessible through R.

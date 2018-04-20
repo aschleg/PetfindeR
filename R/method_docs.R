@@ -3,17 +3,20 @@
 
 #' Method for calling the 'breed.list' method of the Petfinder API. Returns the
 #' available breeds for the selected animal.
-#' 
+#'
 #' @param animal Return breeds of animal. Must be one of 'barnyard', 'bird',
 #'   'cat', 'dog', 'horse', 'reptile', or 'smallfurry'.
-#' @return data.frame containing available breeds of the animal from the Petfinder database.
+#' @param return_df If TRUE, the function will coerce the output JSON from the
+#'   Petfinder API into a data.frame
+#' @return List of returned JSON from the Petfinder API. If the parameter return_df 
+#'   is TRUE, a data.frame is returned instead.
 #' @examples
 #' \dontrun{
 #' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$breed.list('cat')
 #' pf$breed.list('dog')
 #' }
-breed.list <- function(animal) {
+breed.list <- function(animal, return_df=TRUE) {
   return(NULL)
 }
 
@@ -116,7 +119,7 @@ pet.getRandom <- function(records = NULL,
 
 
 #' Returns a data.frame of shelter records matching input parameters.
-#' 
+#'
 #' @param location ZIP/postal code, state, or city and state to perform the
 #'   search.
 #' @param name Full or partial shelter name
@@ -124,11 +127,14 @@ pet.getRandom <- function(records = NULL,
 #'   previous call to retrieve the next set of results. The pages parameter can
 #'   also be used to pull a desired number of paged results.
 #' @param count The number of records to return. Default is 25.
-#' @param pages The number of pages of results to return. For example, if 
-#'   pages=4 with the default count parameter (25), 125 results would be 
+#' @param pages The number of pages of results to return. For example, if
+#'   pages=4 with the default count parameter (25), 125 results would be
 #'   returned (25 results from first call and 100 from the next four pages).
-#' @return data.frame of shelter records matching input parameters.
-#' @examples 
+#' @param return_df If TRUE, the function will coerce the output JSON from the
+#'   Petfinder API into a data.frame
+#' @return List of returned JSON from the Petfinder API. If the parameter
+#'   return_df is TRUE, a data.frame is returned instead.
+#' @examples
 #' \dontrun{
 #' pf <- Petfinder(key) # Initialize Petfinder class
 #' pf$shelter.find('WA', count = 5)

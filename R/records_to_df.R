@@ -182,7 +182,6 @@ pet_records_df = function(r) {
         }
       )
       
-      colnames(df) <- records[i]
       recordlist[[i]] <- df
       
     }
@@ -215,8 +214,8 @@ shelter_records_to_df = function(r) {
       x
     }
   }), stringsAsFactors = FALSE)
-  
-  colnames(df) <- names(r)
+
+  colnames(df) <- gsub(names(r), pattern = '\\.\\$t', replacement = '')
   
   return(df)
 }

@@ -19,12 +19,16 @@ also be used to pull a desired number of paged results.}
 
 \item{count}{The number of records to return. Default is 25.}
 
-\item{pages}{The number of pages of results to return. For example, if 
-pages=4 with the default count parameter (25), 125 results would be 
+\item{pages}{The number of pages of results to return. For example, if
+pages=4 with the default count parameter (25), 125 results would be
 returned (25 results from first call and 100 from the next four pages).}
+
+\item{return_df}{If TRUE, the function will coerce the output JSON from the
+Petfinder API into a data.frame}
 }
 \value{
-data.frame of shelter records matching input parameters.
+List of returned JSON from the Petfinder API. If the parameter
+  return_df is TRUE, a data.frame is returned instead.
 }
 \description{
 Returns a data.frame of shelter records matching input parameters.

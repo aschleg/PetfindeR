@@ -12,7 +12,7 @@ paged_result = function(r, url, params) {
   pageresults <- list()
   pageresults[[1]] <- r
   
-  for (i in 1:pages) {
+  for (i in 1:pages - 1) {
     params['lastOffset'] <- lastOffset
     r <- return_json(url, params)
     
