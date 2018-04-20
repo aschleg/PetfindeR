@@ -5,7 +5,7 @@
 \title{Returns a data.frame of shelter records matching input parameters.}
 \usage{
 shelter.find(location, name = NULL, offset = NULL, count = NULL,
-  pages = NULL)
+  pages = NULL, return_df = FALSE)
 }
 \arguments{
 \item{location}{ZIP/postal code, state, or city and state to perform the

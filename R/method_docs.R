@@ -144,7 +144,8 @@ shelter.find <- function(location,
                         name = NULL,
                         offset = NULL,
                         count = NULL,
-                        pages = NULL) {
+                        pages = NULL, 
+                        return_df = FALSE) {
   return(NULL)
 }
 

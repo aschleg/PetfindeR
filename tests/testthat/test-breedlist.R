@@ -8,5 +8,9 @@ httptest::with_mock_api({
     
     dogs <- pf$breed.list('dog')
     expect_identical(names(dogs), 'dog.breeds')
+    
+    expect_true(is.data.frame(cats))
+    expect_true(is.data.frame(dogs))
   })
 })
+
