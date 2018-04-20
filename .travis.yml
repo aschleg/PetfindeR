@@ -1,2 +1,10 @@
 language: r
 cache: packages
+
+r_check_args: --as-cran --run-donttest
+
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
