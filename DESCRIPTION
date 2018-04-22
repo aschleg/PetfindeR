@@ -10,7 +10,8 @@ LazyData: true
 Imports:
   httr,
   jsonlite,
-  plyr
+  plyr,
+  dplyr
 RoxygenNote: 6.0.1
 License: MIT + file LICENSE
 URL: https://github.com/aschleg/PetfindeR

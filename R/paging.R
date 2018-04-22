@@ -1,5 +1,4 @@
 
-
 paged_result = function(r, url, params) {
   if (is.null(params[['count']])) {
     count <- 25

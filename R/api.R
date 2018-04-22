@@ -39,16 +39,15 @@ Petfinder <- function(key, secret = NULL) {
       
     },
 
-    breed.list = function(animal, return_df = TRUE) {
+    breed.list = function(animal, return_df = FALSE) {
       check_inputs(animal=animal)
       
       url <- paste0(self$host, 'breed.list', sep = '')
-      params <- parameters(key = self$key, 
-                           animal = animal)
+      params <- parameters(key = self$key, animal = animal)
 
       breeds <- return_json(url, params)
       
-      if (return_df == TRUE) {
+      if (return_df) {
         breeds <- breeds$petfinder$breeds$breed
         colnames(breeds) <- paste0(animal, '.breeds', sep = '')
       }
@@ -59,8 +58,7 @@ Petfinder <- function(key, secret = NULL) {
     pet.get = function(petId, return_df = FALSE) {
       
       url <- paste0(self$host, 'pet.get', sep = '')
-      params <- parameters(key = self$key,
-                                   id = petId)
+      params <- parameters(key = self$key, id = petId)
       
       if (length(petId) > 1) {
         pets <- lapply(as.vector(petId), function(x) {
@@ -69,7 +67,7 @@ Petfinder <- function(key, secret = NULL) {
         })
         
         if (return_df) {
-          pets <- bind_rows(lapply(pets, function(x) {
+          pets <- dplyr::bind_rows(lapply(pets, function(x) {
             pet_record(x$petfinder$pet)
           }))
         }
@@ -116,15 +114,17 @@ Petfinder <- function(key, secret = NULL) {
         }
         
         if (return_df) {
-          if (return_df) {
-            pets <- bind_rows(lapply(pets, function(x) {
-              pet_record(x$petfinder$pet)
-            }))
-          }
+          pets <- dplyr::bind_rows(lapply(pets, function(x) {
+            pet_record(x$petfinder$pet)
+          }))
         }
       }
       else {
         pets <- return_json(url, params)
+        
+        if (return_df) {
+          pets <- pet_record(pets$petfinder$pet)
+        }
       }
       
       return(pets)
@@ -231,7 +231,7 @@ Petfinder <- function(key, secret = NULL) {
         })
         
         if (return_df) {
-          shelters <- bind_rows(lapply(shelters, function(x) {
+          shelters <- dplyr::bind_rows(lapply(shelters, function(x) {
             shelter_records_to_df(shelters$petfinder$shelter)
           }))
         }

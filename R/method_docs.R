@@ -99,6 +99,8 @@ pet.get <- function(petId) {
 #'   Each returned record is counted as one call to the Petfinder API.
 #' @param location ZIP/postal code, state, or city and state to perform the
 #'   search.
+#' @param return_df If TRUE, the function will coerce the output JSON from the
+#'   Petfinder API into a data.frame
 #' @return data.frame of randomly selected pet record(s).
 #' @examples
 #' \dontrun{
@@ -113,7 +115,8 @@ pet.getRandom <- function(records = NULL,
                           sex = NULL,
                           location = NULL,
                           shelterId = NULL,
-                          output = NULL) {
+                          output = NULL, 
+                          return_df = FALSE) {
   return(NULL)
 }
 
