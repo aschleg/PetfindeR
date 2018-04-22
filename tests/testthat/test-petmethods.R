@@ -1,5 +1,6 @@
 context('test pet methods')
 
+
 httptest::with_mock_api({
   test_that('breed.list returns correct information', {
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
@@ -22,6 +23,7 @@ httptest::with_mock_api({
     
   })
   
+  
   test_that('pet.getRandom returns data consistently', {
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
@@ -43,6 +45,7 @@ httptest::with_mock_api({
     
   })
   
+  
   test_that('pet.get returns data consistently', {
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
@@ -56,5 +59,22 @@ httptest::with_mock_api({
     pg_df_mult <- pf$pet.get(c(pf$pet.getRandom(return_df = TRUE, records = 3)$id), return_df = TRUE)
     expect_true(dim(pg_df_mult)[1] == 3)
     expect_true(is.data.frame(pg_df_mult))
+  })
+  
+  
+  test_that('pet.find returns data consistently', {
+    pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
+    
+    petf <- pf$pet.find(location = 'WA')
+    
+    expect_true(is.list(petf))
+    
+    
+    expect_error(pf$pet.find(location = 'WA', animal = 'zebra'), 
+                 "animal must be one of 'barnyard', 'bird', 'cat', 'dog', 'horse', 'reptile', or 'smallfurry'")
+    #expect_error(pf$pet.find(location = 'WA', size = 'Ginormous'), 
+    #             "size parameter must be one of 'S' (small), 'M' (medium), 'L' (large), or 'XL' (extra-large)")
+    #expect_error(petf <- pf$pet.find(location = 'WA', sex = 'U'), 
+    #             "sex parameter must be one of 'M' (male), or 'F' (female)")
   })
 })

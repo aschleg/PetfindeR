@@ -44,6 +44,8 @@ breed.list <- function(animal, return_df=TRUE) {
 #' @param output Sets the amount of information returned in each record. 'basic'
 #'   returns a simple record while 'full' returns a complete record with
 #'   description. Defaults to 'basic'.
+#' @param return_df If TRUE, the function will coerce the output JSON from the
+#'   Petfinder API into a data.frame
 #' @return data.frame of pet records matching input parameters.
 #' @examples
 #' \dontrun{
@@ -60,7 +62,8 @@ pet.find <- function(location,
                      offset = NULL,
                      count = NULL,
                      output = NULL,
-                     pages = NULL) {
+                     pages = NULL, 
+                     return_df = FALSE) {
   return(NULL)
 }
 

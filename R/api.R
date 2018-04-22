@@ -139,7 +139,8 @@ Petfinder <- function(key, secret = NULL) {
                         offset = NULL,
                         count = NULL,
                         output = NULL,
-                        pages = NULL) {
+                        pages = NULL, 
+                        return_df = FALSE) {
       
       check_inputs(animal = animal, size = size, sex = sex, age = age)
       
