@@ -50,15 +50,12 @@ httptest::with_mock_api({
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     pg <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id)
+
+    #pg_df <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id, return_df = TRUE)
     
     expect_true(is.list(pg))
+    #expect_true(is.data.frame(pg_df))
     
-    pg_df <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id, return_df = TRUE)
-    expect_true(is.data.frame(pg_df))
-    
-    pg_df_mult <- pf$pet.get(c(pf$pet.getRandom(return_df = TRUE, records = 3)$id), return_df = TRUE)
-    expect_true(dim(pg_df_mult)[1] == 3)
-    expect_true(is.data.frame(pg_df_mult))
   })
   
   

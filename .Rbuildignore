@@ -7,7 +7,7 @@
 ^.*\.travis\.yml$
 ^.*\.DS_Store
 ^.*\.gitignore$
-^\.git$
+^.*\.git$
 ^.*\.Rhistory
 ^.*\.Rprofile
 ^api_key

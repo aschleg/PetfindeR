@@ -6,7 +6,7 @@
 \usage{
 pet.find(location, animal = NULL, breed = NULL, size = NULL, sex = NULL,
   age = NULL, offset = NULL, count = NULL, output = NULL,
-  pages = NULL)
+  pages = NULL, return_df = FALSE)
 }
 \arguments{
 \item{location}{ZIP/postal code, state, or city and state to perform the
@@ -39,6 +39,9 @@ description. Defaults to 'basic'.}
 \item{pages}{The number of pages of results to return. For example, if
 pages=4 with the default count parameter (25), 125 results would be
 returned (25 results from first call and 100 from the next four pages).}
+
+\item{return_df}{If TRUE, the function will coerce the output JSON from the
+Petfinder API into a data.frame}
 }
 \value{
 data.frame of pet records matching input parameters.

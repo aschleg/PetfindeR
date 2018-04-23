@@ -1,7 +1,7 @@
 language: r
 cache: packages
 
-r_check_args: --as-cran --run-donttest
+r_check_args: --as-cran --run-donttest --no-vignettes
 
 r_packages:
   - covr

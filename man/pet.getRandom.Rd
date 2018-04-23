@@ -6,7 +6,8 @@
 with input parameters.}
 \usage{
 pet.getRandom(records = NULL, animal = NULL, breed = NULL, size = NULL,
-  sex = NULL, location = NULL, shelterId = NULL, output = NULL)
+  sex = NULL, location = NULL, shelterId = NULL, output = NULL,
+  return_df = FALSE)
 }
 \arguments{
 \item{records}{Selects the amount of desired random results to be returned. 
@@ -32,6 +33,9 @@ shelter.}
 \item{output}{Sets the amount of information returned in each record. 'basic'
 returns a simple record while 'full' returns a complete record with 
 description. Defaults to 'basic'.}
+
+\item{return_df}{If TRUE, the function will coerce the output JSON from the
+Petfinder API into a data.frame}
 }
 \value{
 data.frame of randomly selected pet record(s).
