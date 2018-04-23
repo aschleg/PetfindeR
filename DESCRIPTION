@@ -18,6 +18,5 @@ URL: https://github.com/aschleg/PetfindeR
 VignetteBuilder: knitr
 Suggests: httptest,
   testthat,
-  qpdf,
   knitr,
   rmarkdown
