@@ -192,7 +192,6 @@ pet_records_df = function(r) {
 }
 
 
-
 shelter_records_to_df = function(r) {
   
   df <- data.frame(lapply(r, function(x) {
@@ -215,7 +214,8 @@ shelter_records_to_df = function(r) {
     }
   }), stringsAsFactors = FALSE)
 
-  colnames(df) <- gsub(names(r), pattern = '\\.\\$t', replacement = '')
+  colnames(df) <- gsub(colnames(df), pattern = '\\..t', replacement = '')
+  colnames(df) <- gsub(colnames(df), pattern = 'shelter\\.', replacement = '')
   
   return(df)
 }

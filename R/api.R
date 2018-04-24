@@ -213,6 +213,7 @@ Petfinder <- function(key, secret = NULL) {
           }
           
           r <- shelter_records_to_df(r)
+          
         }
       }
       

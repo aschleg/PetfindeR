@@ -69,9 +69,11 @@ httptest::with_mock_api({
     
     expect_error(pf$pet.find(location = 'WA', animal = 'zebra'), 
                  "animal must be one of 'barnyard', 'bird', 'cat', 'dog', 'horse', 'reptile', or 'smallfurry'")
-    #expect_error(pf$pet.find(location = 'WA', size = 'Ginormous'), 
-    #             "size parameter must be one of 'S' (small), 'M' (medium), 'L' (large), or 'XL' (extra-large)")
-    #expect_error(petf <- pf$pet.find(location = 'WA', sex = 'U'), 
-    #             "sex parameter must be one of 'M' (male), or 'F' (female)")
+    expect_error(pf$pet.find(location = 'WA', size = 'Ginormous'), 
+                 "size parameter must be one of 'S' \\(small\\), 'M' \\(medium\\), 'L' \\(large\\), or 'XL' \\(extra-large\\)")
+    expect_error(pf$pet.find(location = 'WA', sex = 'U'), 
+                 "sex parameter must be one of 'M' \\(male\\), or 'F' \\(female\\)")
+    expect_error(pf$pet.find(location = 'WA', age = 'Old'), 
+                 "age parameter must be one of 'Baby', 'Young', 'Adult', or 'Senior'")
   })
 })
