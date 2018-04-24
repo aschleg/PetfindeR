@@ -189,15 +189,19 @@ Petfinder <- function(key, secret = NULL) {
         if (return_df) {
           
           if (!is.null(count) && count == 1) {
-            r <- r$petfinder$shelters$shelter
+            #r <- r$petfinder$shelters$shelter
+            r <- dplyr::bind_rows(lapply(r, function(x) {
+              shelter_records_to_df(x$petfinder$shelters$shelter)
+            }))
           }
           else {
-            r <- r$petfinder$shelters
+            #r <- r$petfinder$shelters
+            r <- dplyr::bind_rows(lapply(r, function(x) {
+              shelter_records_to_df(x$petfinder$shelters)
+            }))
           }
           
-          r <- bind_rows(lapply(r, function(x) {
-            shelter_records_to_df(x)
-          }))
+          
           
         }
       }
@@ -234,7 +238,7 @@ Petfinder <- function(key, secret = NULL) {
         
         if (return_df) {
           shelters <- dplyr::bind_rows(lapply(shelters, function(x) {
-            shelter_records_to_df(shelters$petfinder$shelter)
+            shelter_records_to_df(x$petfinder$shelter)
           }))
         }
       }
