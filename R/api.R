@@ -55,6 +55,53 @@ Petfinder <- function(key, secret = NULL) {
       return(breeds)
     },
     
+    pet.find = function(location,
+                        animal = NULL,
+                        breed = NULL,
+                        size = NULL,
+                        sex = NULL,
+                        age = NULL,
+                        offset = NULL,
+                        count = NULL,
+                        output = NULL,
+                        pages = NULL, 
+                        return_df = FALSE) {
+      
+      check_inputs(animal = animal, size = size, sex = sex, age = age)
+      
+      url <- paste0(self$host, 'pet.find', sep = '')
+      params <- parameters(key = self$key,
+                           location = location,
+                           animal = animal,
+                           breed = breed,
+                           size = size,
+                           sex = sex,
+                           age = age,
+                           offset = offset,
+                           count = count,
+                           output = output,
+                           pages = pages)
+      
+      r <- return_json(url, params)
+      
+      if (!is.null(pages)) {
+        r <- paged_result(r = r, url = url, params = params)
+        
+        if (return_df) {
+          r <- dplyr::bind_rows(lapply(r, function(x) {
+            pet_records_df(x)
+          }))
+        }
+      }
+      else {
+        if (return_df) {
+          r <- pet_records_df(r)
+        }  
+      }
+      
+      return(r)
+    },
+    
     pet.get = function(petId, return_df = FALSE) {
       
       url <- paste0(self$host, 'pet.get', sep = '')
@@ -130,42 +177,6 @@ Petfinder <- function(key, secret = NULL) {
       return(pets)
     },
     
-    pet.find = function(location,
-                        animal = NULL,
-                        breed = NULL,
-                        size = NULL,
-                        sex = NULL,
-                        age = NULL,
-                        offset = NULL,
-                        count = NULL,
-                        output = NULL,
-                        pages = NULL, 
-                        return_df = FALSE) {
-      
-      check_inputs(animal = animal, size = size, sex = sex, age = age)
-      
-      url <- paste0(self$host, 'pet.find', sep = '')
-      params <- parameters(key = self$key,
-                           location = location,
-                           animal = animal,
-                           breed = breed,
-                           size = size,
-                           sex = sex,
-                           age = age,
-                           offset = offset,
-                           count = count,
-                           output = output,
-                           pages = pages)
-      
-      r <- return_json(url, params)
-      
-      if (!is.null(pages)) {
-        r <- paged_result(r = r, url = url, params = params)
-      }
-      
-      return(r)
-    },
-    
     shelter.find = function(location,
                             name = NULL,
                             offset = NULL,
@@ -189,20 +200,15 @@ Petfinder <- function(key, secret = NULL) {
         if (return_df) {
           
           if (!is.null(count) && count == 1) {
-            #r <- r$petfinder$shelters$shelter
             r <- dplyr::bind_rows(lapply(r, function(x) {
               shelter_records_to_df(x$petfinder$shelters$shelter)
             }))
           }
           else {
-            #r <- r$petfinder$shelters
             r <- dplyr::bind_rows(lapply(r, function(x) {
               shelter_records_to_df(x$petfinder$shelters)
             }))
           }
-          
-          
-          
         }
       }
       
@@ -220,7 +226,6 @@ Petfinder <- function(key, secret = NULL) {
           
         }
       }
-      
       return(r)
     },
     
@@ -309,7 +314,7 @@ return_json = function(url, params) {
   url$query <- params
   url <- httr::build_url(url)
   
-  json_url <- jsonlite::fromJSON(url, flatten = TRUE, simplifyDataFrame = TRUE)
+  json_url <- jsonlite::fromJSON(url, flatten = TRUE, simplifyDataFrame = TRUE, simplifyMatrix = TRUE, simplifyVector = TRUE)
   
   return(json_url)
 }

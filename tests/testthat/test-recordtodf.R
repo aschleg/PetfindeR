@@ -3,12 +3,18 @@ context('test methods to coerce JSON to data.frame')
 httptest::with_mock_api({
   test_that('pet JSON results to data.frame works properly', {
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
-    pet <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id)
     
+    pet <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id)
     pet_df <- pet_record(pet$petfinder$pet)
+    
+    pet_find <- pf$pet.find(location = 'WA')
+    pet_find_df <- pet_records_df(pet_find)
     
     expect_true(is.data.frame(pet_df))
     expect_true(nrow(pet_df) == 1)
+    
+    expect_true(is.data.frame(pet_find_df))
+    expect_true(nrow(pet_find_df) == 25)
   })
   
   test_that('shelter JSON results coercion to data.frame works correctly', {

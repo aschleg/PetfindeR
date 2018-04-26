@@ -88,107 +88,178 @@ pet_record = function(r) {
 # Helper function for coercing JSON output from Petfinder database into data.frame.
 # Used by pet method pet.find when returning more than one record.
 pet_records_df = function(r) {
-  records <- names(r)
+  # records <- names(r)
+  # 
+  # recordlist <- list()
+  # 
+  # for (i in 1:length(records)) {
+  #   
+  #   if (records[i] == 'options') {
+  #     ropt <- r$options$option
+  #     status_list <- list()
+  #     
+  #     for (j in 1:length(ropt)) {
+  #       if (!is.null(ropt[[j]])) {
+  #         if (length(ropt[[j]][[1]]) == 1) {
+  #           status_list[[j]] <- data.frame('X1'=ropt[[j]][[1]], stringsAsFactors = FALSE)
+  #         }
+  #         else {
+  #           status_list[[j]] <- data.frame(t(ropt[[j]][[1]]), stringsAsFactors = FALSE)  
+  #         }
+  #       }
+  #       else {
+  #         status_list[[j]] <- data.frame('X1'='None', stringsAsFactors = FALSE)
+  #       }
+  #     }
+  #     
+  #     statuses <- plyr::rbind.fill(status_list)
+  #     colnames(statuses) <- paste('status', gsub('X', '', colnames(statuses)), sep='.')
+  #     
+  #     recordlist[[i]] <- statuses
+  #   }
+  #   
+  #   else if (records[i] == 'media') {
+  #     photos <- r$media$photos$photo
+  #     photo_list <- list()
+  #     
+  #     for (j in 1:length(photos)) {
+  #       if (!is.data.frame(photos[[j]])) {
+  #         photo_list[[j]] <- data.frame('X1'=NA, stringsAsFactors = FALSE)
+  #       }
+  #       else {
+  #         photo_list[[j]] <- data.frame(t(photos[[j]][2]), stringsAsFactors = FALSE)
+  #       }
+  #     }
+  #     
+  #     photosdf <- plyr::rbind.fill(photo_list)
+  #     colnames(photosdf) <- paste('photo.', gsub('X', '', colnames(photosdf)), sep = '')
+  #     
+  #     recordlist[[i]] <- photosdf
+  #   }
+  #   
+  #   else if (records[i] == 'contact') {
+  #     con <- r$contact
+  #     
+  #     contacts <- data.frame(lapply(con, function(x) {
+  #       if (dim(x)[2] == 0) {
+  #         x <- NA
+  #       }
+  #       else {
+  #         x
+  #       }
+  #     }))
+  #     
+  #     contact_df <- plyr::rbind.fill(contacts)
+  #     colnames(contact_df) <- names(con)
+  #     
+  #     recordlist[[i]] <- contact_df
+  #   }
+  #   
+  #   else if (records[i] == 'breeds') {
+  #     breed_list <- list()
+  #     breeds <- r$breeds$breed
+  #     
+  #     for (j in 1:length(breeds)) {
+  #       if (is.null(dim(breeds[[j]]))) {
+  #         breed_list[[j]] <- data.frame('X1'=breeds[[j]][[1]], stringsAsFactors = FALSE)
+  #       }
+  #       else {
+  #         breed_list[[j]] <- data.frame(t(breeds[[j]][[1]]), stringsAsFactors = FALSE)    
+  #       }
+  #     }
+  #     
+  #     breeddf <- plyr::rbind.fill(breed_list)
+  #     colnames(breeddf) <- paste('breed', gsub('X', '', colnames(breeddf)), sep='.')
+  #     
+  #     recordlist[[i]] <- breeddf
+  #   }
+  #   
+  #   else {
+  #     tryCatch(
+  #       df <- r[[i]][1],
+  #       error = function(cond) {
+  #         df <- data.frame(NA)
+  #       }
+  #     )
+  #     
+  #     recordlist[[i]] <- df
+  #     
+  #   }
+  # }
+  # 
+  # pet.df <- data.frame(recordlist, stringsAsFactors = FALSE)
+  # return(pet.df)
   
-  recordlist <- list()
+  # Options
   
-  for (i in 1:length(records)) {
-    
-    if (records[i] == 'options') {
-      ropt <- r$options$option
-      status_list <- list()
-      
-      for (j in 1:length(ropt)) {
-        if (!is.null(ropt[[j]])) {
-          if (length(ropt[[j]][[1]]) == 1) {
-            status_list[[j]] <- data.frame('X1'=ropt[[j]][[1]], stringsAsFactors = FALSE)
-          }
-          else {
-            status_list[[j]] <- data.frame(t(ropt[[j]][[1]]), stringsAsFactors = FALSE)  
-          }
-        }
-        else {
-          status_list[[j]] <- data.frame('X1'='None', stringsAsFactors = FALSE)
-        }
-      }
-      
-      statuses <- plyr::rbind.fill(status_list)
-      colnames(statuses) <- paste('status', gsub('X', '', colnames(statuses)), sep='.')
-      
-      recordlist[[i]] <- statuses
+  pet_df <- r$petfinder$pets$pet
+  pet_opt <- pet_df$options.option
+  
+  statuses <- list()
+  
+  for (i in 1:length(pet_df$options.option)) {
+    statuses[i] <- list(pet_opt[i][[1]])
+    if (!is.null(statuses[i][[1]])) {
+
+      statuses[[i]] <- data.frame(t(statuses[[i]]))
     }
-    
-    else if (records[i] == 'media') {
-      photos <- r$media$photos$photo
-      photo_list <- list()
-      
-      for (j in 1:length(photos)) {
-        if (!is.data.frame(photos[[j]])) {
-          photo_list[[j]] <- data.frame('X1'=NA, stringsAsFactors = FALSE)
-        }
-        else {
-          photo_list[[j]] <- data.frame(t(photos[[j]][2]), stringsAsFactors = FALSE)
-        }
-      }
-      
-      photosdf <- plyr::rbind.fill(photo_list)
-      colnames(photosdf) <- paste('photo.', gsub('X', '', colnames(photosdf)), sep = '')
-      
-      recordlist[[i]] <- photosdf
-    }
-    
-    else if (records[i] == 'contact') {
-      con <- r$contact
-      
-      contacts <- data.frame(lapply(con, function(x) {
-        if (dim(x)[2] == 0) {
-          x <- NA
-        }
-        else {
-          x
-        }
-      }))
-      
-      contact_df <- plyr::rbind.fill(contacts)
-      colnames(contact_df) <- names(con)
-      
-      recordlist[[i]] <- contact_df
-    }
-    
-    else if (records[i] == 'breeds') {
-      breed_list <- list()
-      breeds <- r$breeds$breed
-      
-      for (j in 1:length(breeds)) {
-        if (is.null(dim(breeds[[j]]))) {
-          breed_list[[j]] <- data.frame('X1'=breeds[[j]][[1]], stringsAsFactors = FALSE)
-        }
-        else {
-          breed_list[[j]] <- data.frame(t(breeds[[j]][[1]]), stringsAsFactors = FALSE)    
-        }
-      }
-      
-      breeddf <- plyr::rbind.fill(breed_list)
-      colnames(breeddf) <- paste('breed', gsub('X', '', colnames(breeddf)), sep='.')
-      
-      recordlist[[i]] <- breeddf
-    }
-    
     else {
-      tryCatch(
-        df <- r[[i]][1],
-        error = function(cond) {
-          df <- data.frame(NA)
-        }
-      )
-      
-      recordlist[[i]] <- df
-      
+      statuses[[i]] <- data.frame(t(NA))
+    }
+    # tryCatch(
+    #   statuses[[i]] <- data.frame(t(statuses[[i]])),
+    #   error = function(cond) {
+    #     statuses[[i]] <- data.frame(t(NA))
+    #   }
+    # )
+  }
+
+  # Breeds
+  
+  pet_breeds <- pet_df$breeds.breed
+  
+  breeds <- list()
+  
+  for (i in 1:length(pet_breeds)) {
+    breeds[i] <- list(pet_breeds[i][[1]])
+    if (is.data.frame(breeds[i][[1]])) {
+      breeds[[i]] <- data.frame(t(breeds[[i]]))  
+    }
+    else {
+      df <- data.frame(pet_breeds[i][[1]]$`$t`)
+      colnames(df) <- 'X1'
+      breeds[[i]] <- df
     }
   }
   
-  pet.df <- data.frame(recordlist, stringsAsFactors = FALSE)
-  return(pet.df)
+  # Photos
+  
+  media <- pet_df$media.photos.photo
+  
+  photos <- list()
+  
+  for (i in 1:length(media)) {
+    photos[i] <- list(media[i][[1]]$`$t`)
+    photos[[i]] <- data.frame(t(photos[[i]]))
+  }
+  
+  photos <- plyr::rbind.fill(photos)
+  statuses <- plyr::rbind.fill(statuses)
+  breeds <- plyr::rbind.fill(breeds)
+  
+  colnames(photos) <- paste0('photo.', c(1:length(colnames(photos))))
+  colnames(statuses) <- paste0('status.', c(1:length(colnames(statuses))))
+  colnames(breeds) <- paste0('breed.', c(1:length(colnames(breeds))))
+  
+  pet_df$options.option <- NULL
+  pet_df$media.photos.photo <- NULL
+  pet_df$breeds.breed <- NULL
+  
+  colnames(pet_df) <- gsub(x = colnames(pet_df), pattern = '\\.\\$t', replacement = '')
+
+  pet_df <- cbind(pet_df, photos, statuses, breeds)
+  
+  return(pet_df)
 }
 
 

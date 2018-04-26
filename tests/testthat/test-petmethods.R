@@ -51,15 +51,15 @@ httptest::with_mock_api({
     
     pg <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id)
     pg_df <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id, return_df = TRUE)
-    pg_df3 <- pf$pet.get(pf$pet.getRandom(return_df = TRUE, records = 3)$id, return_df=TRUE)
+    #pg_df3 <- pf$pet.get(pf$pet.getRandom(return_df = TRUE, records = 3)$id, return_df = TRUE)
     
     expect_true(is.list(pg))
     
     expect_true(is.data.frame(pg_df))
     expect_true(nrow(pg_df) == 1)
     
-    expect_true(is.data.frame(pg_df3))
-    expect_true(nrow(pg_df3) == 3)
+    #expect_true(is.data.frame(pg_df3))
+    #expect_true(nrow(pg_df3) == 3)
     
   })
   
