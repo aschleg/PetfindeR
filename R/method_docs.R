@@ -72,6 +72,8 @@ pet.find <- function(location,
 #' 
 #' @param petId ID of the pet record to return. Accepts a character for a single
 #'   record or a list or vector of petIds.
+#' @param return_df If TRUE, the function will coerce the output JSON from the
+#'   Petfinder API into a data.frame
 #' @return data.frame of input petId(s).
 #' @examples 
 #' \dontrun{
@@ -80,7 +82,8 @@ pet.find <- function(location,
 #' petIds <- c(petId1, petId2, petId3)
 #' pf$pet.get(petIds)
 #' }
-pet.get <- function(petId) {
+pet.get <- function(petId, 
+                    return_df = FALSE) {
   return(NULL)
 }
 
@@ -189,6 +192,8 @@ shelter.get <- function(shelterId) {
 #' @param output Sets the amount of information returned in each record. 'basic'
 #'   returns a simple record while 'full' returns a complete record with
 #'   description. Defaults to 'basic'.
+#' @param return_df If TRUE, the function will coerce the output JSON from the
+#'   Petfinder API into a data.frame
 #' @return data.frame of pet records associated with specified shelterId.
 #' @examples 
 #' \dontrun{
@@ -200,7 +205,8 @@ shelter.getPets <- function(shelterId,
                             offset = NULL,
                             count = NULL,
                             output = NULL,
-                            pages = NULL) {
+                            pages = NULL,
+                            return_df = FALSE) {
   return(NULL)
 }
 

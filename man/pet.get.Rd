@@ -4,11 +4,14 @@
 \alias{pet.get}
 \title{Returns the available pet record data for the input pet Ids.}
 \usage{
-pet.get(petId)
+pet.get(petId, return_df = FALSE)
 }
 \arguments{
 \item{petId}{ID of the pet record to return. Accepts a character for a single
 record or a list or vector of petIds.}
+
+\item{return_df}{If TRUE, the function will coerce the output JSON from the
+Petfinder API into a data.frame}
 }
 \value{
 data.frame of input petId(s).

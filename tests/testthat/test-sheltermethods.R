@@ -48,7 +48,11 @@ httptest::with_mock_api({
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     wa_pets <- pf$shelter.getPets(shelterId = 'WA40')
+    wa_pets2 <- pf$shelter.getPets(shelterId = 'WA40', return_df = TRUE)
+    wa_pets3 <- pf$shelter.getPets(shelterId = 'WA40', return_df = TRUE, pages = 2)
     
     expect_true(is.list(wa_pets))
+    expect_true(is.data.frame(wa_pets2))
+    expect_true(is.data.frame(wa_pets3))
   })
 })

@@ -102,7 +102,8 @@ Petfinder <- function(key, secret = NULL) {
       return(r)
     },
     
-    pet.get = function(petId, return_df = FALSE) {
+    pet.get = function(petId, 
+                       return_df = FALSE) {
       
       url <- paste0(self$host, 'pet.get', sep = '')
       params <- parameters(key = self$key, id = petId)
@@ -264,7 +265,8 @@ Petfinder <- function(key, secret = NULL) {
                                offset = NULL,
                                count = NULL,
                                output = NULL,
-                               pages = NULL) {
+                               pages = NULL, 
+                               return_df = FALSE) {
       
       url <- paste0(self$host, 'shelter.getPets', sep = '')
       params <- parameters(key = self$key,
@@ -279,8 +281,21 @@ Petfinder <- function(key, secret = NULL) {
       
       if (!is.null(pages)) {
         r <- paged_result(r = r, url = url, params = params)
+        
+        if (return_df) {
+          r <- dplyr::bind_rows(lapply(r, function(x) {
+            pet_records_df(x)
+          }))
+          
+          r <- r[!duplicated(r),]
+        }
       }
       
+      else {
+        if (return_df) {
+          r <- pet_records_df(r)
+        }
+      }
       return(r)
     },
     

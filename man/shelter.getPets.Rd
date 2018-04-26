@@ -5,7 +5,7 @@
 \title{Returns a collection of pet records for an individual shelter.}
 \usage{
 shelter.getPets(shelterId, status = NULL, offset = NULL, count = NULL,
-  output = NULL, pages = NULL)
+  output = NULL, pages = NULL, return_df = FALSE)
 }
 \arguments{
 \item{shelterId}{Desired shelter's ID}
@@ -27,6 +27,9 @@ description. Defaults to 'basic'.}
 \item{pages}{The number of pages of results to return. For example, if 
 pages=4 with the default count parameter (25), 125 results would be 
 returned (25 results from first call and 100 from the next four pages).}
+
+\item{return_df}{If TRUE, the function will coerce the output JSON from the
+Petfinder API into a data.frame}
 }
 \value{
 data.frame of pet records associated with specified shelterId.

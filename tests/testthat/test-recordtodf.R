@@ -33,5 +33,12 @@ httptest::with_mock_api({
     
     expect_true(is.data.frame(shelter_df1))
     expect_true(dim(shelter_df1)[1] == 1)
+    
+    shelter2 <- pf$shelter.getPets(shelterId = 'WA40')
+    shelter2_df <- pet_records_df(shelter2)
+    
+    expect_true(is.data.frame(shelter2_df))
+    expect_true(nrow(shelter2_df) >= 1)
+    
   })
 })
