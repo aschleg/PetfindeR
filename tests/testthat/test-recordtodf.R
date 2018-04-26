@@ -5,11 +5,12 @@ httptest::with_mock_api({
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     pet <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id)
-    pet_df <- pet_record(pet$petfinder$pet)
+    #pet_df <- pet_record(pet$petfinder$pet)
     
     pet_find <- pf$pet.find(location = 'WA')
     pet_find_df <- pet_records_df(pet_find)
     
+    expect_true(is.list(pet))
     expect_true(is.data.frame(pet_df))
     expect_true(nrow(pet_df) == 1)
     
