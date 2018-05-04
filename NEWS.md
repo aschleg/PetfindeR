@@ -1,5 +1,5 @@
 
-# PetfindeR 0.5.0
+# PetfindeR 1.0.0
 
 First release implementing primary functionality for interacting with the Petfinder API. The following table of methods can also be found in the project's README.
 

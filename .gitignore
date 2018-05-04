@@ -8,5 +8,4 @@ $ cat .gitignore
 api_key
 inst/doc
 .build.timestamp
-_key.txt
 _scratch.R

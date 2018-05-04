@@ -92,9 +92,6 @@ random_records
 
 Given a petId, an ID associated with information on a pet in the Petfinder database, the `pet.get()` method will return the pet data in a `data.frame`. The method also accepts a vector or list of IDs for returning multiple records. For example, we can take the petIds given in our previous call to `pet.getRandom()` and pass those to `pet.get()`. Note since we are using the same petIds from before, the returned records will be exactly the same.
 
-```{r}
-```
-
 ## Shelter Methods
 
 | Method                | Petfinder API Method | Description                                                                                        |
@@ -136,9 +133,6 @@ safr.pets <- pf$shelter.getPets('WA40')
 ### Finding shelters that have a particular animal breed
 
 The `shelter.listByBreed()` method allows one to find shelters that have a particular breed of animal, which may be useful for users interested in finding rarer breeds of animal. The `breed` argument must match a breed listed in the Petfinder database, which can be easily extracted by using the `breed.list()` method. We already pulled the available cat breeds earlier in the vignette, so we can use that to select a breed of cat to search.
-
-```{r}
-```
 
 The Abyssinian is a beautiful and wonderfully friendly breed of cat, so let's search for some shelters that have Abyssinians listed on Petfinder.
 
