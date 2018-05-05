@@ -10,3 +10,4 @@ inst/doc
 .build.timestamp
 _scratch.R
 .RData
+.DS_Store
