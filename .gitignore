@@ -9,3 +9,4 @@ api_key
 inst/doc
 .build.timestamp
 _scratch.R
+.RData

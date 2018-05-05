@@ -240,7 +240,13 @@ pet_records_df = function(r) {
   
   for (i in 1:length(media)) {
     photos[i] <- list(media[i][[1]]$`$t`)
-    photos[[i]] <- data.frame(t(photos[[i]]))
+    
+    if (is.null(photos[i][[1]])) {
+      photos[[i]] <- data.frame(photo1=NA)
+    } 
+    else {
+      photos[[i]] <- data.frame(t(photos[[i]]))  
+    }
   }
   
   photos <- plyr::rbind.fill(photos)
