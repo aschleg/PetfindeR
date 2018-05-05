@@ -10,8 +10,7 @@ LazyData: true
 Imports:
   httr,
   jsonlite,
-  plyr,
-  dplyr
+  plyr
 RoxygenNote: 6.0.1
 License: MIT + file LICENSE
 URL: https://github.com/aschleg/PetfindeR
@@ -19,4 +18,5 @@ VignetteBuilder: knitr
 Suggests: httptest,
   testthat,
   knitr,
+  dplyr,
   rmarkdown
