@@ -1,7 +1,4 @@
 language: r
-os:
-  - linux
-  - osx 
 r:
   - oldrel
   - release
