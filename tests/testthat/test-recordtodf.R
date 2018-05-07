@@ -2,6 +2,7 @@ context('test methods to coerce JSON to data.frame')
 
 httptest::with_mock_api({
   test_that('pet JSON results to data.frame works properly', {
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     pet <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id)
@@ -19,6 +20,7 @@ httptest::with_mock_api({
   })
   
   test_that('shelter JSON results coercion to data.frame works correctly', {
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     shelter <- pf$shelter.find(location = 'WA')

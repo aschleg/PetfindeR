@@ -3,6 +3,7 @@ context('test shelter methods')
 
 httptest::with_mock_api({
   test_that('shelter.get method returns data appropriately', { 
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     wa <- pf$shelter.get('WA40')
@@ -26,6 +27,7 @@ httptest::with_mock_api({
   
   
   test_that('shelter.find method returns data appropriately', {
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     wa <- pf$shelter.find('WA')
@@ -45,6 +47,7 @@ httptest::with_mock_api({
   })
   
   test_that('shelter.getPets returns data appropriately', {
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     wa_pets <- pf$shelter.getPets(shelterId = 'WA40')

@@ -8,3 +8,4 @@
 ^\.Rhistory$
 ^\.gitignore$
 ^\.git$
+^appveyor\.yml$

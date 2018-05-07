@@ -5,7 +5,7 @@
 * local Windows 10 64-bit install, R 3.5.0, R 3.4.3
 
 ## R CMD check results
-There were no ERRORS, WARNINGS or NOTES.
+There were no ERRORS, WARNINGS.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.

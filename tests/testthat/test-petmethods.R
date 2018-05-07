@@ -3,6 +3,7 @@ context('test pet methods')
 
 httptest::with_mock_api({
   test_that('breed.list returns correct information', {
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     cats <- pf$breed.list('cat', return_df = TRUE)
@@ -25,6 +26,7 @@ httptest::with_mock_api({
   
   
   test_that('pet.getRandom returns data consistently', {
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     ran_pet_short <- pf$pet.getRandom(return_df = TRUE)
@@ -47,6 +49,7 @@ httptest::with_mock_api({
   
   
   test_that('pet.get returns data consistently', {
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     pg <- pf$pet.get(pf$pet.getRandom(return_df = TRUE)$id)
@@ -65,6 +68,7 @@ httptest::with_mock_api({
   
   
   test_that('pet.find returns data consistently', {
+    skip_on_cran()
     pf <- Petfinder(Sys.getenv('PETFINDER_KEY'))
     
     petf <- pf$pet.find(location = 'WA')
