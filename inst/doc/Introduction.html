@@ -76,11 +76,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>The goal of the PetfindeR package is to provide a simple and straightforward interface for interacting with the <a href="https://www.petfinder.com/developers/api-docs">Petfinder API</a> through R. The Petfinder database contains approximately 300,000 adoptable pet records and 11,000 animal welfare organization records, which makes it a very useful and valuable source of data for those in the animal welfare community. However, the outputs from the Petfinder API are in messy JSON format and thus it makes it more time-consuming and often frustrating to coerce the output data into a format that is workable with R. The PetfindeR package was developed to alleviate this difficultly and provide users with a streamlined interface for getting the data they want and using it for their specific purpose.</p>
+<p>The goal of the PetfindeR package is to provide a simple and straightforward interface for interacting with the <a href="https://www.petfinder.com/developers/api-docs">Petfinder API</a> through R. The Petfinder database contains approximately 300,000 adoptable pet records and 11,000 animal welfare organization records, which makes it a handy and valuable source of data for those in the animal welfare community. However, the outputs from the Petfinder API are in messy JSON format and thus it makes it more time-consuming and often frustrating to coerce the output data into a form that is workable with R. The PetfindeR package was developed to alleviate this difficulty and provide users with a streamlined interface for getting the data they want and using it for their specific purpose.</p>
 </div>
 <div id="obtaining-an-api-key-from-petfinder" class="section level1">
 <h1>Obtaining an API Key from Petfinder</h1>
-<p>Before we can use the PetfindeR package, we need to obtain an API key from the Petfinder website to authenticate our requests. To acquire an API key, create an account on <a href="https://www.petfinder.com/developers/api-key">Petfinder’s developer page</a>. A ‘secret’ key is also given from Petfinder for requests that require an additional layer of authentication; however, the current methods available do not require a secret key to be given (this could potentially change in the future).</p>
+<p>Before we can use the PetfindeR package, we need to obtain an API key from the Petfinder website to authenticate our requests. To acquire an API key, create an account on <a href="https://www.petfinder.com/developers/api-key">Petfinder’s developer page</a>. A ‘secret’ key is also given from Petfinder for requests that require an additional layer of authentication; however, the current methods available do not need a secret key to be provided (this could potentially change in the future).</p>
 </div>
 <div id="getting-started-with-petfinder" class="section level1">
 <h1>Getting Started with PetfindeR</h1>
@@ -88,13 +88,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>After installing and loading the package, The first step in using the PetfindeR package is to initialize the API connection to Petfinder. To do this, we pass the API key received from Petfinder into the <code>Petfinder</code> function which calls a wrapped <a href="https://cran.r-project.org/package=R6">R6 class</a> and creates the connection to the API.</p>
 <p>It is best practice to obfuscate sensitive data such as API keys to avoid any potential malicious activity. To this effect, I load my API key by using the <code>Sys.getenv()</code> function to access an environment variable containing the key.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">key &lt;-<span class="st"> </span><span class="kw">Sys.getenv</span>(<span class="st">'PETFINDER_KEY'</span>)</code></pre></div>
-<p>The API key is securely loaded, so we can initalize the PetfindeR API!</p>
+<p>The API key is securely loaded so that we can initialize the PetfindeR API!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pf &lt;-<span class="st"> </span><span class="kw">Petfinder</span>(key)</code></pre></div>
 <p>That’s all there is to it! The <a href="https://www.petfinder.com/developers/api-docs#methods">Petfinder API methods</a> are now accessible through R.</p>
 </div>
 <div id="examples" class="section level1">
 <h1>Examples</h1>
-<p>The following section introduces the <code>PetfindeR</code> package and how to interact with the Petfinder API with some simple examples on extracting data from the database. The examples are split into pet and shelter methods, not due to any significant demarcation, but rather for organization.</p>
+<p>The following section introduces the <code>PetfindeR</code> package and how to interact with the Petfinder API with some simple examples of extracting data from the database. The examples are split into pet and shelter methods, not due to any significant demarcation, but rather for organization.</p>
 <div id="pet-methods" class="section level2">
 <h2>Pet Methods</h2>
 <table>
@@ -225,7 +225,7 @@ cats</code></pre></div>
 ## $petfinder$header
 ## $petfinder$header$timestamp
 ## $petfinder$header$timestamp$`$t`
-## [1] &quot;2018-05-08T12:58:38Z&quot;
+## [1] &quot;2018-05-08T13:12:49Z&quot;
 ## 
 ## 
 ## $petfinder$header$status
@@ -294,9 +294,13 @@ cats</code></pre></div>
 ## $petfinder$pet
 ## $petfinder$pet$options
 ## $petfinder$pet$options$option
-## $petfinder$pet$options$option$`$t`
-## [1] &quot;altered&quot;
-## 
+##             $t
+## 1 specialNeeds
+## 2      altered
+## 3     hasShots
+## 4 housetrained
+## 5       noDogs
+## 6       noCats
 ## 
 ## 
 ## $petfinder$pet$status
@@ -307,105 +311,178 @@ cats</code></pre></div>
 ## $petfinder$pet$contact
 ## $petfinder$pet$contact$phone
 ## $petfinder$pet$contact$phone$`$t`
-## [1] &quot;561-686-3663&quot;
+## [1] &quot;815-288-7387&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$state
 ## $petfinder$pet$contact$state$`$t`
-## [1] &quot;FL&quot;
+## [1] &quot;IL&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$address2
-## named list()
+## $petfinder$pet$contact$address2$`$t`
+## [1] &quot;613 River Lane&quot;
+## 
 ## 
 ## $petfinder$pet$contact$email
 ## $petfinder$pet$contact$email$`$t`
-## [1] &quot;adoptions@peggyadams.org&quot;
+## [1] &quot;grannyroseanimalshelter@hotmail.com&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$city
 ## $petfinder$pet$contact$city$`$t`
-## [1] &quot;West Palm Beach&quot;
+## [1] &quot;Dixon&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$zip
 ## $petfinder$pet$contact$zip$`$t`
-## [1] &quot;33409&quot;
+## [1] &quot;61021&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$fax
 ## named list()
 ## 
 ## $petfinder$pet$contact$address1
-## $petfinder$pet$contact$address1$`$t`
-## [1] &quot;3100 North Military Trail&quot;
-## 
+## named list()
 ## 
 ## 
 ## $petfinder$pet$age
 ## $petfinder$pet$age$`$t`
-## [1] &quot;Senior&quot;
+## [1] &quot;Adult&quot;
 ## 
 ## 
 ## $petfinder$pet$size
 ## $petfinder$pet$size$`$t`
-## [1] &quot;L&quot;
+## [1] &quot;M&quot;
 ## 
 ## 
 ## $petfinder$pet$media
 ## $petfinder$pet$media$photos
 ## $petfinder$pet$media$photos$photo
-##   @size
-## 1   pnt
-## 2   fpm
-## 3     x
-## 4    pn
-## 5     t
-##                                                                                      $t
-## 1 http://photos.petfinder.com/photos/pets/41455715/1/?bust=1524604567&amp;width=60&amp;-pnt.jpg
-## 2 http://photos.petfinder.com/photos/pets/41455715/1/?bust=1524604567&amp;width=95&amp;-fpm.jpg
-## 3  http://photos.petfinder.com/photos/pets/41455715/1/?bust=1524604567&amp;width=500&amp;-x.jpg
-## 4 http://photos.petfinder.com/photos/pets/41455715/1/?bust=1524604567&amp;width=300&amp;-pn.jpg
-## 5   http://photos.petfinder.com/photos/pets/41455715/1/?bust=1524604567&amp;width=50&amp;-t.jpg
-##   @id
-## 1   1
-## 2   1
-## 3   1
-## 4   1
-## 5   1
+##    @size
+## 1    pnt
+## 2    fpm
+## 3      x
+## 4     pn
+## 5      t
+## 6    pnt
+## 7    fpm
+## 8      x
+## 9     pn
+## 10     t
+## 11   pnt
+## 12   fpm
+## 13     x
+## 14    pn
+## 15     t
+## 16   pnt
+## 17   fpm
+## 18     x
+## 19    pn
+## 20     t
+## 21   pnt
+## 22   fpm
+## 23     x
+## 24    pn
+## 25     t
+## 26   pnt
+## 27   fpm
+## 28     x
+## 29    pn
+## 30     t
+##                                                                                       $t
+## 1  http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=60&amp;-pnt.jpg
+## 2  http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=95&amp;-fpm.jpg
+## 3   http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=500&amp;-x.jpg
+## 4  http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=300&amp;-pn.jpg
+## 5    http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=50&amp;-t.jpg
+## 6  http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=60&amp;-pnt.jpg
+## 7  http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=95&amp;-fpm.jpg
+## 8   http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=500&amp;-x.jpg
+## 9  http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=300&amp;-pn.jpg
+## 10   http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=50&amp;-t.jpg
+## 11 http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=60&amp;-pnt.jpg
+## 12 http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=95&amp;-fpm.jpg
+## 13  http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=500&amp;-x.jpg
+## 14 http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=300&amp;-pn.jpg
+## 15   http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=50&amp;-t.jpg
+## 16 http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=60&amp;-pnt.jpg
+## 17 http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=95&amp;-fpm.jpg
+## 18  http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=500&amp;-x.jpg
+## 19 http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=300&amp;-pn.jpg
+## 20   http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=50&amp;-t.jpg
+## 21 http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=60&amp;-pnt.jpg
+## 22 http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=95&amp;-fpm.jpg
+## 23  http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=500&amp;-x.jpg
+## 24 http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=300&amp;-pn.jpg
+## 25   http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=50&amp;-t.jpg
+## 26 http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=60&amp;-pnt.jpg
+## 27 http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=95&amp;-fpm.jpg
+## 28  http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=500&amp;-x.jpg
+## 29 http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=300&amp;-pn.jpg
+## 30   http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=50&amp;-t.jpg
+##    @id
+## 1    1
+## 2    1
+## 3    1
+## 4    1
+## 5    1
+## 6    2
+## 7    2
+## 8    2
+## 9    2
+## 10   2
+## 11   3
+## 12   3
+## 13   3
+## 14   3
+## 15   3
+## 16   4
+## 17   4
+## 18   4
+## 19   4
+## 20   4
+## 21   5
+## 22   5
+## 23   5
+## 24   5
+## 25   5
+## 26   6
+## 27   6
+## 28   6
+## 29   6
+## 30   6
 ## 
 ## 
 ## 
 ## $petfinder$pet$id
 ## $petfinder$pet$id$`$t`
-## [1] &quot;41455715&quot;
+## [1] &quot;39380568&quot;
 ## 
 ## 
 ## $petfinder$pet$shelterPetId
-## $petfinder$pet$shelterPetId$`$t`
-## [1] &quot;A0130453&quot;
-## 
+## named list()
 ## 
 ## $petfinder$pet$breeds
 ## $petfinder$pet$breeds$breed
-## $petfinder$pet$breeds$breed$`$t`
-## [1] &quot;Domestic Short Hair&quot;
-## 
+##                 $t
+## 1 Pit Bull Terrier
+## 2   Boston Terrier
 ## 
 ## 
 ## $petfinder$pet$name
 ## $petfinder$pet$name$`$t`
-## [1] &quot;ESTHER&quot;
+## [1] &quot;TURBO&quot;
 ## 
 ## 
 ## $petfinder$pet$sex
 ## $petfinder$pet$sex$`$t`
-## [1] &quot;F&quot;
+## [1] &quot;M&quot;
 ## 
 ## 
 ## $petfinder$pet$description
 ## $petfinder$pet$description$`$t`
-## [1] &quot;Meow! I'm so glad you're thinking about adopting a new fur-ever family member. To help you with your big decision, here are a few things you should know. First, cats just want to be happy and feel loved. Living inside and being a part of the family is really important to us. A lot of the things you need as humans to stay happy and healthy, us cats need too. We depend on you for things like vet visits, nutritious food, clean water, toys, play time and of course, lots of love and attention! Did you know that cats live 15 to 20 years on average? That's a lifetime of love! So thanks for stopping by, I hope you'll keep me in mind when you make your big decision!&quot;
+## [1] &quot;Turbo is a handsome 4 year old neutered male that was abandoned at a local animal control facility.  His breed was listed as Pit Bull Terrier/Boston Terrier mix. He has a short black coat with white markings and a short tail.  Turbo is a short stocky-built boy weighing 55 pounds.  He has an awesome personality!  This dog is housebroke and knows to sit on command.  He is super friendly with people and does give rather slobbery kisses.  After a brief adoption, Turbo was returned  due to being jealous of the other dog and starting a fight.  A home where he is the only pet would be best.  He was adopted again and now returned due to personal issues with the owner.  Poor Turbo has a prior injury to one eye and is on eye drops several times a day.  His vision is limited in that eye.  That doesn't slow Turbo down at all.  He loves attention and is eager for treats.  If you don't mind some drool and snorting, Turbo could be  the perfect dog for you!!&quot;
 ## 
 ## 
 ## $petfinder$pet$mix
@@ -415,17 +492,17 @@ cats</code></pre></div>
 ## 
 ## $petfinder$pet$shelterId
 ## $petfinder$pet$shelterId$`$t`
-## [1] &quot;FL279&quot;
+## [1] &quot;IL142&quot;
 ## 
 ## 
 ## $petfinder$pet$lastUpdate
 ## $petfinder$pet$lastUpdate$`$t`
-## [1] &quot;2018-04-21T13:23:17Z&quot;
+## [1] &quot;2017-09-14T19:24:55Z&quot;
 ## 
 ## 
 ## $petfinder$pet$animal
 ## $petfinder$pet$animal$`$t`
-## [1] &quot;Cat&quot;
+## [1] &quot;Dog&quot;
 ## 
 ## 
 ## 
@@ -435,7 +512,7 @@ cats</code></pre></div>
 ## $petfinder$header
 ## $petfinder$header$timestamp
 ## $petfinder$header$timestamp$`$t`
-## [1] &quot;2018-05-08T12:58:40Z&quot;
+## [1] &quot;2018-05-08T13:12:50Z&quot;
 ## 
 ## 
 ## $petfinder$header$status
@@ -461,36 +538,28 @@ cats</code></pre></div>
 <p>Similar to other methods available in the PetfindeR package, the <code>pet.getRandom</code> method can also be set to return a <code>data.frame</code> by setting the parameter <code>return_df = TRUE</code>. As an example, we get three random pet records again and output the result as a <code>data.frame</code> (note the returned records will likely not be the same as the earlier returned records due to the random nature of the output).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">random_records_df &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">pet.getRandom</span>(<span class="dt">records =</span> <span class="dv">3</span>, <span class="dt">output =</span> <span class="st">'full'</span>, <span class="dt">return_df =</span> <span class="ot">TRUE</span>)
 random_records_df[,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
-<pre><code>##   status.1 status.2     status.3 status address1.state
-## 1  altered hasShots housetrained      A             MD
-## 2  altered hasShots         &lt;NA&gt;      A             PA
-## 3  altered hasShots housetrained      A             SC
-##              address1.email address1.city address1.zip address1.address1
-## 1 adopt@kittiesnpitties.org Ellicott City        21041      P.O. Box 767
-## 2            adopt@MLAR.org  Phoenixville        19460              &lt;NA&gt;
-## 3    kerryscats@hotmail.com    McConnells        29726        PO Box 315
-##     age
-## 1 Young
-## 2 Adult
-## 3 Young</code></pre>
+<pre><code>##   status.1 status.2     status.3 status.4 status address1.state
+## 1  altered hasShots housetrained   noCats      A             CA
+## 2  altered hasShots         &lt;NA&gt;     &lt;NA&gt;      A             TX
+## 3  altered hasShots housetrained     &lt;NA&gt;      A             TN
+##                address1.email address1.city address1.zip   age
+## 1 adopt@dharmadogmovement.org  Palm Springs        92264 Adult
+## 2               info@ohar.org    Seagoville        75159 Young
+## 3          adoption@aphdr.org     Knoxville        37920 Young</code></pre>
 </div>
 <div id="getting-pet-records-associated-with-a-petid" class="section level3">
 <h3>Getting pet records associated with a petId</h3>
-<p>Given a petId, an ID associated with information on a pet in the Petfinder database, the <code>pet.get()</code> method will return the pet record as a JSON object represented as an R list. The method also accepts a vector or list of IDs for returning multiple records. For example, we can take the petIds given in our previous call to <code>pet.getRandom()</code> and pass those to <code>pet.get()</code>. Note since we are using the same petIds from before, the returned records will be exactly the same. We also set the <code>return_df</code> parameter to <code>TRUE</code> to demonstrate the functionality to convert the returned JSON result into a <code>data.frame</code> as in other methods seen previously.</p>
+<p>Given a petId, an ID associated with information on a pet in the Petfinder database, the <code>pet.get()</code> method will return the pet record as a JSON object represented as an R list. The method also accepts a vector or list of IDs for returning multiple records. For example, we can take the petIds given in our previous call to <code>pet.getRandom()</code> and pass those to <code>pet.get()</code>. Note since we are using the same petIds from before, the returned records will be the same. We also set the <code>return_df</code> parameter to <code>TRUE</code> to demonstrate the functionality to convert the returned JSON result into a <code>data.frame</code> as in other methods seen previously.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pet_get_df &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">pet.get</span>(<span class="dt">petId =</span> random_records_df<span class="op">$</span>id, <span class="dt">return_df =</span> <span class="ot">TRUE</span>)
 pet_get_df[,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
-<pre><code>##   status.1 status.2     status.3 status address1.state
-## 1  altered hasShots housetrained      A             MD
-## 2  altered hasShots         &lt;NA&gt;      A             PA
-## 3  altered hasShots housetrained      A             SC
-##              address1.email address1.city address1.zip address1.address1
-## 1 adopt@kittiesnpitties.org Ellicott City        21041      P.O. Box 767
-## 2            adopt@MLAR.org  Phoenixville        19460              &lt;NA&gt;
-## 3    kerryscats@hotmail.com    McConnells        29726        PO Box 315
-##     age
-## 1 Young
-## 2 Adult
-## 3 Young</code></pre>
+<pre><code>##   status.1 status.2     status.3 status.4 status address1.state
+## 1  altered hasShots housetrained   noCats      A             CA
+## 2  altered hasShots         &lt;NA&gt;     &lt;NA&gt;      A             TX
+## 3  altered hasShots housetrained     &lt;NA&gt;      A             TN
+##                address1.email address1.city address1.zip   age
+## 1 adopt@dharmadogmovement.org  Palm Springs        92264 Adult
+## 2               info@ohar.org    Seagoville        75159 Young
+## 3          adoption@aphdr.org     Knoxville        37920 Young</code></pre>
 </div>
 </div>
 <div id="shelter-methods" class="section level2">
@@ -531,7 +600,7 @@ pet_get_df[,<span class="dv">1</span><span class="op">:</span><span class="dv">1
 </tr>
 </tbody>
 </table>
-<p>Shelter methods are rather similar to the Pet methods we explored previously, but return information on animal shelters and other animal welfare organizations.</p>
+<p>Shelter methods are somewhat similar to the Pet methods we explored previously, but return information on animal shelters and other animal welfare organizations.</p>
 <div id="finding-animal-welfare-organizations-in-an-area" class="section level3">
 <h3>Finding animal welfare organizations in an area</h3>
 <p>Using the <code>shelter.find()</code> method, one can locate shelters and their available attributes matching the input parameters. For example, say we wanted to find shelters in a ZIP code in Seattle (my old zip code).</p>
@@ -665,7 +734,7 @@ safr</code></pre></div>
 ## $petfinder$header
 ## $petfinder$header$timestamp
 ## $petfinder$header$timestamp$`$t`
-## [1] &quot;2018-05-08T12:58:44Z&quot;
+## [1] &quot;2018-05-08T13:12:53Z&quot;
 ## 
 ## 
 ## $petfinder$header$status
@@ -686,7 +755,7 @@ safr</code></pre></div>
 ## 
 ## $petfinder$`@xsi:noNamespaceSchemaLocation`
 ## [1] &quot;http://api.petfinder.com/schemas/0.9/petfinder.xsd&quot;</code></pre>
-<p>This data can also be transformed into a one row <code>data.frame</code> by setting <code>return_df = TRUE</code>.</p>
+<p>This data can also be transformed into a one-row <code>data.frame</code> by setting <code>return_df = TRUE</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">safr_df &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">shelter.get</span>(<span class="st">'WA40'</span>, <span class="dt">return_df =</span> <span class="ot">TRUE</span>)
 safr_df</code></pre></div>
 <pre><code>##   country longitude                       name         phone state
@@ -698,7 +767,7 @@ safr_df</code></pre></div>
 </div>
 <div id="getting-pet-records-from-a-shelter" class="section level3">
 <h3>Getting pet records from a shelter</h3>
-<p>Let’s say we are interested in finding the available pets at a particular shelter, we could use the <code>shelter.getPets()</code> method to quickly find this information. Here, we return the pets currently available at the Seattle Area Feline Rescue and print the first ten columns of the returned data.</p>
+<p>Let’s say we are interested in finding the available pets at a particular shelter; we could use the <code>shelter.getPets()</code> method to quickly find this information. Here, we return the pets currently available at the Seattle Area Feline Rescue and print the first ten columns of the returned data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">safr.pets &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">shelter.getPets</span>(<span class="st">'WA40'</span>)
 <span class="kw">head</span>(safr.pets<span class="op">$</span>petfinder<span class="op">$</span>pets<span class="op">$</span>pet)[,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
 <pre><code>##                          options.option status.$t contact.phone.$t
@@ -745,7 +814,7 @@ safr_df</code></pre></div>
 <p>The <code>shelter.listByBreed()</code> method allows one to find shelters that have a particular breed of animal, which may be useful for users interested in finding rarer breeds of animal. The <code>breed</code> argument must match a breed listed in the Petfinder database, which can be easily extracted by using the <code>breed.list()</code> method. We already pulled the available cat breeds earlier in the vignette, so we can use that to select a breed of cat to search.</p>
 <p>The Abyssinian is a beautiful and wonderfully friendly breed of cat, so let’s search for some shelters that have Abyssinians listed on Petfinder.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aby_shelters &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">shelter.listByBreed</span>(<span class="st">'cat'</span>, <span class="st">'Abyssinian'</span>)</code></pre></div>
-<p>Note: There currently seems to be an issue (as of 5/9/2018) with the Petfinder API and the <code>shelter.listByBreed</code> method. The API will return an object successfully, but the data is empty. Hopefully, Petfinder will be able to fix this issue soon, but in the meantime I leave this note here just in case.</p>
+<p>Note: There currently seems to be an issue (as of 5/9/2018) with the Petfinder API and the <code>shelter.listByBreed</code> method. The API will return an object successfully, but the data is empty. Hopefully, Petfinder will be able to fix this issue soon, but in the meantime, I leave this note here just in case.</p>
 </div>
 </div>
 <div id="conclusion" class="section level2">
