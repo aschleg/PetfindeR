@@ -6,23 +6,49 @@
 
 :cat2: :dog2: :rooster: :rabbit2: :racehorse:
 
-PetfindeR wraps the [Petfinder API](https://www.petfinder.com/developers/api-docs) in an easy-to-use, conveninent R package. The PetfindeR library also provides handy methods for coercing the returned JSON from the API into usable `data.frame` objects to facilitate data analysis and other tasks. 
+`PetfindeR` wraps the [Petfinder API](https://www.petfinder.com/developers/api-docs) in an easy-to-use, conveninent R package. The `PetfindeR` library also provides handy methods for coercing the returned JSON from the API into usable `data.frame` objects to facilitate data analysis and other tasks. 
 
-## Example
+## Examples and Usage
 
-After receiving an API key from [Petfinder](https://www.petfinder.com/developers/api-key), usage of `PetfindeR` to extract data from the Petfinder database is straightforward.
+After receiving an API key from [Petfinder](https://www.petfinder.com/developers/api-key), usage of `PetfindeR` to extract data from the Petfinder database is straightforward. Below, we demonstrate some examples on authenticating with the Petfinder API and extracting data using the available API methods.
 
-~~~
+#### Authenticating
+
+`PetfindeR` is built using [`R6 Classes`](https://cran.r-project.org/web/packages/R6/index.html), therefore authenticating with the Petfinder API only requires creating an object to store the authentication with a given API key as in the example below.
+
+~~~ r
 library(PetfindeR)
-
 pf = Petfinder(key) # Initialize the connection with the Petfinder API.
-cats = pf$breed.list('cat')
-pf$pet.getRandom()
 ~~~
 
-The above simple example creates an authenticated connection to the Petfinder API and then uses that connection to pull the entire list of cat breeds listed in the Petfinder database. The next line returns a randomly selected pet record.
+#### Get animal breeds currently listed on Petfinder
+
+With the authenticated object `pf` created above, we can use it to extract data from the Petfinder API. To see the available breeds of a particular animal, we can use the `breed.list` method.
+
+~~~ r
+cats <- pf$breed.list('cat')
+~~~
+
+Most methods in the `PetfindeR` package can also be set to return a `data.frame` instead of the raw JSON from the API by setting the parameter `return_df = TRUE`.
+
+~~~ r
+cats.df <- pf$breed.list('cat', return_df = TRUE)
+~~~
+
+#### Finding pets listed on Petfinder
+
+The `pet.find` method returns data on the currently available animals at animal shelters in the specified location. The method requires a location to be passed, which can be as granular as a zip code or as broad as a country in North America. The default amount of records returned is 25, which can be increased up to 1,000 by adjusting the `count` parameter. Here we find 100 available female cats listed on the Petfinder website within the Seattle area.
+
+~~~ r
+sea.female.cats <- pf$pet.find(location = 'Seattle', animal = 'cat', sex = 'female', count = 100)
+
+# The `pet.find` method can also be set to return a `data.frame` for easier analysis.
+sea.female.cats <- pf$pet.find(location = 'Seattle', animal = 'cat', sex = 'female', count = 100, return_df = TRUE)
+~~~
 
 ## Available Methods
+
+The following table lists the methods for interacting with the Petfinder API.
 
 | Method                | Petfinder API Method | Description                                                                                        |
 |-----------------------|----------------------|----------------------------------------------------------------------------------------------------|
@@ -35,9 +61,11 @@ The above simple example creates an authenticated connection to the Petfinder AP
 | shelter.getPets()     | shelter.getPets      | Returns a collection of pet records for an individual shelter.                                     |
 | shelter.listByBreed() | shelter.listByBreed  | Returns a list of shelter IDs listing animals matching the input animal breed.                     |
 
+Further information on the methods available in the Petfinder API can be found by checking out [Petfinder's API method documentation](https://www.petfinder.com/developers/api-docs#methods)
+
 ## Documentation
 
-* [Petfinder API Documentation](https://www.petfinder.com/developers/api-docs#methods)
+* [Petfinder's documentation on its API](https://www.petfinder.com/developers/api-docs)
 
 ## About [Petfinder.com](https://www.petfinder.com)
 
