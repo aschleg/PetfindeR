@@ -12,7 +12,7 @@
 
 <meta name="author" content="Aaron Schlegel" />
 
-<meta name="date" content="2018-05-08" />
+<meta name="date" content="2018-05-09" />
 
 <title>Getting Started with PetfindeR</title>
 
@@ -70,17 +70,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Getting Started with PetfindeR</h1>
 <h4 class="author"><em>Aaron Schlegel</em></h4>
-<h4 class="date"><em>2018-05-08</em></h4>
+<h4 class="date"><em>2018-05-09</em></h4>
 
 
 
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>The goal of the PetfindeR package is to provide a simple and straightforward interface for interacting with the <a href="https://www.petfinder.com/developers/api-docs">Petfinder API</a> through R. The Petfinder database contains approximately 300,000 adoptable pet records and 11,000 animal welfare organization records, which makes it a handy and valuable source of data for those in the animal welfare community. However, the outputs from the Petfinder API are in messy JSON format and thus it makes it more time-consuming and often frustrating to coerce the output data into a form that is workable with R. The PetfindeR package was developed to alleviate this difficulty and provide users with a streamlined interface for getting the data they want and using it for their specific purpose.</p>
+<div id="about-petfinder" class="section level1">
+<h1>About <code>PetfindeR</code></h1>
+<p>The goal of the <code>PetfindeR</code> package is to provide a simple and straightforward interface for interacting with the <a href="https://www.petfinder.com/developers/api-docs">Petfinder API</a> through R. The Petfinder database contains approximately 300,000 adoptable pet records and 11,000 animal welfare organization records, which makes it a handy and valuable source of data for those in the animal welfare community. However, the outputs from the Petfinder API are in messy JSON format and thus it makes it more time-consuming and often frustrating to coerce the output data into a form that is workable with R. The <code>PetfindeR</code> package was developed to alleviate this difficulty and provide users with a streamlined interface for getting the data they want and using it for their specific purpose.</p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This vignette introduces and walks through the methods available in <code>PetfindeR</code> and the Petfinder API for authenticating and extracting data from the database.</p>
+</div>
 </div>
 <div id="obtaining-an-api-key-from-petfinder" class="section level1">
 <h1>Obtaining an API Key from Petfinder</h1>
-<p>Before we can use the PetfindeR package, we need to obtain an API key from the Petfinder website to authenticate our requests. To acquire an API key, create an account on <a href="https://www.petfinder.com/developers/api-key">Petfinder’s developer page</a>. A ‘secret’ key is also given from Petfinder for requests that require an additional layer of authentication; however, the current methods available do not need a secret key to be provided (this could potentially change in the future).</p>
+<p>Before we can use the <code>PetfindeR</code> package, we need to obtain an API key from the Petfinder website to authenticate our requests. To acquire an API key, create an account on <a href="https://www.petfinder.com/developers/api-key">Petfinder’s developer page</a>. A ‘secret’ key is also given from Petfinder for requests that require an additional layer of authentication; however, the current methods available do not need a secret key to be provided (this could potentially change in the future).</p>
 </div>
 <div id="getting-started-with-petfinder" class="section level1">
 <h1>Getting Started with PetfindeR</h1>
@@ -225,7 +229,7 @@ cats</code></pre></div>
 ## $petfinder$header
 ## $petfinder$header$timestamp
 ## $petfinder$header$timestamp$`$t`
-## [1] &quot;2018-05-08T13:12:49Z&quot;
+## [1] &quot;2018-05-10T00:47:36Z&quot;
 ## 
 ## 
 ## $petfinder$header$status
@@ -278,7 +282,7 @@ cats</code></pre></div>
 ## 3      Redmond       98052 8103 161st Ave NE Senior    L 40688475
 ## 4      Redmond       98052 8103 161st Ave NE Senior    M 41470264
 ## 5   Des Moines       98198      PO Box 13244  Young    M 39650811
-## 6   Des Moines       98198      PO Box 13244  Adult    M 41000819</code></pre>
+## 6   Des Moines       98198      PO Box 13244  Adult    M 40844506</code></pre>
 </div>
 <div id="returning-random-pet-records" class="section level3">
 <h3>Returning random pet records</h3>
@@ -294,13 +298,9 @@ cats</code></pre></div>
 ## $petfinder$pet
 ## $petfinder$pet$options
 ## $petfinder$pet$options$option
-##             $t
-## 1 specialNeeds
-## 2      altered
-## 3     hasShots
-## 4 housetrained
-## 5       noDogs
-## 6       noCats
+##         $t
+## 1  altered
+## 2 hasShots
 ## 
 ## 
 ## $petfinder$pet$status
@@ -310,154 +310,77 @@ cats</code></pre></div>
 ## 
 ## $petfinder$pet$contact
 ## $petfinder$pet$contact$phone
-## $petfinder$pet$contact$phone$`$t`
-## [1] &quot;815-288-7387&quot;
-## 
+## named list()
 ## 
 ## $petfinder$pet$contact$state
 ## $petfinder$pet$contact$state$`$t`
-## [1] &quot;IL&quot;
+## [1] &quot;CA&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$address2
-## $petfinder$pet$contact$address2$`$t`
-## [1] &quot;613 River Lane&quot;
-## 
+## named list()
 ## 
 ## $petfinder$pet$contact$email
 ## $petfinder$pet$contact$email$`$t`
-## [1] &quot;grannyroseanimalshelter@hotmail.com&quot;
+## [1] &quot;laurie.newton@tapsusa.org&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$city
 ## $petfinder$pet$contact$city$`$t`
-## [1] &quot;Dixon&quot;
+## [1] &quot;Burbank&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$zip
 ## $petfinder$pet$contact$zip$`$t`
-## [1] &quot;61021&quot;
+## [1] &quot;91507&quot;
 ## 
 ## 
 ## $petfinder$pet$contact$fax
 ## named list()
 ## 
 ## $petfinder$pet$contact$address1
-## named list()
+## $petfinder$pet$contact$address1$`$t`
+## [1] &quot;3318 West Magnolia Blvd&quot;
+## 
 ## 
 ## 
 ## $petfinder$pet$age
 ## $petfinder$pet$age$`$t`
-## [1] &quot;Adult&quot;
+## [1] &quot;Baby&quot;
 ## 
 ## 
 ## $petfinder$pet$size
 ## $petfinder$pet$size$`$t`
-## [1] &quot;M&quot;
+## [1] &quot;S&quot;
 ## 
 ## 
 ## $petfinder$pet$media
 ## $petfinder$pet$media$photos
 ## $petfinder$pet$media$photos$photo
-##    @size
-## 1    pnt
-## 2    fpm
-## 3      x
-## 4     pn
-## 5      t
-## 6    pnt
-## 7    fpm
-## 8      x
-## 9     pn
-## 10     t
-## 11   pnt
-## 12   fpm
-## 13     x
-## 14    pn
-## 15     t
-## 16   pnt
-## 17   fpm
-## 18     x
-## 19    pn
-## 20     t
-## 21   pnt
-## 22   fpm
-## 23     x
-## 24    pn
-## 25     t
-## 26   pnt
-## 27   fpm
-## 28     x
-## 29    pn
-## 30     t
-##                                                                                       $t
-## 1  http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=60&amp;-pnt.jpg
-## 2  http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=95&amp;-fpm.jpg
-## 3   http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=500&amp;-x.jpg
-## 4  http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=300&amp;-pn.jpg
-## 5    http://photos.petfinder.com/photos/pets/39380568/1/?bust=1505417337&amp;width=50&amp;-t.jpg
-## 6  http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=60&amp;-pnt.jpg
-## 7  http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=95&amp;-fpm.jpg
-## 8   http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=500&amp;-x.jpg
-## 9  http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=300&amp;-pn.jpg
-## 10   http://photos.petfinder.com/photos/pets/39380568/2/?bust=1505417355&amp;width=50&amp;-t.jpg
-## 11 http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=60&amp;-pnt.jpg
-## 12 http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=95&amp;-fpm.jpg
-## 13  http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=500&amp;-x.jpg
-## 14 http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=300&amp;-pn.jpg
-## 15   http://photos.petfinder.com/photos/pets/39380568/3/?bust=1505417494&amp;width=50&amp;-t.jpg
-## 16 http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=60&amp;-pnt.jpg
-## 17 http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=95&amp;-fpm.jpg
-## 18  http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=500&amp;-x.jpg
-## 19 http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=300&amp;-pn.jpg
-## 20   http://photos.petfinder.com/photos/pets/39380568/4/?bust=1505417419&amp;width=50&amp;-t.jpg
-## 21 http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=60&amp;-pnt.jpg
-## 22 http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=95&amp;-fpm.jpg
-## 23  http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=500&amp;-x.jpg
-## 24 http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=300&amp;-pn.jpg
-## 25   http://photos.petfinder.com/photos/pets/39380568/5/?bust=1505417436&amp;width=50&amp;-t.jpg
-## 26 http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=60&amp;-pnt.jpg
-## 27 http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=95&amp;-fpm.jpg
-## 28  http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=500&amp;-x.jpg
-## 29 http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=300&amp;-pn.jpg
-## 30   http://photos.petfinder.com/photos/pets/39380568/6/?bust=1505417458&amp;width=50&amp;-t.jpg
-##    @id
-## 1    1
-## 2    1
-## 3    1
-## 4    1
-## 5    1
-## 6    2
-## 7    2
-## 8    2
-## 9    2
-## 10   2
-## 11   3
-## 12   3
-## 13   3
-## 14   3
-## 15   3
-## 16   4
-## 17   4
-## 18   4
-## 19   4
-## 20   4
-## 21   5
-## 22   5
-## 23   5
-## 24   5
-## 25   5
-## 26   6
-## 27   6
-## 28   6
-## 29   6
-## 30   6
+##   @size
+## 1   pnt
+## 2   fpm
+## 3     x
+## 4    pn
+## 5     t
+##                                                                                      $t
+## 1 http://photos.petfinder.com/photos/pets/41586650/2/?bust=1525831162&amp;width=60&amp;-pnt.jpg
+## 2 http://photos.petfinder.com/photos/pets/41586650/2/?bust=1525831162&amp;width=95&amp;-fpm.jpg
+## 3  http://photos.petfinder.com/photos/pets/41586650/2/?bust=1525831162&amp;width=500&amp;-x.jpg
+## 4 http://photos.petfinder.com/photos/pets/41586650/2/?bust=1525831162&amp;width=300&amp;-pn.jpg
+## 5   http://photos.petfinder.com/photos/pets/41586650/2/?bust=1525831162&amp;width=50&amp;-t.jpg
+##   @id
+## 1   1
+## 2   1
+## 3   1
+## 4   1
+## 5   1
 ## 
 ## 
 ## 
 ## $petfinder$pet$id
 ## $petfinder$pet$id$`$t`
-## [1] &quot;39380568&quot;
+## [1] &quot;41586650&quot;
 ## 
 ## 
 ## $petfinder$pet$shelterPetId
@@ -465,24 +388,24 @@ cats</code></pre></div>
 ## 
 ## $petfinder$pet$breeds
 ## $petfinder$pet$breeds$breed
-##                 $t
-## 1 Pit Bull Terrier
-## 2   Boston Terrier
+##                    $t
+## 1 Australian Shepherd
+## 2  Labrador Retriever
 ## 
 ## 
 ## $petfinder$pet$name
 ## $petfinder$pet$name$`$t`
-## [1] &quot;TURBO&quot;
+## [1] &quot;Beacon&quot;
 ## 
 ## 
 ## $petfinder$pet$sex
 ## $petfinder$pet$sex$`$t`
-## [1] &quot;M&quot;
+## [1] &quot;F&quot;
 ## 
 ## 
 ## $petfinder$pet$description
 ## $petfinder$pet$description$`$t`
-## [1] &quot;Turbo is a handsome 4 year old neutered male that was abandoned at a local animal control facility.  His breed was listed as Pit Bull Terrier/Boston Terrier mix. He has a short black coat with white markings and a short tail.  Turbo is a short stocky-built boy weighing 55 pounds.  He has an awesome personality!  This dog is housebroke and knows to sit on command.  He is super friendly with people and does give rather slobbery kisses.  After a brief adoption, Turbo was returned  due to being jealous of the other dog and starting a fight.  A home where he is the only pet would be best.  He was adopted again and now returned due to personal issues with the owner.  Poor Turbo has a prior injury to one eye and is on eye drops several times a day.  His vision is limited in that eye.  That doesn't slow Turbo down at all.  He loves attention and is eager for treats.  If you don't mind some drool and snorting, Turbo could be  the perfect dog for you!!&quot;
+## [1] &quot;MEET BEACON\n\n***POTENTIAL ADOPTER LOCATION REQUIREMENT- Our general adoption area is with a 15 mile radius of our Burbank Home base - zip code  91505*** You can check to see if you fit within the radius at https://www.zipcodesoft.com/zip-codes-in-a-radius\n\nOur adoption applications can be found online at www.tapsusa.org\n\nWho am I? I'm  BEACON\nWhere did you meet TAPS?  Los Angeles County Shelter\nHow old are you?  I am 3 months old!  (as of 5/8/18)\nTell us about yourself! I am a cuddly, colorful little baby girl who is going to bring joy into the hearts of everyone around me!\nI weigh approximately:  11-20lbs\n\nWhere can you meet me! (*But call first to make sure I'll be there.)\n\nOPERATION ADOPT\n3318 W Magnolia\nBurbank CA 91505\n818-934-4268\n\n\nThursday 1:00pm-6:00pm\nFriday 11:00am-6:00pm\nSaturday 11:00am-6:00pm\nSunday 11:00am-6:00pm\nAll other times by appointment only\n\nAll TAPS animals are spayed/neutered, current on age appropriate vaccinations and microchipped before they go to new homes because that's the responsible way to keep them all safe.\n\nTo adopt one of our animals, the first step is filling out an adoption application at www.tapsusa.org Please make sure you get a confirmation that your application has been submitted. \n\nWe only adopt to LOCAL HOMES in City of Burbank and other adjacent communities in the immediate vicinity because we utilize our volunteer force to process home visits.  Photos of your home, letters of reference are not acceptable which is why we only adopt locally. Only in very rare circumstances do we adopt out of area.  Examples of this would be finding the perfect home for a senior animal or one that has other special needs that we have not been able to place locally for an extended period of time.&quot;
 ## 
 ## 
 ## $petfinder$pet$mix
@@ -492,12 +415,12 @@ cats</code></pre></div>
 ## 
 ## $petfinder$pet$shelterId
 ## $petfinder$pet$shelterId$`$t`
-## [1] &quot;IL142&quot;
+## [1] &quot;CA2216&quot;
 ## 
 ## 
 ## $petfinder$pet$lastUpdate
 ## $petfinder$pet$lastUpdate$`$t`
-## [1] &quot;2017-09-14T19:24:55Z&quot;
+## [1] &quot;2018-05-09T02:02:46Z&quot;
 ## 
 ## 
 ## $petfinder$pet$animal
@@ -512,7 +435,7 @@ cats</code></pre></div>
 ## $petfinder$header
 ## $petfinder$header$timestamp
 ## $petfinder$header$timestamp$`$t`
-## [1] &quot;2018-05-08T13:12:50Z&quot;
+## [1] &quot;2018-05-10T00:47:38Z&quot;
 ## 
 ## 
 ## $petfinder$header$status
@@ -538,28 +461,36 @@ cats</code></pre></div>
 <p>Similar to other methods available in the PetfindeR package, the <code>pet.getRandom</code> method can also be set to return a <code>data.frame</code> by setting the parameter <code>return_df = TRUE</code>. As an example, we get three random pet records again and output the result as a <code>data.frame</code> (note the returned records will likely not be the same as the earlier returned records due to the random nature of the output).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">random_records_df &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">pet.getRandom</span>(<span class="dt">records =</span> <span class="dv">3</span>, <span class="dt">output =</span> <span class="st">'full'</span>, <span class="dt">return_df =</span> <span class="ot">TRUE</span>)
 random_records_df[,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
-<pre><code>##   status.1 status.2     status.3 status.4 status address1.state
-## 1  altered hasShots housetrained   noCats      A             CA
-## 2  altered hasShots         &lt;NA&gt;     &lt;NA&gt;      A             TX
-## 3  altered hasShots housetrained     &lt;NA&gt;      A             TN
-##                address1.email address1.city address1.zip   age
-## 1 adopt@dharmadogmovement.org  Palm Springs        92264 Adult
-## 2               info@ohar.org    Seagoville        75159 Young
-## 3          adoption@aphdr.org     Knoxville        37920 Young</code></pre>
+<pre><code>##   status.1 status.2     status.3 status address1.phone address1.state
+## 1  altered hasShots housetrained      A   574-400-5633             IN
+## 2  altered hasShots housetrained      A   4805539311               AZ
+## 3     &lt;NA&gt;     &lt;NA&gt;         &lt;NA&gt;      A   254-754-1454             TX
+##                         address1.email address1.city address1.zip
+## 1 heartlandsmallanimalrescue@gmail.com    South Bend        46660
+## 2                  info@underdogaz.com      Chandler        85249
+## 3           hsctapplications@gmail.com          Waco        76706
+##   address1.address1
+## 1     P.O. Box 6033
+## 2   P. O. Box 13392
+## 3    2032 Circle Rd</code></pre>
 </div>
 <div id="getting-pet-records-associated-with-a-petid" class="section level3">
 <h3>Getting pet records associated with a petId</h3>
 <p>Given a petId, an ID associated with information on a pet in the Petfinder database, the <code>pet.get()</code> method will return the pet record as a JSON object represented as an R list. The method also accepts a vector or list of IDs for returning multiple records. For example, we can take the petIds given in our previous call to <code>pet.getRandom()</code> and pass those to <code>pet.get()</code>. Note since we are using the same petIds from before, the returned records will be the same. We also set the <code>return_df</code> parameter to <code>TRUE</code> to demonstrate the functionality to convert the returned JSON result into a <code>data.frame</code> as in other methods seen previously.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pet_get_df &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">pet.get</span>(<span class="dt">petId =</span> random_records_df<span class="op">$</span>id, <span class="dt">return_df =</span> <span class="ot">TRUE</span>)
 pet_get_df[,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
-<pre><code>##   status.1 status.2     status.3 status.4 status address1.state
-## 1  altered hasShots housetrained   noCats      A             CA
-## 2  altered hasShots         &lt;NA&gt;     &lt;NA&gt;      A             TX
-## 3  altered hasShots housetrained     &lt;NA&gt;      A             TN
-##                address1.email address1.city address1.zip   age
-## 1 adopt@dharmadogmovement.org  Palm Springs        92264 Adult
-## 2               info@ohar.org    Seagoville        75159 Young
-## 3          adoption@aphdr.org     Knoxville        37920 Young</code></pre>
+<pre><code>##   status.1 status.2     status.3 status address1.phone address1.state
+## 1  altered hasShots housetrained      A   574-400-5633             IN
+## 2  altered hasShots housetrained      A   4805539311               AZ
+## 3     &lt;NA&gt;     &lt;NA&gt;         &lt;NA&gt;      A   254-754-1454             TX
+##                         address1.email address1.city address1.zip
+## 1 heartlandsmallanimalrescue@gmail.com    South Bend        46660
+## 2                  info@underdogaz.com      Chandler        85249
+## 3           hsctapplications@gmail.com          Waco        76706
+##   address1.address1
+## 1     P.O. Box 6033
+## 2   P. O. Box 13392
+## 3    2032 Circle Rd</code></pre>
 </div>
 </div>
 <div id="shelter-methods" class="section level2">
@@ -734,7 +665,7 @@ safr</code></pre></div>
 ## $petfinder$header
 ## $petfinder$header$timestamp
 ## $petfinder$header$timestamp$`$t`
-## [1] &quot;2018-05-08T13:12:53Z&quot;
+## [1] &quot;2018-05-10T00:47:41Z&quot;
 ## 
 ## 
 ## $petfinder$header$status
