@@ -67,7 +67,7 @@ Petfinder <- function(key, secret = NULL) {
                         pages = NULL, 
                         return_df = FALSE) {
       
-      check_inputs(animal = animal, size = size, sex = sex, age = age)
+      check_inputs(animal = animal, size = size, sex = sex, age = age, count = count, pages = pages)
       
       url <- paste0(self$host, 'pet.find', sep = '')
       params <- parameters(key = self$key,
@@ -185,6 +185,8 @@ Petfinder <- function(key, secret = NULL) {
                             pages = NULL, 
                             return_df = FALSE) {
       
+      check_inputs(count = count, pages = pages)
+      
       url <- paste0(self$host, 'shelter.find', sep = '')
       params <- parameters(key = self$key,
                                    location = location,
@@ -268,6 +270,8 @@ Petfinder <- function(key, secret = NULL) {
                                pages = NULL, 
                                return_df = FALSE) {
       
+      check_inputs(count = count, pages = pages)
+      
       url <- paste0(self$host, 'shelter.getPets', sep = '')
       params <- parameters(key = self$key,
                            id = shelterId,
@@ -305,7 +309,7 @@ Petfinder <- function(key, secret = NULL) {
                                    count = NULL,
                                    pages = NULL) {
       
-      check_inputs(animal = animal)
+      check_inputs(animal = animal, count = count, pages = pages)
       
       url <- paste0(self$host, 'shelter.listByBreed', sep = '')
       params <- parameters(key = self$key,
@@ -329,7 +333,10 @@ return_json = function(url, params) {
   url$query <- params
   url <- httr::build_url(url)
   
-  json_url <- jsonlite::fromJSON(url, flatten = TRUE, simplifyDataFrame = TRUE, simplifyMatrix = TRUE, simplifyVector = TRUE)
+  json_url <- jsonlite::fromJSON(url, flatten = TRUE, 
+                                 simplifyDataFrame = TRUE, 
+                                 simplifyMatrix = TRUE, 
+                                 simplifyVector = TRUE)
   
   return(json_url)
 }

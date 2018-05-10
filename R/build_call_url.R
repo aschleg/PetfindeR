@@ -42,7 +42,7 @@ parameters = function(key,
 }
 
 
-check_inputs <- function(animal=NULL, size=NULL, sex=NULL, age=NULL) {
+check_inputs <- function(animal=NULL, size=NULL, sex=NULL, age=NULL, count=NULL, pages=NULL) {
   
   if (!is.null(animal)) {
     animals <- c('barnyard', 'bird', 'cat', 'dog', 'horse', 'reptile', 'smallfurry')
@@ -76,4 +76,15 @@ check_inputs <- function(animal=NULL, size=NULL, sex=NULL, age=NULL) {
     }
   }
   
+  if (!is.null(count)) {
+    if (count > 1000) {
+      stop('a single request cannot exceed 1,000 records')
+    }
+  }
+  
+  if (!is.null(count) & !is.null(pages)) {
+    if (count * pages > 2000) {
+      stop('searches cannot exceed 2,000 records.')
+    }
+  }
 }

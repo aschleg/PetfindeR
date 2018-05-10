@@ -1,3 +1,7 @@
+# PetfindeR 1.0.1
+
+* Methods that have a `count` parameter will now check the input value to make sure it is not above 1,000. The 1,000 record limitation is imposed by Petfinder. More information can be found in [Petfinder's API documentation](https://www.petfinder.com/developers/api-docs#restrictions).
+* Methods will now check to make sure that the inputted values for parameters `count` and `pages` will not exceed 2,000 records. Petfinder imposes a limit of 2,000 records per search.
 
 # PetfindeR 1.0.0
 
