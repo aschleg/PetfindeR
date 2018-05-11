@@ -1,7 +1,6 @@
 ---
 title: "Getting Started with PetfindeR"
 author: "Aaron Schlegel"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started with PetfindeR}

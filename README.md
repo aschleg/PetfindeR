@@ -18,10 +18,10 @@ After receiving an API key from [Petfinder](https://www.petfinder.com/developers
 
 ~~~ r
 library(PetfindeR)
-pf = Petfinder(key) # Initialize the connection with the Petfinder API.
+pf <- Petfinder(key) # Initialize the connection with the Petfinder API.
 ~~~
 
-#### Get animal breeds currently listed on Petfinder
+### Get animal breeds currently listed on Petfinder
 
 With the authenticated object `pf` created above, we can use it to extract data from the Petfinder API. To see the available breeds of a particular animal, we can use the `breed.list` method.
 
@@ -35,15 +35,25 @@ Most methods in the `PetfindeR` package can also be set to return a `data.frame`
 cats.df <- pf$breed.list('cat', return_df = TRUE)
 ~~~
 
-#### Finding pets listed on Petfinder
+### Finding pets listed on Petfinder
 
 The `pet.find` method returns data on the currently available animals at animal shelters in the specified location. The method requires a location to be passed, which can be as granular as a zip code or as broad as a country in North America. The default amount of records returned is 25, which can be increased up to 1,000 by adjusting the `count` parameter. Here we find 100 available female cats listed on the Petfinder website within the Seattle area.
 
 ~~~ r
-sea.female.cats <- pf$pet.find(location = 'Seattle', animal = 'cat', sex = 'female', count = 100)
+sea.female.cats <- pf$pet.find(location = 'Seattle', 
+                               animal = 'cat', sex = 'female', count = 100)
 
 # The `pet.find` method can also be set to return a `data.frame` for easier analysis.
-sea.female.cats <- pf$pet.find(location = 'Seattle', animal = 'cat', sex = 'female', count = 100, return_df = TRUE)
+sea.female.cats <- pf$pet.find(location = 'Seattle', 
+                               animal = 'cat', sex = 'female', count = 100, return_df = TRUE)
+~~~
+
+### Locating animal shelters in a given location
+
+Similar to the `pet.find` method described above, we can use the `shelter.find` method to locate animal shelters in a given location. Let's say we are interested in finding 500 animal shelters in Washington State starting in Seattle. The Petfinder API will automatically expand its search for shelters in a given location once it finds all the shelters in the provided location. Therefore, specifying the search to begin in Seattle with a count of 500 will also return shelters outside of the Seattle area (as there are not 500 animal shelters in Seattle alone). The `shelter.find` method, as with other methods provided by `PetfindeR`, has a `return_df` parameter which will automatically coerce the returned JSON results from the API into a `data.frame`.
+
+~~~ r
+wa.shelters <- pf$shelter.find(location = 'Seattle', count = 500, return_df = TRUE)
 ~~~
 
 ## Available Methods
