@@ -148,11 +148,9 @@ pet_records_df = function(r) {
   colnames(statuses) <- paste0('status.', c(1:length(colnames(statuses))))
   colnames(breeds) <- paste0('breed.', c(1:length(colnames(breeds))))
   
-  photos %>%
-    dplyr::mutate_if(is.factor, as.character) -> photos
   
-  statuses %>%
-    dplyr::mutate_if(is.factor, as.character) -> statuses
+  photos <- dplyr::mutate_if(photos, is.factor, as.character)
+  statuses <- dplyr::mutate_if(statuses, is.factor, as.character)
   
   pet_df$options.option <- NULL
   pet_df$media.photos.photo <- NULL
