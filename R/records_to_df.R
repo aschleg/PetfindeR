@@ -79,7 +79,7 @@ pet_record = function(r) {
   pet.df <- data.frame(recordlist, stringsAsFactors = FALSE)
   colnames(pet.df) <- gsub('X.t', '', colnames(pet.df))
   
-  pet_df <- dplyr::mutate_if(pet_df, is.factor, as.character)
+  pet.df <- dplyr::mutate_if(pet.df, is.factor, as.character)
   
   return(pet.df)
 }
