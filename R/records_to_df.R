@@ -79,6 +79,8 @@ pet_record = function(r) {
   pet.df <- data.frame(recordlist, stringsAsFactors = FALSE)
   colnames(pet.df) <- gsub('X.t', '', colnames(pet.df))
   
+  pet_df <- dplyr::mutate_if(pet_df, is.factor, as.character)
+  
   return(pet.df)
 }
 
@@ -148,10 +150,6 @@ pet_records_df = function(r) {
   colnames(statuses) <- paste0('status.', c(1:length(colnames(statuses))))
   colnames(breeds) <- paste0('breed.', c(1:length(colnames(breeds))))
   
-  
-  photos <- dplyr::mutate_if(photos, is.factor, as.character)
-  statuses <- dplyr::mutate_if(statuses, is.factor, as.character)
-  
   pet_df$options.option <- NULL
   pet_df$media.photos.photo <- NULL
   pet_df$breeds.breed <- NULL
@@ -159,6 +157,8 @@ pet_records_df = function(r) {
   colnames(pet_df) <- gsub(x = colnames(pet_df), pattern = '\\.\\$t', replacement = '')
 
   pet_df <- cbind(pet_df, photos, statuses, breeds)
+  
+  pet_df <- dplyr::mutate_if(pet_df, is.factor, as.character)
   
   return(pet_df)
 }
@@ -188,6 +188,8 @@ shelter_records_to_df = function(r) {
 
   colnames(df) <- gsub(colnames(df), pattern = '\\..t', replacement = '')
   colnames(df) <- gsub(colnames(df), pattern = 'shelter\\.', replacement = '')
+  
+  df <- dplyr::mutate_if(df, is.factor, as.character)
   
   return(df)
 }

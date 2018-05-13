@@ -8,11 +8,22 @@
 
 `PetfindeR` wraps the [Petfinder API](https://www.petfinder.com/developers/api-docs) in an easy-to-use, conveninent R package. The `PetfindeR` library also provides handy methods for coercing the returned JSON from the API into usable `data.frame` objects to facilitate data analysis and other tasks. 
 
+## Installation
+
+The `PetfindeR` library has been submitted to CRAN for review, but in the meantime, the library can be installed using [devtools](https://cran.r-project.org/web/packages/devtools/index.html). 
+
+~~~ r
+install.packages('devtools') # if devtools is not already installed
+devtools::install_github('aschleg/PetfindeR')
+~~~
+
+The latest development version can always be installed using `devtools` rather than waiting for new releases to become live on CRAN.
+
 ## Examples and Usage
 
 After receiving an API key from [Petfinder](https://www.petfinder.com/developers/api-key), usage of `PetfindeR` to extract data from the Petfinder database is straightforward. Below, we demonstrate some examples on authenticating with the Petfinder API and extracting data using the available API methods.
 
-#### Authenticating
+### Authenticating
 
 `PetfindeR` is built using [`R6 Classes`](https://cran.r-project.org/web/packages/R6/index.html), therefore authenticating with the Petfinder API only requires creating an object to store the authentication with a given API key as in the example below.
 
