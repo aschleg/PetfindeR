@@ -1,5 +1,6 @@
 ---
 title: "PetfindeR Introduction Part Two"
+author: "Aaron Schlegel"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started with PetfindeR}
