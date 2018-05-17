@@ -8,6 +8,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include=FALSE}
+library(httptest)
+start_vignette("PetfindeR_Introduction_Part_One")
+```
+
 # Introduction to `PetfindeR` Part Two
 
 The first vignette introduced and explored the basic usage of the `PetfindeR` library. In this vignette, we take a quick look at some of the additional uses of the library and its methods to extract data from the Petfinder database. Before getting started, it is worthwhile to recall the limits imposed by Petfinder when interacting with its API. The following restrictions are copied from [Petfinder's API documentation](https://www.petfinder.com/developers/api-docs#restrictions):
@@ -68,3 +73,7 @@ raw_count <- pf$pet.find(location = 'WA', count = 100, return_df = TRUE)
 ## Conclusion
 
 This short vignette explored some of the additional functionality of several of the methods available in the Petfinder API and `PetfindeR` library for further customizing the number of records and their location in the database using the `offset` parameter. Future vignettes will also explore some possible use cases of extracting and analyzing the data available in the Petfinder database.
+
+```{r, include=FALSE}
+end_vignette()
+```

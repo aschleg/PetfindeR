@@ -9,3 +9,4 @@ $ cat .gitignore
 .RData
 .DS_Store
 data/
+vignettes/Analyzing Adoptable Pet Descriptions with R and PetfindeR.Rmd
