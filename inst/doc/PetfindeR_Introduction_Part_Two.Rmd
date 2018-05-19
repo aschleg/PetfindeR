@@ -1,11 +1,17 @@
 ---
 title: "PetfindeR Introduction Part Two"
+author: "Aaron Schlegel"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started with PetfindeR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{r, include=FALSE}
+library(httptest)
+start_vignette('mocks')
+```
 
 # Introduction to `PetfindeR` Part Two
 
@@ -67,3 +73,7 @@ raw_count <- pf$pet.find(location = 'WA', count = 100, return_df = TRUE)
 ## Conclusion
 
 This short vignette explored some of the additional functionality of several of the methods available in the Petfinder API and `PetfindeR` library for further customizing the number of records and their location in the database using the `offset` parameter. Future vignettes will also explore some possible use cases of extracting and analyzing the data available in the Petfinder database.
+
+```{r, include=FALSE}
+end_vignette()
+```

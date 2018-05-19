@@ -1,10 +1,14 @@
 Package: PetfindeR
 Type: Package
-Title: Petfinder API Wrapper
-Version: 1.1.0
+Title: 'Petfinder' API Wrapper
+Version: 1.1.3
 Author: Aaron Schlegel
 Maintainer: Aaron Schlegel <aaron@aaronschlegel.com>
-Description: R package that wraps the Petfinder API to allow easy and convenient extraction of data from the Petfinder database. 
+Description: 
+  Wrapper of the 'Petfinder API' <https://www.petfinder.com/developers/api-docs> that implements 
+  methods for interacting with and extracting data from the 'Petfinder' database. The 'Petfinder 
+  REST API' allows access to the 'Petfinder' database, one of the largest online, searchable 
+  databases of adoptable animals and animal welfare organizations across North America.
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -20,5 +24,4 @@ Suggests: R6,
   httptest,
   testthat,
   knitr,
-  dplyr,
   rmarkdown

@@ -10,7 +10,7 @@
 
 ## Installation
 
-The `PetfindeR` library has been submitted to CRAN for review, but in the meantime, the library can be installed using [devtools](https://cran.r-project.org/web/packages/devtools/index.html). 
+The `PetfindeR` library has been submitted to CRAN for review, but in the meantime, the library can be installed using [devtools](https://cran.r-project.org/package=devtools). 
 
 ~~~ r
 install.packages('devtools') # if devtools is not already installed
@@ -25,7 +25,7 @@ After receiving an API key from [Petfinder](https://www.petfinder.com/developers
 
 ### Authenticating
 
-`PetfindeR` is built using [`R6 Classes`](https://cran.r-project.org/web/packages/R6/index.html), therefore authenticating with the Petfinder API only requires creating an object to store the authentication with a given API key as in the example below.
+`PetfindeR` is built using [`R6 Classes`](https://cran.r-project.org/package=R6), therefore authenticating with the Petfinder API only requires creating an object to store the authentication with a given API key as in the example below.
 
 ~~~ r
 library(PetfindeR)

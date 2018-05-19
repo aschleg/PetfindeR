@@ -8,6 +8,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include=FALSE}
+library(httptest)
+library(magrittr)
+start_vignette('mocks')
+```
+
 # About `PetfindeR`
 
 The goal of the `PetfindeR` package is to provide a simple and straightforward interface for interacting with the [Petfinder API](https://www.petfinder.com/developers/api-docs) through R. The Petfinder database contains approximately 300,000 adoptable pet records and 11,000 animal welfare organization records, which makes it a handy and valuable source of data for those in the animal welfare community. However, the outputs from the Petfinder API are in messy JSON format and thus it makes it more time-consuming and often frustrating to coerce the output data into a form that is workable with R. The `PetfindeR` package was developed to alleviate this difficulty and provide users with a streamlined interface for getting the data they want and using it for their specific purpose.
@@ -194,3 +200,7 @@ Note: There currently seems to be an issue (as of 5/9/2018) with the Petfinder A
 ## Conclusion
 
 In this vignette, we introduced the core functionality of the `PetfindeR` library for interacting and extracting data from the Petfinder API. In future vignettes, we will further explore working with the `PetfindeR` library as well some potential uses of the package for data extraction and analysis.
+
+```{r, include=FALSE}
+end_vignette()
+```

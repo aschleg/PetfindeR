@@ -1,3 +1,8 @@
+## ---- include=FALSE------------------------------------------------------
+library(httptest)
+library(magrittr)
+start_vignette('mocks')
+
 ## ------------------------------------------------------------------------
 library(PetfindeR)
 
@@ -62,4 +67,7 @@ head(safr.pets_df)[,1:10]
 
 ## ------------------------------------------------------------------------
 aby_shelters <- pf$shelter.listByBreed('cat', 'Abyssinian')
+
+## ---- include=FALSE------------------------------------------------------
+end_vignette()
 

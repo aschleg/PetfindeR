@@ -1,3 +1,7 @@
+## ---- include=FALSE------------------------------------------------------
+library(httptest)
+start_vignette('mocks')
+
 ## ------------------------------------------------------------------------
 library(PetfindeR)
 key <- Sys.getenv('PETFINDER_KEY')
@@ -20,4 +24,7 @@ max.record.exceeded <- pf$pet.find(location = 'WA', count = 500, pages = 5, retu
 ## ---- eval=FALSE---------------------------------------------------------
 #  paged <- pf$pet.find(location = 'WA', pages = 2, count = 50, return_df = TRUE)
 #  raw_count <- pf$pet.find(location = 'WA', count = 100, return_df = TRUE)
+
+## ---- include=FALSE------------------------------------------------------
+end_vignette()
 
