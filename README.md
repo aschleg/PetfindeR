@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/aschleg/PetfindeR.svg?branch=master)](https://travis-ci.org/aschleg/PetfindeR)
 [![Build status](https://ci.appveyor.com/api/projects/status/78048x1q7086r0dl?svg=true)](https://ci.appveyor.com/project/aschleg/petfinder)
 [![codecov](https://codecov.io/gh/aschleg/PetfindeR/branch/master/graph/badge.svg)](https://codecov.io/gh/aschleg/PetfindeR)
+[![https://cran.r-project.org/package=PetfindeR](https://www.r-pkg.org/badges/version/PetfindeR)
 
 :cat2: :dog2: :rooster: :rabbit2: :racehorse:
 
@@ -10,14 +11,18 @@
 
 ## Installation
 
-The `PetfindeR` library has been submitted to CRAN for review, but in the meantime, the library can be installed using [devtools](https://cran.r-project.org/package=devtools). 
+`PetfindeR` can be installed through the usual means:
+
+~~~ r
+install.packages('PetfindeR')
+~~~
+
+The package can also be installed with [`devtools`](https://cran.r-project.org/package=devtools) for those wanting the most recent development version.
 
 ~~~ r
 install.packages('devtools') # if devtools is not already installed
 devtools::install_github('aschleg/PetfindeR')
 ~~~
-
-The latest development version can always be installed using `devtools` rather than waiting for new releases to become live on CRAN.
 
 ## Examples and Usage
 

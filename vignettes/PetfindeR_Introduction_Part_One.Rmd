@@ -1,5 +1,5 @@
 ---
-title: "Getting Started with PetfindeR"
+title: "Getting Started with PetfindeR Part One"
 author: "Aaron Schlegel"
 output: rmarkdown::html_vignette
 vignette: >

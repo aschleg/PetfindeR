@@ -1,5 +1,5 @@
 ---
-title: "PetfindeR Introduction Part Two"
+title: "Getting Started with PetfindeR Part Two"
 author: "Aaron Schlegel"
 output: rmarkdown::html_vignette
 vignette: >
@@ -7,11 +7,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-```{r, include=FALSE}
-library(httptest)
-start_vignette('mocks')
-```
 
 # Introduction to `PetfindeR` Part Two
 
@@ -44,13 +39,13 @@ paged2 <- pf$pet.find(location = 'WA', count = 1000, pages = 2, return_df = TRUE
 
 The `PetfindeR` library will check to make sure the `count` parameter doesn't exceed 1,000 to avoid wasting an API call.
 
-```{r, error=TRUE}
+```{r, error=TRUE, eval=FALSE}
 count.too.high <- pf$pet.find(location = 'WA', count = 1001, return_df = TRUE)
 ```
 
 The library will also check to make sure that the input `pages` parameter and `count` will not exceed 2,000.
 
-```{r, error=TRUE}
+```{r, error=TRUE, eval=FALSE}
 max.record.exceeded <- pf$pet.find(location = 'WA', count = 500, pages = 5, return_df = TRUE)
 ```
 
@@ -73,7 +68,3 @@ raw_count <- pf$pet.find(location = 'WA', count = 100, return_df = TRUE)
 ## Conclusion
 
 This short vignette explored some of the additional functionality of several of the methods available in the Petfinder API and `PetfindeR` library for further customizing the number of records and their location in the database using the `offset` parameter. Future vignettes will also explore some possible use cases of extracting and analyzing the data available in the Petfinder database.
-
-```{r, include=FALSE}
-end_vignette()
-```
