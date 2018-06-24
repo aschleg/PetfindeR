@@ -91,7 +91,15 @@ Further information on the methods available in the Petfinder API can be found b
 
 ## Documentation
 
+* [PetfindeR PDF Reference Manual](https://CRAN.R-project.org/package=PetfindeR/PetfindeR.pdf)
 * [Petfinder's documentation on its API](https://www.petfinder.com/developers/api-docs)
+
+## Vignettes
+
+Vignettes are long-form documentation that explore more in-depth concepts related to the package. 
+
+* [PetfindeR Introduction Part One](https://CRAN.R-project.org/package=PetfindeR/vignettes/PetfindeR_Introduction_Part_One.html)
+* [PetfindeR Introduction Part Two](https://CRAN.R-project.org/package=PetfindeR/vignettes/PetfindeR_Introduction_Part_Two.html)
 
 ## About [Petfinder.com](https://www.petfinder.com)
 
