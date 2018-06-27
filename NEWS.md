@@ -1,3 +1,7 @@
+# PetfindeR 1.1.3
+
+No changes to the API for internal functionality have been changed. Versioning updated to 1.1.3 in accordance with CRAN submission policies.
+
 # PetfindeR 1.1.0
 
 * The `pet.find` method now correctly extracts results into a `data.frame` when the parameter `return_df = TRUE`.
