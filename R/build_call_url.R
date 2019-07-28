@@ -1,40 +1,44 @@
 
 
-parameters = function(key,
-                      animal = NULL,
-                      breed = NULL,
+parameters = function(breed = NULL,
                       size = NULL,
-                      sex = NULL,
+                      gender = NULL,
+                      color = NULL,
+                      coat = NULL,
+                      animal_type = NULL,
                       location = NULL,
+                      distance = NULL,
+                      state = NULL,
+                      country = NULL,
+                      query = NULL,
+                      sort = NULL,
                       name = NULL,
                       age = NULL,
-                      petId = NULL,
-                      shelterId = NULL,
+                      animal_id = NULL,
+                      organization_id = NULL,
                       status = NULL,
-                      output = NULL,
-                      offset = NULL,
-                      format = 'json',
-                      count = NULL,
-                      pages = NULL,
-                      id = NULL) {
+                      results_per_page = NULL,
+                      page = NULL) {
   
-  params <- list('key' = key,
-                 'animal' = animal,
-                 'breed' = breed,
+  params <- list('breed' = breed,
                  'size' = size,
-                 'sex' = sex,
-                 'age' = age,
+                 'gender' = gender,
+                 'color' = color,
+                 'coat' = coat,
+                 'animal_type' = animal_type,
                  'location' = location,
+                 'distance' = distance,
+                 'state' = state,
+                 'country' = country,
+                 'query' = query,
+                 'sort' = sort,
                  'name' = name,
-                 'petId' = petId,
-                 'shelterId' = shelterId,
+                 'age' = age,
+                 'animal_id' = animal_id,
+                 'organization_id' = organization_id,
                  'status' = status,
-                 'output' = output,
-                 'offset' = offset,
-                 'format' = format,
-                 'count' = count,
-                 'pages' = pages,
-                 'id' = id
+                 'results_per_page' = results_per_page,
+                 'page' = page
   )
   
   params <- params[!sapply(params, is.null)]
@@ -42,49 +46,62 @@ parameters = function(key,
 }
 
 
-check_inputs <- function(animal=NULL, size=NULL, sex=NULL, age=NULL, count=NULL, pages=NULL) {
+check_inputs <- function(animal_types=NULL, size=NULL, sex=NULL, age=NULL, count=NULL, pages=NULL) {
   
   if (!is.null(animal)) {
-    animals <- c('barnyard', 'bird', 'cat', 'dog', 'horse', 'reptile', 'smallfurry')
+    animals <- c('dog', 'cat', 'rabbit', 'small-furry', 
+                 'horse', 'bird', 'scales-fins-other', 'barnyard')
     
     if (!animal %in% animals) {
-      stop("animal must be one of 'barnyard', 'bird', 'cat', 'dog', 'horse', 'reptile', or 'smallfurry'")
-    }   
+      stop(paste0('The following animal type options are valid: ', paste0(animals, collapse = ', ')))
+    }
   }
   
   if (!is.null(size)) {
-    sizes <- c('S', 'M', 'L', 'XL')
+    sizes <- c('small', 'medium', 'large', 'xlarge')
     
     if (!size %in% sizes) {
-      stop("size parameter must be one of 'S' (small), 'M' (medium), 'L' (large), or 'XL' (extra-large)")
+      stop(paste0('The following animal size options are valid: ', paste0(sizes, collapse = ', ')))
     }
   }
 
   if (!is.null(sex)) {
-    genders <- c('M', 'F')
+    genders <- c('male', 'female', 'unknown')
     
     if (!sex %in% genders) {
-      stop("sex parameter must be one of 'M' (male), or 'F' (female)")
+      stop(paste0('The following gender options are valid: ', paste0(genders, collapse = ', ')))
     }
   }
   
   if (!is.null(age)) {
-    ages <- c('Baby', 'Young', 'Adult', 'Senior')
+    ages <- c('baby', 'young', 'adult', 'senior')
     
     if (!age %in% ages) {
-      stop("age parameter must be one of 'Baby', 'Young', 'Adult', or 'Senior'")
+      stop(paste0('The following animal age options are valid: ', paste0(ages, collapse = ', ')))
     }
   }
   
-  if (!is.null(count)) {
-    if (count > 1000) {
-      stop('a single request cannot exceed 1,000 records')
+  if (!is.null(coats)) {
+    coats <- c('short', 'medium', 'long', 'wire', 'hairless', 'curly')
+    
+    if (!coats %in% coats) {
+      stop(paste0('The following coat options are valid: ', paste0(coats, collapse = ', ')))
     }
   }
   
-  if (!is.null(count) & !is.null(pages)) {
-    if (count * pages > 2000) {
-      stop('searches cannot exceed 2,000 records.')
+  if (!is.null(status)) {
+  status <- c('adoptable', 'adopted', 'found')
+    
+    if (!status %in% status) {
+      stop(paste0('The following status options are valid: ', paste0(status, collapse = ', ')))
+    }
+  }
+  
+  if (!is.null(sort)) {
+    sort <- c('recent', '-recent', 'distance', '-distance')
+    
+    if (!sort %in% sort) {
+      stop(paste0('The following sorting options are valid: ', paste0(sort, collapse = ', ')))
     }
   }
 }

@@ -1,3 +1,19 @@
+# PetfindeR 2.0.0
+
+New major release coinciding with the release of [v2.0 of the Petfinder API](https://www.petfinder.com/developers/)! The legacy version of the Petfinder API, v1.0, will be retired in January 2020, therefore, the `PetfindeR` library has been updated almost from the ground up to be compatible as possible with the new version of the Petfinder API! The new version of the Petfinder API is a huge improvement over the legacy version, with many changes and additions to 
+the design of the API itself. 
+
+Below is a summary of all the changes made in the release of `petpy 2.0`. 
+
+* The following methods have been added to `PetfindeR` to make it compatible with v2.0 of the Petfinder API.
+  - `animal_types()` is used to getting animal types (or type) available from the Petfinder API. The release of v2.0 of the Petfinder API added several endpoints for accessing animal types in the Petfinder database. This method wraps both Petfinder API endpoints for getting animal types. More information on the animal type endpoints in the Petfinder API can be found in its documentation:
+    - [Get Animal Types](https://www.petfinder.com/developers/v2/docs/#get-animal-types)
+    - [Get Single Animal Type](https://www.petfinder.com/developers/v2/docs/#get-a-single-animal-type)
+* The following methods have been removed as they are no longer valid endpoints with the release of v2.0 of the Petfinder API.
+  - `pet.getRandom`
+  - `shelter.getPets`
+  - `shelter.listByBreed`
+
 # PetfindeR 1.1.3
 
 No changes to the API for internal functionality have been changed. Versioning updated to 1.1.3 in accordance with CRAN submission policies.
