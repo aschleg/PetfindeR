@@ -11,7 +11,7 @@
 #' @examples 
 #' \dontrun{
 #' pf <- Petfinder(key) # Creates the connection with the Petfinder API.
-#' pf$breed.list('cat') # The connection can now be used to access the Petfinder API methods.
+#' pf$breeds('cat') # The connection can now be used to access the Petfinder API methods.
 #' }
 #' @export
 Petfinder <- function(key, secret) {
@@ -25,25 +25,96 @@ Petfinder <- function(key, secret) {
 .Petfinder.class <- R6::R6Class(".Petfinder.class",
 
   public = list(
-    key = NULL,
-    secret = NULL,
-    host = NULL,
-    
-    initialize = function(key, secret = NULL) {
-      
-      self$key <- key
-      self$secret <- secret
-      self$host <- 'https://api.petfinder.com/v2/'
-      self$auth <- self$authenticate(key = self$key, secret = self$secret)
-      
-    },
-    
-    animal_types = function(types, return_df = FALSE) {
-      
-    },
-    
-    breeds = function(animal_types, return_df = FALSE) {
 
+    initialize = function(key, secret) {
+      
+      private$key <- key
+      private$secret <- secret
+      private$host <- 'https://api.petfinder.com/v2/'
+      private$auth <- private$authenticate()
+      
+    },
+    
+    animal_types = function(types = NULL) {
+      all_types <- c('dog', 'cat', 'rabbit', 'small-furry', 'horse', 'bird',
+                     'scales-fins-other', 'barnyard')
+      
+      if (!is.null(types)) {
+        type_check <- types
+        
+        differ <- setdiff(type_check, all_types)
+        
+        if (length(differ) > 1) {
+          stop(paste0("animal types must be of the following", all_types, collapse = ' '))
+        }
+      }
+        
+      if (is.null(types)) {
+        types <- all_types
+      }
+      
+      if (is.vector(types) || is.list(types)) {
+        types_collection = list()
+        
+        for (type in types) {
+          url <- paste0(private$host, 'types/', type, sep = '')
+          
+          r <- httr::GET(url, 
+                         httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                  private$auth, sep = '')))
+
+          req_json <- fromJSON(httr::content(r, as='text', encoding = 'utf-8'))$type
+          req_json$`_links` <- NULL
+
+          types_collection[[req_json$name]] <- req_json
+
+        }
+      }
+        
+      else {
+        stop('types parameter must be either NULL, character, a vector, or a list.')
+      }
+      
+      return(types_collection)
+      
+    },
+    
+    breeds = function(animal_types = NULL, return_df = FALSE) {
+      all_animal_types <- c('dog', 'cat', 'rabbit', 'small-furry', 
+                            'horse', 'bird', 'scales-fins-other', 'barnyard')
+      
+      if (!is.null(animal_types)) {
+        type_check <- animal_types
+        
+        differ <- setdiff(type_check, all_animal_types)
+        
+        if (length(differ) > 1) {
+          stop(paste0("animal types must be of the following", all_animal_types, collapse = ' '))
+        }
+      }
+      
+      if (is.null(animal_types)) {
+        animal_types <- all_animal_types
+      }
+      
+      if (is.vector(animal_types) || is.list(animal_types)) {
+        breeds_collection = list()
+        
+        for (type in animal_types) {
+          url <- paste0(private$host, 'types/', type, '/breeds', sep = '')
+          
+          r <- httr::GET(url, 
+                         httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                  private$auth, sep = '')))
+          
+          req_json <- fromJSON(httr::content(r, as='text', encoding = 'utf-8'))$breeds$name
+          breeds_collection[[type]] <- req_json
+          
+        }
+      }
+      
+      return(breeds_collection)
+      
     },
     
     animals = function(animal_id = NULL, 
@@ -63,7 +134,7 @@ Petfinder <- function(key, secret) {
                        pages = 1,
                        results_per_page = 20, 
                        return_df = FALSE) {
-      
+      return(NULL)
     },
     
     organizations = function(organization_id = NULL,
@@ -77,23 +148,27 @@ Petfinder <- function(key, secret) {
                              results_per_page = 20,
                              pages = 1, 
                              return_df = FALSE) {
-      
+      return(NULL)
     }
   ),
   private = list(
-    authenticate = function(key, secret) {
+    key = NULL,
+    secret = NULL,
+    host = NULL,
+    auth = NULL,
+    
+    authenticate = function() {
       endpoint <- 'oauth2/token'
-      url <- paste0(self$host, endpoint, sep = '')
+      url <- paste0(private$host, endpoint, sep = '')
       req <- httr::POST(url, 
-                        body = list("grant_type"="client_credentials", "client_id" = key, 
-                                    "client_secret" = secret)
+                        body = list("grant_type"="client_credentials", "client_id" = private$key, 
+                                    "client_secret" = private$secret)
       );
       
       return(httr::content(req)$access_token)
     },
     
     return_json = function(url, params) {
-      params['format'] = 'json'
       url <- httr::parse_url(url)
       url$query <- params
       url <- httr::build_url(url)
