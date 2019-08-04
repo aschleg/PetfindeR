@@ -1,8 +1,8 @@
-context('test animal_types method')
+context('test animals method')
 
 
 httptest::with_mock_api({
-  test_that('animal_types method returns correct information', {
+  test_that('animals method returns correct information', {
     skip_on_cran()
     pf <- Petfinder(key = Sys.getenv('PETFINDER_KEY'), 
                     secret = Sys.getenv('PETFINDER_SECRET'))

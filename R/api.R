@@ -63,7 +63,7 @@ Petfinder <- function(key, secret) {
                          httr::add_headers(Authorization = paste0('Bearer ', 
                                                                   private$auth, sep = '')))
 
-          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))$type
+          req_json <- jsonlite::fromJSON(httr::content(r, as = 'text', encoding = 'utf-8'))$type
           req_json$`_links` <- NULL
 
           types_collection[[req_json$name]] <- req_json
@@ -150,7 +150,124 @@ Petfinder <- function(key, secret) {
                        pages = 1,
                        results_per_page = 20, 
                        return_df = FALSE) {
-      return(NULL)
+      
+      animals_list <- list()
+      
+      if (!is.null(animal_id)) {
+
+        if (is.vector(animal_id) || is.list(animal_id)) { 
+          
+          for (ani_id in animal_id) {
+            url <- paste0(private$host, 'animals/', ani_id, sep = '')
+            
+            r <- httr::GET(url, 
+                           httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                    private$auth, sep = '')))
+            
+            req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                           flatten = TRUE)$animal
+            animals_list[[as.character(ani_id)]] <- req_json
+            
+          }
+        }
+      }
+      
+      else {
+        url <- paste0(private$host, 'animals/', sep = '')
+        
+        params <- private$parameters(animal_type = animal_type,
+                                     breed = breed,
+                                     size = size,
+                                     gender = gender,
+                                     age = age,
+                                     color = color,
+                                     coat = coat,
+                                     status = status,
+                                     name = name,
+                                     organization_id = organization_id,
+                                     location = location,
+                                     distance = distance,
+                                     sort = sort,
+                                     results_per_page = results_per_page
+                                     )
+        
+        if (is.null(pages)) {
+          params['limit'] = 100
+          params['page'] = 1
+          
+          r <- httr::GET(url, 
+                         query = params,
+                         httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                  private$auth, sep = '')))
+          
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                         flatten = TRUE)
+          
+          animals_list[[as.character(1)]] <- req_json$animals
+          max_pages <- req_json$pagination$total_pages
+          
+          for (page in 2:max_pages) {
+            params['page'] <- page
+            
+            r <- httr::GET(url, 
+                           query = params,
+                           httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                    private$auth, sep = '')))
+            
+            req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                           flatten = TRUE)
+            animals_list[page] <- req_json$animals
+            
+          }
+          
+        }
+        
+        else {
+          params['page'] = 1
+          
+          r <- httr::GET(url, 
+                         query = params,
+                         httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                  private$auth, sep = '')))
+          
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))
+          
+          animals_list[[as.character(1)]] <- req_json$animals
+          
+          if (pages == 1) {
+            return(animals_list)
+          }
+          
+          max_pages <- req_json$pagination$total_pages
+          
+          if (pages > max_pages) {
+            pages <- max_pages
+            max_page_warning = TRUE
+          }
+          
+          for (page in 2:pages) {
+            params['page'] = page
+            
+            r <- httr::GET(url, 
+                           query = params,
+                           httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                    private$auth, sep = '')))
+            
+            req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                           flatten = TRUE)
+            
+            animals_list[[as.character(page)]] <- req_json$animals
+          }
+        }
+        
+      }
+      
+      if (return_df == TRUE) {
+        
+      }
+      
+      return(animals_list)
+      
     },
     
     organizations = function(organization_id = NULL,
@@ -167,6 +284,7 @@ Petfinder <- function(key, secret) {
       return(NULL)
     }
   ),
+  
   private = list(
     key = NULL,
     secret = NULL,
@@ -184,17 +302,127 @@ Petfinder <- function(key, secret) {
       return(httr::content(req)$access_token)
     },
     
-    return_json = function(url, params) {
-      url <- httr::parse_url(url)
-      url$query <- params
-      url <- httr::build_url(url)
+    parameters = function(breed = NULL,
+                          size = NULL,
+                          gender = NULL,
+                          color = NULL,
+                          coat = NULL,
+                          animal_type = NULL,
+                          location = NULL,
+                          distance = NULL,
+                          state = NULL,
+                          country = NULL,
+                          query = NULL,
+                          sort = NULL,
+                          name = NULL,
+                          age = NULL,
+                          animal_id = NULL,
+                          organization_id = NULL,
+                          status = NULL,
+                          results_per_page = NULL,
+                          page = NULL) {
       
-      json_url <- jsonlite::fromJSON(url, flatten = TRUE, 
-                                     simplifyDataFrame = TRUE, 
-                                     simplifyMatrix = TRUE, 
-                                     simplifyVector = TRUE)
+      params <- list('breed' = breed,
+                     'size' = size,
+                     'gender' = gender,
+                     'color' = color,
+                     'coat' = coat,
+                     'animal_type' = animal_type,
+                     'location' = location,
+                     'distance' = distance,
+                     'state' = state,
+                     'country' = country,
+                     'query' = query,
+                     'sort' = sort,
+                     'name' = name,
+                     'age' = age,
+                     'animal_id' = animal_id,
+                     'organization_id' = organization_id,
+                     'status' = status,
+                     'limit' = results_per_page,
+                     'page' = page
+      )
       
-      return(json_url)
+      params <- params[!sapply(params, is.null)]
+      
+      return(params)
+    }, 
+    
+    check_inputs = function(animal_types = NULL, 
+                             size = NULL, 
+                             gender = NULL, 
+                             age = NULL, 
+                             coat = NULL,
+                             status = NULL,
+                             distance = NULL,
+                             sort = NULL,
+                             limit = NULL) {
+      
+      .animal_types <- c('dog', 'cat', 'rabbit', 'small-furry', 
+                         'horse', 'bird', 'scales-fins-other', 'barnyard')
+      .sizes <- c('small', 'medium', 'large', 'xlarge')
+      .genders <- c('male', 'female', 'unknown')
+      .ages <- c('baby', 'young', 'adult', 'senior')
+      .coats <- c('short', 'medium', 'long', 'wire', 'hairless', 'curly')
+      .status <- c('adoptable', 'adopted', 'found')
+      .sort <- c('recent', '-recent', 'distance', '-distance')
+      
+      if (!is.null(animal_types)) {
+        if (!animal_types %in% .animal_types) {
+          stop(paste0('The following animal type options are valid: ', 
+                      paste0(.animal_types, collapse = ', ')))
+        }
+      }
+      
+      if (!is.null(size)) {
+        if (!size %in% .sizes) {
+          stop(paste0('The following animal size options are valid: ', 
+                      paste0(.sizes, collapse = ', ')))
+        }
+      }
+      
+      if (!is.null(gender)) {
+        if (!gender %in% .genders) {
+          stop(paste0('The following gender options are valid: ', paste0(.genders, collapse = ', ')))
+        }
+      }
+      
+      if (!is.null(age)) {
+        if (!age %in% .ages) {
+          stop(paste0('The following animal age options are valid: ', paste0(.ages, collapse = ', ')))
+        }
+      }
+      
+      if (!is.null(coat)) {
+        if (!coat %in% .coats) {
+          stop(paste0('The following coat options are valid: ', paste0(.coats, collapse = ', ')))
+        }
+      }
+      
+      if (!is.null(status)) {
+        if (!status %in% .status) {
+          stop(paste0('The following status options are valid: ', paste0(.status, collapse = ', ')))
+        }
+      }
+      
+      if (!is.null(sort)) {
+        if (!sort %in% .sort) {
+          stop(paste0('The following sorting options are valid: ', paste0(.sort, collapse = ', ')))
+        }
+      }
+      
+      if (!is.null(distance)) {
+        if (0 > as.integer(distance) || as.integer(distance) > 500) {
+          stop('distance cannot be greater than 500 or less than 0.')
+        }
+      }
+      
+      if (!is.null(limit)) {
+        if (as.integer(limit) > 100) {
+          stop('results per page cannot be greater than 100.')
+        } 
+      }
+      
     }
   )
 )
