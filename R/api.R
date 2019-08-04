@@ -63,7 +63,7 @@ Petfinder <- function(key, secret) {
                          httr::add_headers(Authorization = paste0('Bearer ', 
                                                                   private$auth, sep = '')))
 
-          req_json <- fromJSON(httr::content(r, as='text', encoding = 'utf-8'))$type
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))$type
           req_json$`_links` <- NULL
 
           types_collection[[req_json$name]] <- req_json
@@ -107,10 +107,26 @@ Petfinder <- function(key, secret) {
                          httr::add_headers(Authorization = paste0('Bearer ', 
                                                                   private$auth, sep = '')))
           
-          req_json <- fromJSON(httr::content(r, as='text', encoding = 'utf-8'))$breeds$name
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))$breeds$name
           breeds_collection[[type]] <- req_json
           
         }
+      }
+      
+      if (return_df == TRUE) {
+        breeds_collection_df <- data.frame()
+        type_names <- names(breeds_collection)
+        
+        for (type in seq_along(breeds_collection)) {
+          df <- data.frame(rep(type_names[type], length(breeds_collection[[type]])), 
+                           breeds_collection[[type]], stringsAsFactors = FALSE)
+          
+          names(df) <- c('animal', 'breeds')
+          breeds_collection_df <- dplyr::bind_rows(breeds_collection_df, df)
+        }
+        
+        breeds_collection <- breeds_collection_df
+        
       }
       
       return(breeds_collection)
