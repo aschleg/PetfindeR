@@ -166,6 +166,7 @@ Petfinder <- function(key, secret) {
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)$animal
+            
             animals_list[[as.character(ani_id)]] <- req_json
             
           }
@@ -216,7 +217,8 @@ Petfinder <- function(key, secret) {
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)
-            animals_list[page] <- req_json$animals
+            
+            animals_list[[as.character(page)]] <- req_json$animals
             
           }
           
@@ -257,9 +259,9 @@ Petfinder <- function(key, secret) {
                                            flatten = TRUE)
             
             animals_list[[as.character(page)]] <- req_json$animals
+            
           }
         }
-        
       }
       
       if (return_df == TRUE) {
@@ -281,7 +283,117 @@ Petfinder <- function(key, secret) {
                              results_per_page = 20,
                              pages = 1, 
                              return_df = FALSE) {
-      return(NULL)
+      
+      organizations_list <- list()
+      
+      if (!is.null(organization_id)) {
+        
+        if (is.vector(organization_id) || is.list(organization_id)) {
+          
+          for (org_id in organization_id) {
+            url <- paste0(private$host, 'organizations/', org_id, sep = '')
+            
+            r <- httr::GET(url, 
+                           httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                    private$auth, sep = '')))
+            
+            req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                           flatten = TRUE)$organization
+            
+            organizations_list[[as.character(org_id)]] <- req_json
+          }
+        }
+      }
+      
+      else {
+        url <- paste0(private$host, 'organizations/', sep = '')
+        
+        params <- private$parameters(name = name,
+                                     location = location, 
+                                     distance = distance, 
+                                     state = state,
+                                     country = country,
+                                     query = query, 
+                                     sort = sort,
+                                     results_per_page = results_per_page)
+        
+        if (is.null(pages)) {
+          params['limit'] = 100
+          params['page'] = 1
+          
+          r <- httr::GET(url, 
+                         query = params,
+                         httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                  private$auth, sep = '')))
+          
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                         flatten = TRUE)$organizations
+          
+          max_pages <- req_json$pagination$total_pages
+          
+          for (page in 2:max_pages) {
+            params['page'] = page
+            
+            r <- httr::GET(url, 
+                           query = params,
+                           httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                    private$auth, sep = '')))
+            
+            req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                           flatten = TRUE)$organizations
+            
+            organizations_list[[as.character(page)]] <- req_json
+            
+          }
+        }
+        
+        else {
+          params['page'] = 1
+          
+          r <- httr::GET(url, 
+                         query = params,
+                         httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                  private$auth, sep = '')))
+          
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                         flatten = TRUE)
+          
+          organizations_list[[as.character(1)]] <- req_json$organizations
+          
+          if (pages == 1) {
+            return(organizations_list)
+          }
+          
+          max_pages <- req_json$pagination$total_pages
+          
+          if (pages > max_pages) {
+            pages <- max_pages
+            max_page_warning <- TRUE
+          }
+          
+          for (page in 2:pages) {
+            params['page'] = page
+            
+            r <- httr::GET(url, 
+                           query = params,
+                           httr::add_headers(Authorization = paste0('Bearer ', 
+                                                                    private$auth, sep = '')))
+            
+            req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
+                                           flatten = TRUE)
+            
+            organizations_list[[as.character(page)]] <- req_json$organizations
+            
+          }
+        }
+      }
+      
+      if (return_df == TRUE) {
+        
+      }
+    
+      return(organizations_list)
+    
     }
   ),
   
@@ -349,14 +461,14 @@ Petfinder <- function(key, secret) {
     }, 
     
     check_inputs = function(animal_types = NULL, 
-                             size = NULL, 
-                             gender = NULL, 
-                             age = NULL, 
-                             coat = NULL,
-                             status = NULL,
-                             distance = NULL,
-                             sort = NULL,
-                             limit = NULL) {
+                            size = NULL, 
+                            gender = NULL, 
+                            age = NULL, 
+                            coat = NULL,
+                            status = NULL,
+                            distance = NULL,
+                            sort = NULL,
+                            limit = NULL) {
       
       .animal_types <- c('dog', 'cat', 'rabbit', 'small-furry', 
                          'horse', 'bird', 'scales-fins-other', 'barnyard')
