@@ -63,10 +63,10 @@ Petfinder <- function(key, secret) {
                          httr::add_headers(Authorization = paste0('Bearer ', 
                                                                   private$auth, sep = '')))
 
-          req_json <- jsonlite::fromJSON(httr::content(r, as = 'text', encoding = 'utf-8'))
+          req_json <- jsonlite::fromJSON(httr::content(r, as = 'text', encoding = 'utf-8'))$type
           req_json$`_links` <- NULL
 
-          types_collection[[type]] <- req_json$type
+          types_collection[[req_json$name]] <- req_json
 
         }
       }
@@ -241,14 +241,12 @@ Petfinder <- function(key, secret) {
           }
           
           max_pages <- req_json$pagination$total_pages
-
-          if (!is.null(max_pages)) {
-            if (pages > max_pages) {
-              pages <- max_pages
-              max_page_warning = TRUE
-            }
+          
+          if (pages > max_pages) {
+            pages <- max_pages
+            max_page_warning = TRUE
           }
-
+          
           for (page in 2:pages) {
             params['page'] = page
             
@@ -332,7 +330,6 @@ Petfinder <- function(key, secret) {
                                          flatten = TRUE)
           
           max_pages <- req_json$pagination$total_pages
-          organizations_list[[paste0('page', as.character(1), sep = '')]] <- req_json$organizations
           
           for (page in 2:max_pages) {
             params['page'] = page
@@ -369,11 +366,9 @@ Petfinder <- function(key, secret) {
           
           max_pages <- req_json$pagination$total_pages
           
-          if (!is.null(max_pages)) {
-            if (pages > max_pages) {
-              pages <- max_pages
-              max_page_warning <- TRUE
-            }
+          if (pages > max_pages) {
+            pages <- max_pages
+            max_page_warning <- TRUE
           }
           
           for (page in 2:pages) {

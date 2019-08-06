@@ -7,7 +7,7 @@ test_that('animals method returns correct information', {
                   secret = Sys.getenv('PETFINDER_SECRET_KEY'))
   
   general_search <- pf$animals()
-  
+
   expect_is(general_search, 'list')
   expect_is(general_search$page1, 'data.frame')
   
