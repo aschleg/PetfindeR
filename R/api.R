@@ -204,7 +204,7 @@ Petfinder <- function(key, secret) {
           req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                          flatten = TRUE)
           
-          animals_list[[as.character(1)]] <- req_json$animals
+          animals_list[[paste0('page', as.character(1), sep = '')]] <- req_json$animals
           max_pages <- req_json$pagination$total_pages
           
           for (page in 2:max_pages) {
@@ -218,7 +218,7 @@ Petfinder <- function(key, secret) {
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)
             
-            animals_list[[as.character(page)]] <- req_json$animals
+            animals_list[[paste0('page', as.character(page), sep='')]] <- req_json$animals
             
           }
           
@@ -234,7 +234,7 @@ Petfinder <- function(key, secret) {
           
           req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))
           
-          animals_list[[as.character(1)]] <- req_json$animals
+          animals_list[[paste0('page', as.character(1), sep='')]] <- req_json$animals
           
           if (pages == 1) {
             return(animals_list)
@@ -258,7 +258,7 @@ Petfinder <- function(key, secret) {
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)
             
-            animals_list[[as.character(page)]] <- req_json$animals
+            animals_list[[paste0('page', as.character(page), sep='')]] <- req_json$animals
             
           }
         }
@@ -342,7 +342,7 @@ Petfinder <- function(key, secret) {
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)$organizations
             
-            organizations_list[[as.character(page)]] <- req_json
+            organizations_list[[paste0('page', as.character(page), sep = '')]] <- req_json
             
           }
         }
@@ -358,7 +358,7 @@ Petfinder <- function(key, secret) {
           req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                          flatten = TRUE)
           
-          organizations_list[[as.character(1)]] <- req_json$organizations
+          organizations_list[[paste0('page', as.character(1), sep = '')]] <- req_json$organizations
           
           if (pages == 1) {
             return(organizations_list)
@@ -382,7 +382,7 @@ Petfinder <- function(key, secret) {
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)
             
-            organizations_list[[as.character(page)]] <- req_json$organizations
+            organizations_list[[paste0('page', as.character(page), sep = '')]] <- req_json$organizations
             
           }
         }

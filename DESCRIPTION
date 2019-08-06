@@ -21,7 +21,6 @@ License: MIT + file LICENSE
 URL: https://github.com/aschleg/PetfindeR
 VignetteBuilder: knitr
 Suggests: R6,
-  httptest,
   testthat,
   knitr,
   rmarkdown
