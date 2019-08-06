@@ -1,4 +1,4 @@
-library(httptest)
+library(testthat)
 library(PetfindeR)
 
 test_check('PetfindeR')
