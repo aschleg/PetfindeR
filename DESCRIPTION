@@ -11,11 +11,6 @@ Description:
   databases of adoptable animals and animal welfare organizations across North America.
 Encoding: UTF-8
 LazyData: true
-Imports:
-  dplyr,
-  httr,
-  jsonlite,
-  plyr
 RoxygenNote: 6.1.1
 License: MIT + file LICENSE
 URL: https://github.com/aschleg/PetfindeR

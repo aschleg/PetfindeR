@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Introduction to PetfindeR</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to PetfindeR</h1>
+
+
+
+<p>The following vignette introduces the <code>PetfindeR</code> package and its methods for interacting with the Petfinder API. The goal of the <code>PetfindEr</code> library is to enable other users to interact with the rich data available in the Petfinder database. More information on the Petfinder API itself can be found on the <a href="https://www.petfinder.com/developers/v2/docs/">API documentation page</a>.</p>
+<div id="table-of-contents" class="section level1">
+<h1>Table of Contents</h1>
+<ul>
+<li><a href="#api_key">Obtaining an API and Secret key</a></li>
+<li><a href="#installation">Installation</a>
+<ul>
+<li><a href="#types">Animal Types</a></li>
+<li><a href="#breeds">Extracting breeds of animals available in the Petfinder database</a></li>
+<li><a href="#animals">Finding animals</a></li>
+<li><a href="#organizations">Finding shelters matching search criteria</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div>
+<div id="obtaining-an-api-and-secret-key" class="section level1">
+<h1>Obtaining an API and Secret Key <a id="api_key"></a></h1>
+<p>Before we can begin extracting data from the API, we first require an API and secret key to authenticate access. To receive an API and secret key, <a href="https://www.petfinder.com/developers/">create a free account with Petfinder</a> on their developer page and request an API key.</p>
+<p>The API and secret key received from Petfinder are what we will use to authenticate our connection to the Petfinder API with <code>PetfindeR</code>. Note authenication has a timeout of 3600 seconds, or one hour, after which the authentication to the API will need to be made again. For more information on how the Petfinder API authenication works, <a href="https://www.petfinder.com/developers/v2/docs/#using-the-api">visit the API documentation on the Petfinder developer page</a>.</p>
+<p>Storing your keys received from APIs and other sensitive information in a secure file or as an environment variable is considered best practice to avoid any potential malicious activity. Therefore, we save the API and secret keys we received from Petfinder as environment variables in a specific R file named <code>.Renviron</code>. If you do not have an <code>.Renviron</code> file on your system, here is handy and short guide for creating one and adding environment variables for both Linux and Windows. If on a Mac, you can add the <code>.Renviron</code> file in your home directory. After saving the variables and restarting R/RStudio, we can access the environment variables with the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Sys.getenv.html"><code>Sys.getenv()</code></a> function.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">key &lt;-<span class="st"> </span><span class="kw">Sys.getenv</span>(<span class="st">'PETFINDER_KEY'</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">secret &lt;-<span class="st"> </span><span class="kw">Sys.getenv</span>(<span class="st">'PETFINDER_SECRET_KEY'</span>)</a></code></pre></div>
+</div>
+<div id="installation" class="section level1">
+<h1>Installation <a id="installation"></a></h1>
+<p>If not already installed, <code>PetfindeR</code> can be installed through the usual means:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">'PetfindeR'</span>)</a></code></pre></div>
+<p>The package can also be installed with <a href="https://cran.r-project.org/package=devtools"><code>devtools</code></a> for those wanting the most recent development version.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">'devtools'</span>) <span class="co"># if devtools is not already installed</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">'aschleg/PetfindeR'</span>)</a></code></pre></div>
+<p>Once installed, we can load the library as usual:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(PetfindeR)</a></code></pre></div>
+<p>Now that <code>PetfindeR</code> is loaded, we can authenticate our connection to the API and begin extracting data! The authentication to the Petfinder API occurs when the <code>Petfinder</code> class is initialized, which requires the API and secret keys we received in the previous step as parameters.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">pf =<span class="st"> </span><span class="kw">Petfinder</span>(<span class="dt">key =</span> key, <span class="dt">secret =</span> secret)</a></code></pre></div>
+<p>The <code>pf</code> variable is the initialized Petfinder class with our given API and secret key. We can now use this instance to interact with and extract data from the Petfinder API.</p>
+</div>
+<div id="getting-animal-types" class="section level1">
+<h1>Getting Animal Types <a id="types"></a></h1>
+<p>The <code>animal_types</code> method allows one to get information on all or specific animal types in the Petfinder database. Animal type data includes the type’s species, color, coat and gender. Leaving the <code>types</code> parameter of the method empty will return all available animal types.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">animal_types =<span class="st"> </span>pf<span class="op">$</span><span class="kw">animal_types</span>()</a></code></pre></div>
+<p>We can get the names of all the animal types available in the Petfinder API by using the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/names.html"><code>names()</code></a> function</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">names</span>(animal_types)</a></code></pre></div>
+<pre><code>## [1] &quot;Dog&quot;                  &quot;Cat&quot;                  &quot;Rabbit&quot;              
+## [4] &quot;Small &amp; Furry&quot;        &quot;Horse&quot;                &quot;Bird&quot;                
+## [7] &quot;Scales, Fins &amp; Other&quot; &quot;Barnyard&quot;</code></pre>
+<p>Specific information for a given type can be accessed as usual:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">print</span>(animal_types<span class="op">$</span>Cat<span class="op">$</span>coats)</a></code></pre></div>
+<pre><code>## [1] &quot;Hairless&quot; &quot;Short&quot;    &quot;Medium&quot;   &quot;Long&quot;</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">print</span>(animal_types<span class="op">$</span>Cat<span class="op">$</span>colors)</a></code></pre></div>
+<pre><code>##  [1] &quot;Black&quot;                        &quot;Black &amp; White / Tuxedo&quot;      
+##  [3] &quot;Blue Cream&quot;                   &quot;Blue Point&quot;                  
+##  [5] &quot;Brown / Chocolate&quot;            &quot;Buff &amp; White&quot;                
+##  [7] &quot;Buff / Tan / Fawn&quot;            &quot;Calico&quot;                      
+##  [9] &quot;Chocolate Point&quot;              &quot;Cream / Ivory&quot;               
+## [11] &quot;Cream Point&quot;                  &quot;Dilute Calico&quot;               
+## [13] &quot;Dilute Tortoiseshell&quot;         &quot;Flame Point&quot;                 
+## [15] &quot;Gray &amp; White&quot;                 &quot;Gray / Blue / Silver&quot;        
+## [17] &quot;Lilac Point&quot;                  &quot;Orange &amp; White&quot;              
+## [19] &quot;Orange / Red&quot;                 &quot;Seal Point&quot;                  
+## [21] &quot;Smoke&quot;                        &quot;Tabby (Brown / Chocolate)&quot;   
+## [23] &quot;Tabby (Buff / Tan / Fawn)&quot;    &quot;Tabby (Gray / Blue / Silver)&quot;
+## [25] &quot;Tabby (Leopard / Spotted)&quot;    &quot;Tabby (Orange / Red)&quot;        
+## [27] &quot;Tabby (Tiger Striped)&quot;        &quot;Torbie&quot;                      
+## [29] &quot;Tortoiseshell&quot;                &quot;White&quot;</code></pre>
+<p>The <code>animal_types</code> method also accepts a single or multiple animal types.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">cats =<span class="st"> </span>pf<span class="op">$</span><span class="kw">animal_types</span>(<span class="st">'cat'</span>)</a></code></pre></div>
+<p>We can access the type’s data as we did before:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">print</span>(cats<span class="op">$</span>Cat<span class="op">$</span>coats)</a></code></pre></div>
+<pre><code>## [1] &quot;Hairless&quot; &quot;Short&quot;    &quot;Medium&quot;   &quot;Long&quot;</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">print</span>(cats<span class="op">$</span>Cat<span class="op">$</span>colors)</a></code></pre></div>
+<pre><code>##  [1] &quot;Black&quot;                        &quot;Black &amp; White / Tuxedo&quot;      
+##  [3] &quot;Blue Cream&quot;                   &quot;Blue Point&quot;                  
+##  [5] &quot;Brown / Chocolate&quot;            &quot;Buff &amp; White&quot;                
+##  [7] &quot;Buff / Tan / Fawn&quot;            &quot;Calico&quot;                      
+##  [9] &quot;Chocolate Point&quot;              &quot;Cream / Ivory&quot;               
+## [11] &quot;Cream Point&quot;                  &quot;Dilute Calico&quot;               
+## [13] &quot;Dilute Tortoiseshell&quot;         &quot;Flame Point&quot;                 
+## [15] &quot;Gray &amp; White&quot;                 &quot;Gray / Blue / Silver&quot;        
+## [17] &quot;Lilac Point&quot;                  &quot;Orange &amp; White&quot;              
+## [19] &quot;Orange / Red&quot;                 &quot;Seal Point&quot;                  
+## [21] &quot;Smoke&quot;                        &quot;Tabby (Brown / Chocolate)&quot;   
+## [23] &quot;Tabby (Buff / Tan / Fawn)&quot;    &quot;Tabby (Gray / Blue / Silver)&quot;
+## [25] &quot;Tabby (Leopard / Spotted)&quot;    &quot;Tabby (Orange / Red)&quot;        
+## [27] &quot;Tabby (Tiger Striped)&quot;        &quot;Torbie&quot;                      
+## [29] &quot;Tortoiseshell&quot;                &quot;White&quot;</code></pre>
+<p>Multiple specific animal types can also be passed.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">cat_dog &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">animal_types</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'dog'</span>))</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">print</span>(cat_dog<span class="op">$</span>Dog<span class="op">$</span>coats)</a></code></pre></div>
+<pre><code>## [1] &quot;Hairless&quot; &quot;Short&quot;    &quot;Medium&quot;   &quot;Long&quot;     &quot;Wire&quot;     &quot;Curly&quot;</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">print</span>(cat_dog<span class="op">$</span>Cat<span class="op">$</span>coats)</a></code></pre></div>
+<pre><code>## [1] &quot;Hairless&quot; &quot;Short&quot;    &quot;Medium&quot;   &quot;Long&quot;</code></pre>
+</div>
+<div id="finding-available-breeds-of-animal-types" class="section level1">
+<h1>Finding Available Breeds of Animal Types <a id="breeds"></a></h1>
+<p>Listed breeds for each animal type can be extracted using the <code>breeds()</code> method.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">all_breeds &lt;-<span class="st"> </span>pf<span class="op">$</span><span class="kw">breeds</span>()</a></code></pre></div>
+<p>For brevity, let’s print the animal types and the first three breeds of each type.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="cf">for</span> (breed <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(all_breeds)) {</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">  <span class="kw">print</span>(<span class="kw">names</span>(all_breeds[breed]))</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">  <span class="kw">print</span>(all_breeds[breed][[<span class="dv">1</span>]][<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">}</a></code></pre></div>
+<pre><code>## [1] &quot;dog&quot;
+## [1] &quot;Affenpinscher&quot;    &quot;Afghan Hound&quot;     &quot;Airedale Terrier&quot;
+## [1] &quot;cat&quot;
+## [1] &quot;Abyssinian&quot;       &quot;American Bobtail&quot; &quot;American Curl&quot;   
+## [1] &quot;rabbit&quot;
+## [1] &quot;American&quot;           &quot;American Fuzzy Lop&quot; &quot;American Sable&quot;    
+## [1] &quot;small-furry&quot;
+## [1] &quot;Abyssinian&quot; &quot;Chinchilla&quot; &quot;Degu&quot;      
+## [1] &quot;horse&quot;
+## [1] &quot;Appaloosa&quot; &quot;Arabian&quot;   &quot;Belgian&quot;  
+## [1] &quot;bird&quot;
+## [1] &quot;African Grey&quot; &quot;Amazon&quot;       &quot;Brotogeris&quot;  
+## [1] &quot;scales-fins-other&quot;
+## [1] &quot;Asian Box&quot;      &quot;Ball Python&quot;    &quot;Bearded Dragon&quot;
+## [1] &quot;barnyard&quot;
+## [1] &quot;Alpaca&quot; &quot;Alpine&quot; &quot;Angora&quot;</code></pre>
+<p>Similar to the <code>animal_types()</code> method, the <code>breeds()</code> mehtod can accept a single or multiple animal types.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">cat_rabbit =<span class="st"> </span>pf<span class="op">$</span><span class="kw">breeds</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'rabbit'</span>))</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="cf">for</span> (breed <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(cat_rabbit)) {</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4">  <span class="kw">print</span>(<span class="kw">names</span>(all_breeds[breed]))</a>
+<a class="sourceLine" id="cb25-5" data-line-number="5">  <span class="kw">print</span>(all_breeds[breed][[<span class="dv">1</span>]][<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb25-6" data-line-number="6">}</a></code></pre></div>
+<pre><code>## [1] &quot;dog&quot;
+## [1] &quot;Affenpinscher&quot;    &quot;Afghan Hound&quot;     &quot;Airedale Terrier&quot;
+## [1] &quot;cat&quot;
+## [1] &quot;Abyssinian&quot;       &quot;American Bobtail&quot; &quot;American Curl&quot;</code></pre>
+</div>
+<div id="search-for-animals-in-the-petfinder-database" class="section level1">
+<h1>Search for animals in the Petfinder database <a id="animals"></a></h1>
+<p>The <code>animals</code> method can be used to perform a general search for animals based on specified criteria or returning data on specific animals based on their respective IDs. For example, let’s say we want to get 100 adoptable female cats within a 10 mile distance of Seattle, WA.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">cats =<span class="st"> </span>pf<span class="op">$</span><span class="kw">animals</span>(<span class="dt">animal_type =</span> <span class="st">'cat'</span>, <span class="dt">gender =</span> <span class="st">'female'</span>, <span class="dt">status =</span> <span class="st">'adoptable'</span>, </a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">                  <span class="dt">location =</span> <span class="st">'Seattle, WA'</span>, <span class="dt">distance =</span> <span class="dv">10</span>, <span class="dt">results_per_page =</span> <span class="dv">50</span>, <span class="dt">pages =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p>If the <code>pages</code> parameter is set to <code>NULL</code>, all matching results from the Petfinder database will be extracted. The <code>pages</code> parameter defaults to <code>1</code>, therefore it must be explictly set to <code>NULL</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">cats_wa_all_results =<span class="st"> </span>pf<span class="op">$</span><span class="kw">animals</span>(<span class="dt">animal_type=</span><span class="st">'cat'</span>, <span class="dt">gender=</span><span class="st">'female'</span>, <span class="dt">status=</span><span class="st">'adoptable'</span>, </a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">                                 <span class="dt">location=</span><span class="st">'Seattle, WA'</span>, <span class="dt">distance=</span><span class="dv">10</span>, <span class="dt">pages=</span><span class="ot">NULL</span>)</a></code></pre></div>
+<p>Specific animal data can also be extracted by supplying the <code>animal_id</code> parameter in the <code>animals()</code> method. As the search by ID is a direct search, the general search queries such as <code>gender</code>, <code>age</code>, and the others are overridden. As an example, we can use some of the <code>animal_ids</code> returned from the <code>animals()</code> method. Although Petfinder <code>animal_ids</code> are integers, they can be supplied as strings.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">cat_ids =<span class="st"> </span>pf<span class="op">$</span><span class="kw">animals</span>(<span class="dt">animal_id =</span> <span class="kw">c</span>(animal_id1, animal_id2))</a></code></pre></div>
+</div>
+<div id="finding-animal-welfare-organizations" class="section level1">
+<h1>Finding animal welfare organizations <a id="organizations"></a></h1>
+<p>The <code>organizations()</code> method is similar to the <code>animals()</code> method described above but is used to perform general or specific searches by ID on animal welfare organizations listed in the Petfinder database. Again, similar to the first example above, we can find animal welfare organizations in a 50 mile radius of Seattle, WA. To see all of the possible search parameters, please see the <a href="https://petpy.readthedocs.io/en/latest/api.html#get-animal-welfare-organization-data">petpy documentation for the <code>organizations()</code> method</a>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">wa_orgs =<span class="st"> </span>pf<span class="op">$</span><span class="kw">organizations</span>(<span class="dt">location =</span> <span class="st">'Seattle, WA'</span>, <span class="dt">distance =</span> <span class="dv">50</span>, <span class="dt">sort =</span> <span class="st">'distance'</span>, <span class="dt">pages =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<p>We can also extract specific animal welfare organization data by supplying the <code>organizations()</code> method with Petfinder organization IDs. When performing a direct search for organizations, the general search parameters in the method are overridden and do not need to be supplied.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">wa_some_orgs =<span class="st"> </span>pf<span class="op">$</span><span class="kw">organizations</span>(<span class="dt">organization_id =</span> wa_orgs<span class="op">$</span>page1<span class="op">$</span>id[<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>])</a></code></pre></div>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion <a id="conclusion"></a></h1>
+<p>Hopefully this served as a useful introduction to the basic functionality of <code>PetfindeR</code> and some short examples to get started. The Petfinder database contains a wealth of adoptable animal information that is updated constantly so it is the goal of the <code>PetfindeR</code> wrapper library to make extracting and interacting with this data even easier whether you’re building a web app or want to scrape the database for data analysis.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

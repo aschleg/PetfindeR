@@ -10,7 +10,7 @@ This is a resubmission. In this version I have:
 * local Windows 10 64-bit install, R 3.6.1
 
 ## R CMD check results
-There were no ERRORS, WARNINGS.
+There were no ERRORS, WARNINGS or NOTES.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
