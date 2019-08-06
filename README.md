@@ -32,10 +32,65 @@ An account must first be created with [Petfinder](https://www.petfinder.com/deve
 
 Authenticating the connection with the Petfinder API is done at the same time the `Petfinder` class is initialized.
 
-~~~ python
+~~~ r
 pf = Petfinder(key=key, secret=secret)
 ~~~
 
+### Finding animal types
+
+~~~ r
+# All animal types and their relevant data.
+all_types = pf$animal_types()
+
+# Returning data for a single animal type
+dogs = pf$animal_types('dog')
+
+# Getting multiple animal types at once
+cat_dog_rabbit_types = pf$animal_types(c('cat', 'dog', 'rabbit'))
+~~~
+
+### Getting animal breeds for available animal types
+
+~~~ r
+cat_breeds = pf$breeds('cat')
+dog_breeds = pf$breeds('dog')
+
+# All available breeds or multiple breeds can also be returned.
+
+all_breeds = pf$breeds()
+cat_dog_rabbit = pf$breeds(types=c('cat', 'dog', 'rabbit'))
+~~~
+
+### Finding available animals on Petfinder
+
+The `animals()` method returns animals based on specified criteria that are listed in the Petfinder database. Specific 
+animals can be searched using the `animal_id` parameter, or a search of the database can be performed by entering 
+the desired search criteria.
+
+~~~ r
+# Getting first 20 results without any search criteria
+animals = pf$animals()
+
+cats = pf$animals(animal_type = 'cat', gender = 'female', status = 'adoptable', 
+                  location = 'Seattle, WA', distance = 10, results_per_page = 50, pages = 2)
+~~~
+
+### Getting animal welfare organizations in the Petfinder database 
+
+Similar to the `animals()` method described above, the `organizations()` method returns data on animal welfare 
+organizations listed in the Petfinder database based on specific criteria, if any. In addition to a general search 
+of animal welfare organizations, specific organizational data can be extracted by supplying the `organizations()` 
+method with organization IDs.
+
+~~~ r
+# Return the first 1,000 animal welfare organizations
+
+organizations = pf$organizations(results_per_page = 100, pages = 10)
+
+# Get organizations in the state of Washington
+
+wa_organizations = pf$organizations(state='WA')
+~~~
 
 ## Documentation
 
@@ -46,8 +101,7 @@ pf = Petfinder(key=key, secret=secret)
 
 Vignettes are long-form documentation that explore more in-depth concepts related to the package. 
 
-* [PetfindeR Introduction Part One](https://CRAN.R-project.org/package=PetfindeR/vignettes/PetfindeR_Introduction_Part_One.html)
-* [PetfindeR Introduction Part Two](https://CRAN.R-project.org/package=PetfindeR/vignettes/PetfindeR_Introduction_Part_Two.html)
+* [PetfindeR Introduction Part One](https://CRAN.R-project.org/package=PetfindeR/vignettes/Introduction to PetfindeR.html)
 
 ## About [Petfinder.com](https://www.petfinder.com)
 
