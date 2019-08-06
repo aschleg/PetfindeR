@@ -114,10 +114,9 @@ all_breeds <- pf$breeds()
 For brevity, let's print the animal types and the first three breeds of each type.
 
 ```{r}
-
 for (breed in 1:length(all_breeds)) {
   print(names(all_breeds[breed]))
-  print(all_breeds[breed][[1]][0:3])
+  print(all_breeds[breed][0:3])
 }
 ```
 
@@ -128,7 +127,7 @@ cat_rabbit = pf$breeds(c('cat', 'rabbit'))
 
 for (breed in 1:length(cat_rabbit)) {
   print(names(all_breeds[breed]))
-  print(all_breeds[breed][[1]][0:3])
+  print(all_breeds[breed][0:3])
 }
 ```
 
@@ -137,15 +136,7 @@ for (breed in 1:length(cat_rabbit)) {
 The `animals` method can be used to perform a general search for animals based on specified criteria or returning data on specific animals based on their respective IDs. For example, let's say we want to get 100 adoptable female cats within a 10 mile distance of Seattle, WA.
 
 ```{r}
-cats = pf$animals(animal_type = 'cat', gender = 'female', status = 'adoptable', 
-                  location = 'Seattle, WA', distance = 10, results_per_page = 50, pages = 2)
-```
-
-If the `pages` parameter is set to `NULL`, all matching results from the Petfinder database will be extracted. The `pages` parameter defaults to `1`, therefore it must be explictly set to `NULL`.
-
-```{r}
-cats_wa_all_results = pf$animals(animal_type='cat', gender='female', status='adoptable', 
-                                 location='Seattle, WA', distance=10, pages=NULL)
+cats = pf$animals(animal_type = 'cat', gender = 'female', status = 'adoptable', location = 'Seattle, WA', distance = 10, results_per_page = 50, pages = 2)
 ```
 
 Specific animal data can also be extracted by supplying the `animal_id` parameter in the `animals()` method. As the search by ID is a direct search, the general search queries such as `gender`, `age`, and the others are overridden. As an example, we can use some of the `animal_ids` returned from the `animals()` method. Although Petfinder `animal_ids` are integers, they can be supplied as strings.
@@ -159,7 +150,7 @@ cat_ids = pf$animals(animal_id = c(animal_id1, animal_id2))
 The `organizations()` method is similar to the `animals()` method described above but is used to perform general or specific searches by ID on animal welfare organizations listed in the Petfinder database. Again, similar to the first example above, we can find animal welfare organizations in a 50 mile radius of Seattle, WA. To see all of the possible search parameters, please see the [petpy documentation for the `organizations()` method](https://petpy.readthedocs.io/en/latest/api.html#get-animal-welfare-organization-data).
 
 ```{r}
-wa_orgs = pf$organizations(location = 'Seattle, WA', distance = 50, sort = 'distance', pages = NULL)
+wa_orgs = pf$organizations(location = 'Seattle, WA', distance = 50, sort = 'distance', pages = 4, results_per_page = 100)
 ```
 
 We can also extract specific animal welfare organization data by supplying the `organizations()` method with Petfinder organization IDs. When performing a direct search for organizations, the general search parameters in the method are overridden and do not need to be supplied.
@@ -171,4 +162,3 @@ wa_some_orgs = pf$organizations(organization_id = wa_orgs$page1$id[0:3])
 # Conclusion <a id='conclusion'></a>
 
 Hopefully this served as a useful introduction to the basic functionality of `PetfindeR` and some short examples to get started. The Petfinder database contains a wealth of adoptable animal information that is updated constantly so it is the goal of the `PetfindeR` wrapper library to make extracting and interacting with this data even easier whether you're building a web app or want to scrape the database for data analysis.
-
