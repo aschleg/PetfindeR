@@ -9,6 +9,7 @@ r_check_args: --as-cran --run-donttest --no-build-vignettes --no-manual
 
 r_packages:
   - covr
+  - R6
 
 after_success:
   - Rscript -e 'library(covr); codecov()'

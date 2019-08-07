@@ -3,7 +3,7 @@ Type: Package
 Title: 'Petfinder' API Wrapper
 Version: 2.0.0
 Author: Aaron Schlegel
-Maintainer: Aaron Schlegel <aaron@aaronschlegel.me>
+Maintainer: Aaron Schlegel <aaronsc32@gmail.com>
 Description: 
   Wrapper of the 'Petfinder API' <https://www.petfinder.com/developers/v2/docs/> that implements 
   methods for interacting with and extracting data from the 'Petfinder' database. The 'Petfinder 
