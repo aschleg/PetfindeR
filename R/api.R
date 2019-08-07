@@ -1,3 +1,5 @@
+require(R6)
+
 
 #' Creates an authenticated connection with the Petfinder API. The stored
 #' authentication is then used to call the Petfinder API methods. An API key can
@@ -22,7 +24,7 @@ Petfinder <- function(key, secret) {
 
 
 #' Internal R6 class
-.Petfinder.class <- R6::R6Class(".Petfinder.class",
+.Petfinder.class <- R6Class(".Petfinder.class",
 
   public = list(
 
