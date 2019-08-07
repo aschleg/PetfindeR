@@ -6,8 +6,8 @@ test_that('animal_types method returns correct information', {
   pf <- Petfinder(key = Sys.getenv('PETFINDER_KEY'), 
                   secret = Sys.getenv('PETFINDER_SECRET_KEY'))
   
-  all_types <- c('dog', 'cat', 'rabbit', 'small-furry', 'horse', 'bird',
-                 'scales-fins-other', 'barnyard')
+  all_types <- c('dog', 'cat', 'rabbit', 'small & furry', 'horse', 'bird',
+                 'scales, fins & other', 'barnyard')
   
   all_ani_types <- pf$animal_types()
   
@@ -18,10 +18,10 @@ test_that('animal_types method returns correct information', {
   cats <- pf$animal_types('cat')
 
   expect_true(length(cats) == 1)
-  expect_is(cats$cat$name, 'character')
-  expect_is(cats$cat$coats, 'character')
-  expect_is(cats$cat$colors, 'character')
-  expect_is(cats$cat$genders, 'character')
+  expect_is(cats$Cat$name, 'character')
+  expect_is(cats$Cat$coats, 'character')
+  expect_is(cats$Cat$colors, 'character')
+  expect_is(cats$Cat$genders, 'character')
   
   multi_types <- pf$animal_types(c('cat', 'dog'))
   

@@ -1,6 +1,5 @@
 $ cat .gitignore
 
-build/
 *.Rproj
 *.Rproj.user/
 *.Rproj.user.backup/
