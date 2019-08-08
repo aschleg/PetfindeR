@@ -1,4 +1,4 @@
-# PetfindeR
+# PetfinderR
 
 [![Build Status](https://travis-ci.org/aschleg/PetfindeR.svg?branch=master)](https://travis-ci.org/aschleg/PetfindeR)
 [![Build status](https://ci.appveyor.com/api/projects/status/78048x1q7086r0dl?svg=true)](https://ci.appveyor.com/project/aschleg/petfinder)
@@ -7,14 +7,14 @@
 
 :cat2: :dog2: :rooster: :rabbit2: :racehorse:
 
-`PetfindeR` wraps the [Petfinder API](https://www.petfinder.com/developers/api-docs) in an easy-to-use, conveninent R package. The `PetfindeR` library also provides handy methods for coercing the returned JSON from the API into usable `data.frame` objects to facilitate data analysis and other tasks. 
+`PetfinderR` wraps the [Petfinder API](https://www.petfinder.com/developers/api-docs) in an easy-to-use, conveninent R package. The `PetfinderR` library also provides handy methods for coercing the returned JSON from the API into usable `data.frame` objects to facilitate data analysis and other tasks. 
 
 ## Installation
 
-`PetfindeR` can be installed through the usual means:
+`PetfinderR` can be installed through the usual means:
 
 ~~~ r
-install.packages('PetfindeR')
+install.packages('PetfinderR')
 ~~~
 
 The package can also be installed with [`devtools`](https://cran.r-project.org/package=devtools) for those wanting the most recent development version.
@@ -26,7 +26,7 @@ devtools::install_github('aschleg/PetfindeR')
 
 ## Examples and Usage
 
-An account must first be created with [Petfinder](https://www.petfinder.com/developers/) to receive an API and secret key. The API and secret key will be used to grant access to the Petfinder API, which lasts for 3600 seconds, or one hour. After the authentication period ends, you must re-authenticate with the Petfinder API. The following are some quick examples for using `PetfindeR` to get started. More in-depth tutorials for `PetfindeR` and some examples of what can be done with the library, please see the More Examples and Tutorials section below.
+An account must first be created with [Petfinder](https://www.petfinder.com/developers/) to receive an API and secret key. The API and secret key will be used to grant access to the Petfinder API, which lasts for 3600 seconds, or one hour. After the authentication period ends, you must re-authenticate with the Petfinder API. The following are some quick examples for using `PetfinderR` to get started. More in-depth tutorials for `PetfinderR` and some examples of what can be done with the library, please see the More Examples and Tutorials section below.
 
 ### Authenticating with the Petfinder API
 
