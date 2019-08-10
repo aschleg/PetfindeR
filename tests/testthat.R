@@ -1,4 +1,4 @@
 library(testthat)
-library(PetfinderR)
+library(PetfindeR)
 
-test_check('PetfinderR')
+test_check('PetfindeR')

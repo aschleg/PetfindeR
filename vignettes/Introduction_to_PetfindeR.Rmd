@@ -1,13 +1,13 @@
 ---
-title: "Introduction to PetfinderR"
+title: "Introduction to PetfindeR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to PetfinderR}
+  %\VignetteIndexEntry{Introduction to PetfindeR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-The following vignette introduces the `PetfinderR` package and its methods for interacting with the Petfinder API. The goal of the `PetfinderR` library is to enable other users to interact with the rich data available in the Petfinder database. More information on the Petfinder API itself can be found on the [API documentation page](https://www.petfinder.com/developers/v2/docs/).
+The following vignette introduces the `PetfindeR` package and its methods for interacting with the Petfinder API. The goal of the `PetfindeR` library is to enable other users to interact with the rich data available in the Petfinder database. More information on the Petfinder API itself can be found on the [API documentation page](https://www.petfinder.com/developers/v2/docs/).
 
 # Table of Contents
 
@@ -23,7 +23,7 @@ The following vignette introduces the `PetfinderR` package and its methods for i
 
 Before we can begin extracting data from the API, we first require an API and secret key to authenticate access. To receive an API and secret key, [create a free account with Petfinder](https://www.petfinder.com/developers/) on their developer page and request an API key.
 
-The API and secret key received from Petfinder are what we will use to authenticate our connection to the Petfinder API with `PetfinderR`. Note authenication has a timeout of 3600 seconds, or one hour, after which the authentication to the API will need to be made again. For more information on how the Petfinder API authenication works, [visit the API documentation on the Petfinder developer page](https://www.petfinder.com/developers/v2/docs/#using-the-api).
+The API and secret key received from Petfinder are what we will use to authenticate our connection to the Petfinder API with `PetfindeR`. Note authenication has a timeout of 3600 seconds, or one hour, after which the authentication to the API will need to be made again. For more information on how the Petfinder API authenication works, [visit the API documentation on the Petfinder developer page](https://www.petfinder.com/developers/v2/docs/#using-the-api).
 
 Storing your keys received from APIs and other sensitive information in a secure file or as an environment variable is considered best practice to avoid any potential malicious activity. Therefore, we save the API and secret keys we received from Petfinder as environment variables in a specific R file named `.Renviron`. If you do not have an `.Renviron` file on your system, here is handy and short guide for creating one and adding environment variables for both Linux and Windows. If on a Mac, you can add the `.Renviron` file in your home directory. After saving the variables and restarting R/RStudio, we can access the environment variables with the [`Sys.getenv()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Sys.getenv.html) function.
 
@@ -34,10 +34,10 @@ secret <- Sys.getenv('PETFINDER_SECRET_KEY')
 
 # Installation <a id='installation'></a>
 
-If not already installed, `PetfinderR` can be installed through the usual means:
+If not already installed, `PetfindeR` can be installed through the usual means:
 
 ```{r, eval=FALSE}
-install.packages('PetfinderR')
+install.packages('PetfindeR')
 ```
 
 The package can also be installed with [`devtools`](https://cran.r-project.org/package=devtools) for those wanting the most recent development version.
@@ -50,10 +50,10 @@ devtools::install_github('aschleg/PetfindeR')
 Once installed, we can load the library as usual:
 
 ```{r}
-library(PetfinderR)
+library(PetfindeR)
 ```
 
-Now that `PetfinderR` is loaded, we can authenticate our connection to the API and begin extracting data! The authentication to the Petfinder API occurs when the `PetfinderR` class is initialized, which requires the API and secret keys we received in the previous step as parameters.
+Now that `PetfindeR` is loaded, we can authenticate our connection to the API and begin extracting data! The authentication to the Petfinder API occurs when the `PetfindeR` class is initialized, which requires the API and secret keys we received in the previous step as parameters.
 
 ```{r}
 pf = Petfinder(key = key, secret = secret)
@@ -161,4 +161,4 @@ wa_some_orgs = pf$organizations(organization_id = wa_orgs$page1$id[0:3])
 
 # Conclusion <a id='conclusion'></a>
 
-Hopefully this served as a useful introduction to the basic functionality of `PetfinderR` and some short examples to get started. The Petfinder database contains a wealth of adoptable animal information that is updated constantly so it is the goal of the `PetfinderR` wrapper library to make extracting and interacting with this data even easier whether you're building a web app or want to scrape the database for data analysis.
+Hopefully this served as a useful introduction to the basic functionality of `PetfindeR` and some short examples to get started. The Petfinder database contains a wealth of adoptable animal information that is updated constantly so it is the goal of the `PetfindeR` wrapper library to make extracting and interacting with this data even easier whether you're building a web app or want to scrape the database for data analysis.

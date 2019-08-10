@@ -1,9 +1,9 @@
-Package: PetfinderR
+Package: PetfindeR
 Type: Package
 Title: 'Petfinder' API Wrapper
 Version: 2.0.0
 Author: Aaron Schlegel
-Maintainer: Aaron Schlegel <aaron@aaronschlegel.com>
+Maintainer: Aaron Schlegel <aaron@aaronschlegel.me>
 Description: 
   Wrapper of the 'Petfinder API' <https://www.petfinder.com/developers/v2/docs/> that implements 
   methods for interacting with and extracting data from the 'Petfinder' database. The 'Petfinder 
@@ -11,13 +11,13 @@ Description:
   databases of adoptable animals and animal welfare organizations across North America.
 Encoding: UTF-8
 LazyData: true
-Imports: R6,
-  httr,
-  jsonlite
 RoxygenNote: 6.1.1
 License: MIT + file LICENSE
 URL: https://github.com/aschleg/PetfindeR
 VignetteBuilder: knitr
+Imports: R6,
+  httr,
+  jsonlite
 Suggests: testthat,
   knitr,
   rmarkdown
