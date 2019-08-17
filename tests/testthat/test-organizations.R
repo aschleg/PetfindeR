@@ -19,4 +19,8 @@ test_that('organizations method returns correct information', {
   n <- names(org_search)
   expect_equal(n, ids_to_search)
   
+  max_results_search <- pf$organizations(pages = NULL, location = 'Seattle, WA', distance = 10)
+  expect_is(max_results_search, 'list')
+  expect_is(max_results_search$page1, 'data.frame')
+  
 })

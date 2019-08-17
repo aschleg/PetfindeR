@@ -24,4 +24,8 @@ test_that('breeds method returns correct information', {
   
   expect_true(length(multi_breeds) == 2)
   expect_equal(c('cat', 'dog'), names(multi_breeds))
+  
+  breeds_df <- pf$breeds('cat', return_df = TRUE)
+  expect_true(is.data.frame(breeds_df))
+  
 })

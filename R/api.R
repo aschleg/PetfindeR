@@ -321,7 +321,7 @@ Petfinder <- function(key, secret) {
             params['page'] = page
             
             r <- private$get_request(url = url, 
-                                     parms = params)
+                                     params = params)
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)$organizations
@@ -485,6 +485,16 @@ Petfinder <- function(key, secret) {
                      'page' = page
       )
       
+      private$check_inputs(animal_types = animal_type, 
+                           size = size, 
+                           gender = gender, 
+                           age = age, 
+                           coat = coat, 
+                           status = status,
+                           distance = distance,
+                           sort = sort, 
+                           limit = results_per_page)
+      
       params <- params[!sapply(params, is.null)]
       
       return(params)
@@ -498,7 +508,8 @@ Petfinder <- function(key, secret) {
                             status = NULL,
                             distance = NULL,
                             sort = NULL,
-                            limit = NULL) {
+                            limit = NULL, 
+                            country = NULL) {
       
       .animal_types <- c('dog', 'cat', 'rabbit', 'small-furry', 
                          'horse', 'bird', 'scales-fins-other', 'barnyard')
@@ -508,6 +519,7 @@ Petfinder <- function(key, secret) {
       .coats <- c('short', 'medium', 'long', 'wire', 'hairless', 'curly')
       .status <- c('adoptable', 'adopted', 'found')
       .sort <- c('recent', '-recent', 'distance', '-distance')
+      .country <- c('US', 'CA')
       
       if (!is.null(animal_types)) {
         if (!animal_types %in% .animal_types) {
@@ -550,6 +562,12 @@ Petfinder <- function(key, secret) {
       if (!is.null(sort)) {
         if (!sort %in% .sort) {
           stop(paste0('The following sorting options are valid: ', paste0(.sort, collapse = ', ')))
+        }
+      }
+      
+      if (!is.null(country)) {
+        if (!country %in% .country) {
+          stop(paste0('The following country options are valid: ', paste0(.country, collapse = ', ')))
         }
       }
       
