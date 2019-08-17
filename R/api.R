@@ -492,6 +492,7 @@ Petfinder <- function(key, secret) {
                            coat = coat, 
                            status = status,
                            distance = distance,
+                           country = country,
                            sort = sort, 
                            limit = results_per_page)
       

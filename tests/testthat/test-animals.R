@@ -3,8 +3,8 @@ context('test animals method')
 
 test_that('animals method returns correct information', {
   skip_on_cran()
-  pf <- Petfinder(key = Sys.getenv('PETFINDER_KEY2'), 
-                  secret = Sys.getenv('PETFINDER_SECRET_KEY2'))
+  pf <- Petfinder(key = Sys.getenv('PETFINDER_KEY'), 
+                  secret = Sys.getenv('PETFINDER_SECRET_KEY'))
   
   general_search <- pf$animals()
 
