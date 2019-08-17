@@ -3,8 +3,8 @@ context('test animals method')
 
 test_that('animals method returns correct information', {
   skip_on_cran()
-  pf <- Petfinder(key = Sys.getenv('PETFINDER_KEY'), 
-                  secret = Sys.getenv('PETFINDER_SECRET_KEY'))
+  pf <- Petfinder(key = Sys.getenv('PETFINDER_KEY2'), 
+                  secret = Sys.getenv('PETFINDER_SECRET_KEY2'))
   
   general_search <- pf$animals()
 
@@ -26,5 +26,9 @@ test_that('animals method returns correct information', {
   expect_is(wa_search, 'list')
   expect_is(wa_search$page1, 'data.frame')
   expect_true(nrow(wa_search$page1) == 20)
+  
+  max_search <- pf$animals(location = 'Seattle, WA', distance = 1, pages = NULL)
+  expect_is(max_search, 'list')
+  expect_is(max_search$page1, 'data.frame')
   
 })

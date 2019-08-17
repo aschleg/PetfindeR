@@ -28,5 +28,6 @@ test_that('invalid parameters and other errors return appropriate responses', {
   expect_error(pf$animals(results_per_page = 1000))
   
   expect_error(pf$organizations(distance = 1000))
+  expect_error(pf$organizations(country = 'MX'))
   
 })

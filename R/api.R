@@ -47,7 +47,7 @@ Petfinder <- function(key, secret) {
         
         differ <- setdiff(type_check, all_types)
         
-        if (length(differ) > 1) {
+        if (length(differ) > 0) {
           stop(paste0("animal types must be of the following", all_types, collapse = ' '))
         }
       }
@@ -89,7 +89,7 @@ Petfinder <- function(key, secret) {
         
         differ <- setdiff(type_check, all_animal_types)
         
-        if (length(differ) > 1) {
+        if (length(differ) > 0) {
           stop(paste0("animal types must be of the following", all_animal_types, collapse = ' '))
         }
       }
