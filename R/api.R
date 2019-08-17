@@ -62,9 +62,7 @@ Petfinder <- function(key, secret) {
         for (type in types) {
           url <- paste0(private$host, 'types/', type, sep = '')
           
-          r <- httr::GET(url, 
-                         httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                  private$auth, sep = '')))
+          r <- private$get_request(url = url)
 
           req_json <- jsonlite::fromJSON(httr::content(r, as = 'text', encoding = 'utf-8'))$type
           req_json$`_links` <- NULL
@@ -106,11 +104,10 @@ Petfinder <- function(key, secret) {
         for (type in animal_types) {
           url <- paste0(private$host, 'types/', type, '/breeds', sep = '')
           
-          r <- httr::GET(url, 
-                         httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                  private$auth, sep = '')))
+          r <- private$get_request(url = url)
           
           req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))$breeds$name
+          
           breeds_collection[[type]] <- req_json
           
         }
@@ -163,9 +160,7 @@ Petfinder <- function(key, secret) {
           for (ani_id in animal_id) {
             url <- paste0(private$host, 'animals/', ani_id, sep = '')
             
-            r <- httr::GET(url, 
-                           httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                    private$auth, sep = '')))
+            r <- private$get_request(url = url)
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)$animal
@@ -199,10 +194,8 @@ Petfinder <- function(key, secret) {
           params['limit'] = 100
           params['page'] = 1
           
-          r <- httr::GET(url, 
-                         query = params,
-                         httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                  private$auth, sep = '')))
+          r <- private$get_request(url = url, 
+                                   params = params)
           
           req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                          flatten = TRUE)
@@ -213,10 +206,8 @@ Petfinder <- function(key, secret) {
           for (page in 2:max_pages) {
             params['page'] <- page
             
-            r <- httr::GET(url, 
-                           query = params,
-                           httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                    private$auth, sep = '')))
+            r <- private$get_request(url = url, 
+                                     params = params)
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)
@@ -230,10 +221,8 @@ Petfinder <- function(key, secret) {
         else {
           params['page'] = 1
           
-          r <- httr::GET(url, 
-                         query = params,
-                         httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                  private$auth, sep = '')))
+          r <- private$get_request(url = url, 
+                                   params = params)
           
           req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))
           
@@ -253,10 +242,8 @@ Petfinder <- function(key, secret) {
           for (page in 2:pages) {
             params['page'] = page
             
-            r <- httr::GET(url, 
-                           query = params,
-                           httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                    private$auth, sep = '')))
+            r <- private$get_request(url = url, 
+                                     params = params)
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)
@@ -296,9 +283,7 @@ Petfinder <- function(key, secret) {
           for (org_id in organization_id) {
             url <- paste0(private$host, 'organizations/', org_id, sep = '')
             
-            r <- httr::GET(url, 
-                           httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                    private$auth, sep = '')))
+            r <- private$get_request(url = url)
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)$organization
@@ -324,10 +309,8 @@ Petfinder <- function(key, secret) {
           params['limit'] = 100
           params['page'] = 1
           
-          r <- httr::GET(url, 
-                         query = params,
-                         httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                  private$auth, sep = '')))
+          r <- private$get_request(url = url, 
+                                   params = params)
           
           req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                          flatten = TRUE)
@@ -337,10 +320,8 @@ Petfinder <- function(key, secret) {
           for (page in 2:max_pages) {
             params['page'] = page
             
-            r <- httr::GET(url, 
-                           query = params,
-                           httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                    private$auth, sep = '')))
+            r <- private$get_request(url = url, 
+                                     parms = params)
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)$organizations
@@ -353,10 +334,8 @@ Petfinder <- function(key, secret) {
         else {
           params['page'] = 1
           
-          r <- httr::GET(url, 
-                         query = params,
-                         httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                  private$auth, sep = '')))
+          r <- private$get_request(url = url, 
+                                   params = params)
           
           req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                          flatten = TRUE)
@@ -377,10 +356,8 @@ Petfinder <- function(key, secret) {
           for (page in 2:pages) {
             params['page'] = page
             
-            r <- httr::GET(url, 
-                           query = params,
-                           httr::add_headers(Authorization = paste0('Bearer ', 
-                                                                    private$auth, sep = '')))
+            r <- private$get_request(url = url, 
+                                     params = params)
             
             req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'), 
                                            flatten = TRUE)
@@ -414,7 +391,57 @@ Petfinder <- function(key, secret) {
                                     "client_secret" = private$secret)
       );
       
-      return(httr::content(req)$access_token)
+      if (req$status_code == 401) {
+        stop('Provided credentials are invalid.')
+      }
+      else {
+        return(httr::content(req)$access_token)  
+      }
+    },
+    
+    get_request = function(url, 
+                           body,
+                           params = NULL) {
+
+      if (is.null(params)) {
+        r <- httr::GET(url = url,
+                       httr::add_headers(Authorization = paste0('Bearer ', private$auth, sep = '')))
+      } 
+      
+      else {
+        r <- httr::GET(url = url, 
+                       query = params, 
+                       httr::add_headers(Authorization = paste0('Bearer ', private$auth, sep = '')))
+      }
+
+      if (r$status_code == 400) {
+        print(httr::content(req)$`invalid-params`)
+        stop(paste0('There are invalid parameters in the API query. Status Code: ', 
+                    r$status_code, 
+                    sep = ''))
+      }
+      
+      if (r$status_code == 403) {
+        stop(paste0(
+          'Insufficient access to requested resource. This is typically the result of current Petfinder API access token becoming invalid. Status Code: ',
+          r$status_code,
+          sep = ''))
+      }
+      
+      if (r$status_code == 404) {
+        stop(paste0('The requested resource could not be found. Status Code: ', 
+                    r$status_code, 
+                    sep = ''))
+      }
+      
+      if (r$status_code == 500) {
+        stop(paste0('There was an unexpected error in the Petfinder API. Please try again. Status Code: ', 
+                    r$status_code, 
+                    sep = ''))
+      }
+      
+      return(r)
+      
     },
     
     parameters = function(breed = NULL,
