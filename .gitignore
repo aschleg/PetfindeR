@@ -8,3 +8,4 @@ $ cat .gitignore
 .build.timestamp
 .RData
 .DS_Store
+build/
