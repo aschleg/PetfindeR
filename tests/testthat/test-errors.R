@@ -9,11 +9,13 @@ test_that('invalid parameters and other errors return appropriate responses', {
   # Animal Types
   
   expect_error(pf$animal_types(types = 'zebra'))
-  expect_error(pf$animal_types(types = data.frame()))
+  expect_error(pf$animal_types(types = pf))
+  expect_error(pf$animal_types(types = 1))
   
   # Breeds
   
   expect_error(pf$breeds(animal_types = 'zebra'))
+  expect_error(pf$breeds(animal_types = pf))
   expect_error(pf$breeds(animal_types = 1))
   
   # Animals & Organizations
