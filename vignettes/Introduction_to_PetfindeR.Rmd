@@ -27,7 +27,7 @@ The API and secret key received from Petfinder are what we will use to authentic
 
 Storing your keys received from APIs and other sensitive information in a secure file or as an environment variable is considered best practice to avoid any potential malicious activity. Therefore, we save the API and secret keys we received from Petfinder as environment variables in a specific R file named `.Renviron`. If you do not have an `.Renviron` file on your system, here is handy and short guide for creating one and adding environment variables for both Linux and Windows. If on a Mac, you can add the `.Renviron` file in your home directory. After saving the variables and restarting R/RStudio, we can access the environment variables with the [`Sys.getenv()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Sys.getenv.html) function.
 
-```{r}
+```{r, eval=FALSE}
 key <- Sys.getenv('PETFINDER_KEY')
 secret <- Sys.getenv('PETFINDER_SECRET_KEY')
 ```
@@ -49,13 +49,13 @@ devtools::install_github('aschleg/PetfindeR')
 
 Once installed, we can load the library as usual:
 
-```{r}
+```{r, eval=FALSE}
 library(PetfindeR)
 ```
 
 Now that `PetfindeR` is loaded, we can authenticate our connection to the API and begin extracting data! The authentication to the Petfinder API occurs when the `PetfindeR` class is initialized, which requires the API and secret keys we received in the previous step as parameters.
 
-```{r}
+```{r, eval=FALSE}
 pf = Petfinder(key = key, secret = secret)
 ```
 
@@ -65,39 +65,39 @@ The `pf` variable is the initialized Petfinder class with our given API and secr
 
 The `animal_types` method allows one to get information on all or specific animal types in the Petfinder database. Animal type data includes the type's species, color, coat and gender. Leaving the `types` parameter of the method empty will return all available animal types.
 
-```{r}
+```{r, eval=FALSE}
 animal_types = pf$animal_types()
 ```
 
 We can get the names of all the animal types available in the Petfinder API by using the [`names()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/names.html) function
 
-```{r}
+```{r, eval=FALSE}
 names(animal_types)
 ```
 
 Specific information for a given type can be accessed as usual:
 
-```{r}
+```{r, eval=FALSE}
 print(animal_types$Cat$coats)
 print(animal_types$Cat$colors)
 ```
 
 The `animal_types` method also accepts a single or multiple animal types.
 
-```{r}
+```{r, eval=FALSE}
 cats = pf$animal_types('cat')
 ```
 
 We can access the type's data as we did before:
 
-```{r}
+```{r, eval=FALSE}
 print(cats$Cat$coats)
 print(cats$Cat$colors)
 ```
 
 Multiple specific animal types can also be passed.
 
-```{r}
+```{r, eval=FALSE}
 cat_dog <- pf$animal_types(c('cat', 'dog'))
 print(cat_dog$Dog$coats)
 print(cat_dog$Cat$coats)
@@ -107,13 +107,13 @@ print(cat_dog$Cat$coats)
 
 Listed breeds for each animal type can be extracted using the `breeds()` method.
 
-```{r}
+```{r, eval=FALSE}
 all_breeds <- pf$breeds()
 ```
 
 For brevity, let's print the animal types and the first three breeds of each type.
 
-```{r}
+```{r, eval=FALSE}
 for (breed in 1:length(all_breeds)) {
   print(names(all_breeds[breed]))
   print(all_breeds[breed][0:3])
@@ -122,7 +122,7 @@ for (breed in 1:length(all_breeds)) {
 
 Similar to the `animal_types()` method, the `breeds()` mehtod can accept a single or multiple animal types.
 
-```{r}
+```{r, eval=FALSE}
 cat_rabbit = pf$breeds(c('cat', 'rabbit'))
 
 for (breed in 1:length(cat_rabbit)) {
@@ -135,7 +135,7 @@ for (breed in 1:length(cat_rabbit)) {
 
 The `animals` method can be used to perform a general search for animals based on specified criteria or returning data on specific animals based on their respective IDs. For example, let's say we want to get 100 adoptable female cats within a 10 mile distance of Seattle, WA.
 
-```{r}
+```{r, eval=FALSE}
 cats = pf$animals(animal_type = 'cat', gender = 'female', status = 'adoptable', location = 'Seattle, WA', distance = 10, results_per_page = 50, pages = 2)
 ```
 
@@ -149,13 +149,13 @@ cat_ids = pf$animals(animal_id = c(animal_id1, animal_id2))
 
 The `organizations()` method is similar to the `animals()` method described above but is used to perform general or specific searches by ID on animal welfare organizations listed in the Petfinder database. Again, similar to the first example above, we can find animal welfare organizations in a 50 mile radius of Seattle, WA. To see all of the possible search parameters, please see the [petpy documentation for the `organizations()` method](https://petpy.readthedocs.io/en/latest/api.html#get-animal-welfare-organization-data).
 
-```{r}
+```{r, eval=FALSE}
 wa_orgs = pf$organizations(location = 'Seattle, WA', distance = 50, sort = 'distance', pages = 4, results_per_page = 100)
 ```
 
 We can also extract specific animal welfare organization data by supplying the `organizations()` method with Petfinder organization IDs. When performing a direct search for organizations, the general search parameters in the method are overridden and do not need to be supplied.
 
-```{r}
+```{r, eval=FALSE}
 wa_some_orgs = pf$organizations(organization_id = wa_orgs$page1$id[0:3])
 ```
 

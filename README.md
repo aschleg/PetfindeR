@@ -94,14 +94,13 @@ wa_organizations = pf$organizations(state='WA')
 
 ## Documentation
 
-* [PetfindeR PDF Reference Manual](https://CRAN.R-project.org/package=PetfindeR/PetfindeR.pdf)
 * [Petfinder API v2.0 documentation](https://www.petfinder.com/developers/v2/docs/)
 
 ## Vignettes
 
 Vignettes are long-form documentation that explore more in-depth concepts related to the package. 
 
-* [PetfindeR Introduction Part One](https://CRAN.R-project.org/package=PetfindeR/vignettes/Introduction to PetfindeR.html)
+* [Introduction to PetfindeR](https://cran.r-project.org/web/packages/PetfindeR/vignettes/Introduction_to_PetfindeR.html)
 
 ## About [Petfinder.com](https://www.petfinder.com)
 
