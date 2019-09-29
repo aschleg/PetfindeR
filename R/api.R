@@ -221,7 +221,8 @@ Petfinder <- function(key, secret) {
           r <- private$get_request(url = url, 
                                    params = params)
           
-          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'),
+                                         flatten = TRUE)
           
           animals_list[[paste0('page', as.character(1), sep='')]] <- req_json$animals
           
