@@ -140,7 +140,7 @@ Petfinder <- function(key, secret) {
                        coat = NULL, 
                        status = NULL, 
                        name = NULL, 
-                       organization_id = NULL, 
+                       organization = NULL, 
                        location = NULL, 
                        distance = NULL, 
                        sort = NULL, 
@@ -180,7 +180,7 @@ Petfinder <- function(key, secret) {
                                      coat = coat,
                                      status = status,
                                      name = name,
-                                     organization_id = organization_id,
+                                     organization = organization,
                                      location = location,
                                      distance = distance,
                                      sort = sort,
@@ -221,7 +221,8 @@ Petfinder <- function(key, secret) {
           r <- private$get_request(url = url, 
                                    params = params)
           
-          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'),
+                                         flatten = TRUE)
           
           animals_list[[paste0('page', as.character(1), sep='')]] <- req_json$animals
           
@@ -456,7 +457,7 @@ Petfinder <- function(key, secret) {
                           name = NULL,
                           age = NULL,
                           animal_id = NULL,
-                          organization_id = NULL,
+                          organization = NULL,
                           status = NULL,
                           results_per_page = NULL,
                           page = NULL) {
@@ -476,7 +477,7 @@ Petfinder <- function(key, secret) {
                      'name' = name,
                      'age' = age,
                      'animal_id' = animal_id,
-                     'organization_id' = organization_id,
+                     'organization' = organization,
                      'status' = status,
                      'limit' = results_per_page,
                      'page' = page
