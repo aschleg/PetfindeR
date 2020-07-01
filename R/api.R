@@ -531,7 +531,6 @@ Petfinder <- function(key, secret) {
                      'name' = name,
                      'age' = age,
                      'animal_id' = animal_id,
-<<<<<<< HEAD
                      'organization' = organization_id,
                      'status' = status, 
                      'good_with_cats' = good_with_cats,
@@ -539,10 +538,6 @@ Petfinder <- function(key, secret) {
                      'good_with_dogs' = good_with_dogs,
                      'before' = before_date,
                      'after' = after_date,
-=======
-                     'organization' = organization,
-                     'status' = status,
->>>>>>> e2763a0bb7b48f4cfffccc4fcf47821af5c8e443
                      'limit' = results_per_page,
                      'page' = page
       )
