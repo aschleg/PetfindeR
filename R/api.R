@@ -140,7 +140,7 @@ Petfinder <- function(key, secret) {
                        coat = NULL, 
                        status = NULL, 
                        name = NULL, 
-                       organization_id = NULL, 
+                       organization = NULL, 
                        location = NULL, 
                        distance = NULL, 
                        sort = NULL, 
@@ -224,7 +224,7 @@ Petfinder <- function(key, secret) {
                                      coat = coat,
                                      status = status,
                                      name = name,
-                                     organization_id = organization_id,
+                                     organization = organization,
                                      location = location,
                                      distance = distance,
                                      sort = sort,
@@ -270,7 +270,8 @@ Petfinder <- function(key, secret) {
           r <- private$get_request(url = url, 
                                    params = params)
           
-          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'))
+          req_json <- jsonlite::fromJSON(httr::content(r, as='text', encoding = 'utf-8'),
+                                         flatten = TRUE)
           
           animals_list[[paste0('page', as.character(1), sep='')]] <- req_json$animals
           
@@ -505,7 +506,7 @@ Petfinder <- function(key, secret) {
                           name = NULL,
                           age = NULL,
                           animal_id = NULL,
-                          organization_id = NULL,
+                          organization = NULL,
                           status = NULL,
                           good_with_cats = NULL,
                           good_with_children = NULL,
@@ -530,6 +531,7 @@ Petfinder <- function(key, secret) {
                      'name' = name,
                      'age' = age,
                      'animal_id' = animal_id,
+<<<<<<< HEAD
                      'organization' = organization_id,
                      'status' = status, 
                      'good_with_cats' = good_with_cats,
@@ -537,6 +539,10 @@ Petfinder <- function(key, secret) {
                      'good_with_dogs' = good_with_dogs,
                      'before' = before_date,
                      'after' = after_date,
+=======
+                     'organization' = organization,
+                     'status' = status,
+>>>>>>> e2763a0bb7b48f4cfffccc4fcf47821af5c8e443
                      'limit' = results_per_page,
                      'page' = page
       )
