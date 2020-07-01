@@ -31,4 +31,18 @@ test_that('animals method returns correct information', {
   expect_is(max_search, 'list')
   expect_is(max_search$page1, 'data.frame')
   
+  good_with_filters <- pf$animals(good_with_cats = TRUE, good_with_children = TRUE, good_with_dogs = TRUE)
+  expect_true(all(good_with_filters$environment.cats))
+  expect_true(all(good_with_filters$environment.children))
+  expect_true(all(good_with_filters$environment.dogs))
+  
+  before_date <- pf$animals(before_date = '2020-06-29')
+  expect_true(all(before_date$page1$published_at > lubridate::format_ISO8601(as.POSIXct('2020-06-29 00:00:00'), usetz = TRUE)))
+  
+  after_date <- pf$animals(after_date = '2020-06-30 0:0:0')
+  expect_true(all(after_date$page1$published_at < lubridate::format_ISO8601(as.POSIXct('2020-06-30'), usetz = TRUE)))
+  
+  between_date <- pf$animals(before_date = '2020-06-30', after_date = '2020-06-28')
+  expect_true(all(between_date$page1$published_at > lubridate::format_ISO8601(as.POSIXct('2020-06-28'), usetz = TRUE)))
+  
 })

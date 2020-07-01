@@ -1,3 +1,7 @@
+# PetfindeR 2.1.0
+
+
+
 # PetfindeR 2.0.0
 
 New major release coinciding with the release of [v2.0 of the Petfinder API](https://www.petfinder.com/developers/)! The legacy version of the Petfinder API, v1.0, will be retired in January 2020, therefore, the `PetfindeR` library has been updated almost from the ground up to be compatible as possible with the new version of the Petfinder API! The new version of the Petfinder API is a huge improvement over the legacy version, with many changes and additions to 
