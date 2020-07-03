@@ -4,9 +4,19 @@
 \alias{organizations}
 \title{Returns data on an animal welfare organization, or organizations, based on specified criteria.}
 \usage{
-organizations(organization_id = NULL, name = NULL, location = NULL,
-  distance = NULL, state = NULL, country = NULL, query = NULL,
-  sort = NULL, results_per_page = 20, pages = 1, return_df = FALSE)
+organizations(
+  organization_id = NULL,
+  name = NULL,
+  location = NULL,
+  distance = NULL,
+  state = NULL,
+  country = NULL,
+  query = NULL,
+  sort = NULL,
+  results_per_page = 20,
+  pages = 1,
+  return_df = FALSE
+)
 }
 \arguments{
 \item{organization_id}{Returns results for specified :code:`organization_id`. Can be a character 

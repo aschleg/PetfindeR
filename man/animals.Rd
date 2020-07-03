@@ -4,11 +4,25 @@
 \alias{animals}
 \title{Returns adoptable animal data from Petfinder based on specified criteria.}
 \usage{
-animals(animal_id = NULL, animal_type = NULL, breed = NULL,
-  size = NULL, gender = NULL, age = NULL, color = NULL,
-  coat = NULL, status = NULL, name = NULL, organization_id = NULL,
-  location = NULL, distance = NULL, sort = NULL, pages = 1,
-  results_per_page = 20, return_df = FALSE)
+animals(
+  animal_id = NULL,
+  animal_type = NULL,
+  breed = NULL,
+  size = NULL,
+  gender = NULL,
+  age = NULL,
+  color = NULL,
+  coat = NULL,
+  status = NULL,
+  name = NULL,
+  organization_id = NULL,
+  location = NULL,
+  distance = NULL,
+  sort = NULL,
+  pages = 1,
+  results_per_page = 20,
+  return_df = FALSE
+)
 }
 \arguments{
 \item{animal_id}{Integer or vector or list of integers representing animal IDs obtained from Petfinder. 
