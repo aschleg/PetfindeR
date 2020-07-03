@@ -37,7 +37,7 @@ test_that('animals method returns correct information', {
   expect_true(all(good_with_filters$environment.dogs))
   
   before_date <- pf$animals(before_date = '2020-06-29')
-  expect_true(all(before_date$page1$published_at >= lubridate::format_ISO8601(as.POSIXct('2020-06-29 00:00:00'), usetz = TRUE)))
+  expect_true(all(before_date$page1$published_at < lubridate::format_ISO8601(as.POSIXct('2020-06-29'), usetz = TRUE)))
   
   after_date <- pf$animals(after_date = '2020-06-30 0:0:0')
   expect_true(all(after_date$page1$published_at >= lubridate::format_ISO8601(as.POSIXct('2020-06-30'), usetz = TRUE)))
