@@ -211,8 +211,10 @@ Petfinder <- function(key, secret) {
           after_date <- lubridate::format_ISO8601(as.POSIXct(after_date), usetz = TRUE)
         }
         
-        if (before_date < after_date) {
-          stop('before_date must a date or datetime earlier than after_date.')
+        if (!is.null(after_date) && !is.null(before_date)) {
+          if (before_date < after_date) {
+            stop('before_date must a date or datetime earlier than after_date.')
+          }
         }
         
         params <- private$parameters(animal_type = animal_type,
@@ -531,7 +533,7 @@ Petfinder <- function(key, secret) {
                      'name' = name,
                      'age' = age,
                      'animal_id' = animal_id,
-                     'organization' = organization_id,
+                     'organization' = organization,
                      'status' = status, 
                      'good_with_cats' = good_with_cats,
                      'good_with_children' = good_with_children,
