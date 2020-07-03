@@ -15,11 +15,11 @@ RoxygenNote: 6.1.1
 License: MIT + file LICENSE
 URL: https://github.com/aschleg/PetfindeR
 VignetteBuilder: knitr
+Imports: R6,
 Suggests: lubridate,
   testthat,
   knitr,
   rmarkdown,
   dplyr, 
-  R6,
   httr,
   jsonlite
