@@ -4,6 +4,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/78048x1q7086r0dl?svg=true)](https://ci.appveyor.com/project/aschleg/petfinder)
 [![codecov](https://codecov.io/gh/aschleg/PetfindeR/branch/master/graph/badge.svg)](https://codecov.io/gh/aschleg/PetfindeR)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5424a91e87e042b083707a568e890c33)](https://www.codacy.com/manual/aschleg/PetfindeR?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=aschleg/PetfindeR&amp;utm_campaign=Badge_Grade)
+![CRAN checks](https://cranchecks.info/badges/summary/badger)](https://cran.r-project.org/web/checks/check_results_badger.html)
 ![https://cran.r-project.org/package=PetfindeR](https://www.r-pkg.org/badges/version/PetfindeR)
 
 :cat2: :dog2: :rooster: :rabbit2: :racehorse:
