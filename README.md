@@ -12,17 +12,17 @@
 
 ## Installation
 
-`Petfinder` is best installed with [`devtools`](https://cran.r-project.org/package=devtools) to get the most recent production version. 
-
-~~~ r
-install.packages('devtools') # if devtools is not already installed
-devtools::install_github('aschleg/PetfindeR')
-~~~
-
 `PetfindeR` can also be installed from CRAN using `install.packages()`: 
 
 ~~~ r
 install.packages('PetfindeR')
+~~~
+
+`Petfinder` can also be installed with [`devtools`](https://cran.r-project.org/package=devtools) to get the most recent production version. 
+
+~~~ r
+install.packages('devtools') # if devtools is not already installed
+devtools::install_github('aschleg/PetfindeR')
 ~~~
 
 Please note the version on CRAN may be behind the most recent version on GitHub. I apologize for any confusion or inconvenience; however, submitting the package to CRAN can often be delayed due to reviews and other submission steps.

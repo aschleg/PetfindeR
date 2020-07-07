@@ -15,8 +15,8 @@ RoxygenNote: 7.1.1
 License: MIT + file LICENSE
 URL: https://github.com/aschleg/PetfindeR
 VignetteBuilder: knitr
-Suggests: R6,
-  lubridate,
+Imports: R6
+Suggests: lubridate,
   testthat,
   knitr,
   rmarkdown,
