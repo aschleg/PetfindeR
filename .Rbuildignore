@@ -11,3 +11,4 @@
 ^appveyor\.yml$
 ^vignettes/Analyzing Adoptable Pet Descriptions with R and PetfindeR$
 ^build/$
+^dist/$
